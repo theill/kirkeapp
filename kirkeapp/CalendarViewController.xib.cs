@@ -44,6 +44,12 @@ namespace dk.kirkeapp {
 				return _data;
 			}
 		}
+
+		public string CellNibName {
+			get {
+				return "EventCellViewController";
+			}
+		}
 		#endregion
 
 		public override void ViewDidLoad() {
@@ -51,7 +57,7 @@ namespace dk.kirkeapp {
 
 			NavigationItem.Title = "Kalender";
 
-			_data = new List<Event>() { new Event { Title = "Sommerfest" } };
+			_data = new List<Event>() { new Event { Title = "Sommerfest", ActiveAt = DateTime.Parse("2011-03-02") } };
 
 			this.CalendarTableView.DataSource = new JsonDataSource<Event>(this);
 			this.CalendarTableView.Delegate = new JsonDataListDelegate<Event>(this, this);

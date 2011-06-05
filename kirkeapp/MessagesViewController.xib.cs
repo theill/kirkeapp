@@ -23,6 +23,12 @@ namespace dk.kirkeapp {
 			}
 		}
 
+		public string CellNibName {
+			get {
+				return "MessageCellViewController";
+			}
+		}
+
 		#region Constructors
 
 		// The IntPtr and initWithCoder constructors are required for items that need
@@ -51,8 +57,8 @@ namespace dk.kirkeapp {
 
 			NavigationItem.Title = "Beskeder";
 
-			this._data = new List<Message> { new Message { From = "Peter", Content = "En lille test", SentAt = DateTime.Now },
-			new Message { From = "Paulus", Content = "Test linie 2", SentAt = DateTime.Now } };
+			this._data = new List<Message> { new Message { From = "Peter Theill", Content = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", SentAt = DateTime.Now },
+				new Message { From = "Paulus Mikael Ekstrand", Content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", SentAt = DateTime.Now } };
 
 			this.tblMessages.DataSource = new JsonDataSource<Message>(this);
 			this.tblMessages.Delegate = new JsonDataListDelegate<Message>(this, this);

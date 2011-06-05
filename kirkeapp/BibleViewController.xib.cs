@@ -42,6 +42,12 @@ namespace dk.kirkeapp {
 				return _data;
 			}
 		}
+
+		public string CellNibName {
+			get {
+				return "TitleCellViewController";
+			}
+		}
 		#endregion
 
 		public override void ViewDidLoad() {

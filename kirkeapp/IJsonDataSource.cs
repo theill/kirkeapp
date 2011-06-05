@@ -9,6 +9,8 @@ namespace dk.kirkeapp {
 		int ListCount { get; }
 
 		List<T> JsonData { get; }
+
+		string CellNibName { get; }
 	}
 }
 

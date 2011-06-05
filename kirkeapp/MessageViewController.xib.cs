@@ -46,6 +46,12 @@ namespace dk.kirkeapp {
 			}
 		}
 
+		public string CellNibName {
+			get {
+				return "MessageCellViewController";
+			}
+		}
+
 		List<Message> _messages = new List<Message>();
 
 		private Conversation _conversation;

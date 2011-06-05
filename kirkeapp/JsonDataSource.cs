@@ -7,11 +7,12 @@ using System.Collections.Generic;
 #endregion
 
 namespace dk.kirkeapp {
-	public class JsonDataSource<IJsonData> : UITableViewDataSource {
+	public class JsonDataSource<T> : UITableViewDataSource where T : IJsonData {
 		public static NSString kCellIdentifier = new NSString("CellIdentifier");
-		private IJsonDataSource<IJsonData> _appd;
+		private IJsonDataSource<T> _appd;
+		private Dictionary<int, IJsonCellController> controllers = new Dictionary<int, IJsonCellController>();
 
-		public JsonDataSource(IJsonDataSource<IJsonData> appd) {
+		public JsonDataSource(IJsonDataSource<T> appd) {
 			_appd = appd;
 		}
 
@@ -20,32 +21,33 @@ namespace dk.kirkeapp {
 		}
 
 		public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath) {
-			var cellController = new MessageCellViewController();
+			IJsonCellController cellController = null;
 
-			var cell = tableView.DequeueReusableCell(JsonDataSource<IJsonData>.kCellIdentifier);
+			var cell = tableView.DequeueReusableCell(JsonDataSource<T>.kCellIdentifier);
 			if (cell == null) {
-				NSBundle.MainBundle.LoadNib("MessageCellViewController", cellController, null);
+				// FIXME: figure out if you can do this dynamically (without reflection :))
+				if (_appd.CellNibName == "MessageCellViewController") {
+					cellController = new MessageCellViewController();
+				} else if (_appd.CellNibName == "EventCellViewController") {
+					cellController = new EventCellViewController();
+				} else {
+					cellController = new TitleCellViewController();
+				}
+
+				NSBundle.MainBundle.LoadNib(_appd.CellNibName, (NSObject)cellController, null);
 				cell = cellController.ViewCell;
 
 				cell.Tag = Environment.TickCount;
-//				controllers.Add(cell.Tag, cellController);
-
-//				cell = new UITableViewCell(UITableViewCellStyle.Default, JsonDataSource<T>.kCellIdentifier);
-				//cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
+				controllers.Add(cell.Tag, cellController);
+			} else {
+				cellController = controllers[cell.Tag];
 			}
 
 			int row = indexPath.Row;
-			var e = _appd.JsonData[row];
-			e.ToOptions();
-
-			Dictionary<string, string > options = new Dictionary<string, string>();
-			options.Add("subject", "test subject");
-			options.Add("content", "my content");
-			options.Add("sent_at", "today");
+			var e = (IJsonData)_appd.JsonData[row];
 
 			cellController.Configure(e.ToOptions());
 
-//			cell.TextLabel.Text = e.ToString();
 			return cell;
 		}
 	}

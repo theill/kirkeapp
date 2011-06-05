@@ -1,6 +1,9 @@
+#region Using directives
 using System;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
+
+#endregion
 
 namespace dk.kirkeapp {
 	public class JsonDataListDelegate<T> : UITableViewDelegate {
@@ -12,11 +15,15 @@ namespace dk.kirkeapp {
 			_appd = appd;
 		}
 
+		public override float GetHeightForRow(UITableView tableView, NSIndexPath indexPath) {
+			return 64f;
+		}
+
 		public override void RowSelected(UITableView tableView, NSIndexPath indexPath) {
 			int row = indexPath.Row;
 			var e = _appd.JsonData[row];
 //			string rowValue = e.From;
-			Console.WriteLine("selected {0}", e);
+			Console.WriteLine("Selected {0}", e);
 
 			// TODO: call event
 		}

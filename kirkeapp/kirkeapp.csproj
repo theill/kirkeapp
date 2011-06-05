@@ -168,6 +168,21 @@
     </Compile>
     <Compile Include="IJsonData.cs" />
     <Compile Include="IJsonDataSource.cs" />
+    <Compile Include="Favorite.cs" />
+    <Compile Include="IJsonCellController.cs" />
+    <Compile Include="EventCellViewController.xib.cs">
+      <DependentUpon>EventCellViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="EventCellViewController.xib.designer.cs">
+      <DependentUpon>EventCellViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="TitleCellViewController.xib.cs">
+      <DependentUpon>TitleCellViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="TitleCellViewController.xib.designer.cs">
+      <DependentUpon>TitleCellViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="OptionDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xib" />
@@ -182,6 +197,8 @@
     <Page Include="AboutViewController.xib" />
     <Page Include="LogOnViewController.xib" />
     <Page Include="MessageCellViewController.xib" />
+    <Page Include="EventCellViewController.xib" />
+    <Page Include="TitleCellViewController.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -10,8 +10,5 @@ namespace dk.kirkeapp {
 
 		public Conversation() {
 		}
-
-
 	}
 }
-

@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using System.Drawing;
 
 #endregion
 
 namespace dk.kirkeapp {
-	public partial class MessageCellViewController : UIViewController {
+	public partial class MessageCellViewController : UIViewController, IJsonCellController {
 		#region Constructors
 
 		// The IntPtr and initWithCoder constructors are required for items that need
@@ -23,7 +24,8 @@ namespace dk.kirkeapp {
 			Initialize();
 		}
 
-		public MessageCellViewController() : base ("MessageCellViewController", null) {
+		public MessageCellViewController() { //: base ("MessageCellViewController", null) {
+			MonoTouch.Foundation.NSBundle.MainBundle.LoadNib("MessageCellViewController", this, null);
 			Initialize();
 		}
 
@@ -38,10 +40,16 @@ namespace dk.kirkeapp {
 			}
 		}
 
-		public void Configure(Dictionary<string, string> options) {
-			this.SubjectLabel.Text = options["subject"];
-			this.ContentLabel.Text = options["content"];
-			this.DateLabel.Text = options["sent_at"];
+		public void Configure(OptionDictionary options) {
+			this.SubjectLabel.Text = options.ContainsKey("From") ? (string)options["From"] : string.Empty;
+			this.ContentLabel.Text = options.ContainsKey("Content") ? (string)options["Content"] : string.Empty;
+			this.DateLabel.Text = (options.ContainsKey("SentAt") ? Convert.ToDateTime(options["SentAt"]) : DateTime.Now).ToString("d/M-yyyy");
+
+			if (!string.IsNullOrEmpty(this.ContentLabel.Text)) {
+				NSString a = new NSString(this.ContentLabel.Text);
+				SizeF size = a.StringSize(this.ContentLabel.Font, new SizeF(280, 9999), this.ContentLabel.LineBreakMode);
+				this.ContentLabel.Frame = new System.Drawing.RectangleF(this.ContentLabel.Frame.X, this.ContentLabel.Frame.Y, size.Width, size.Height);
+			}
 		}
 	}
 }

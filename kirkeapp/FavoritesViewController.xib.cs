@@ -8,7 +8,7 @@ using MonoTouch.UIKit;
 #endregion
 
 namespace dk.kirkeapp {
-	public partial class FavoritesViewController : BackgroundViewController, IJsonDataSource<string> {
+	public partial class FavoritesViewController : BackgroundViewController, IJsonDataSource<Favorite> {
 		#region Constructors
 		
 		// The IntPtr and initWithCoder constructors are required for items that need 
@@ -32,17 +32,23 @@ namespace dk.kirkeapp {
 		
 		#endregion
 
-		#region IJsonDataSource[System.String] implementation
-		private List<string> _data;
+		#region IJsonDataSource[Favorite] implementation
+		private List<Favorite> _data;
 		public int ListCount {
 			get {
 				return _data.Count;
 			}
 		}
 
-		public List<string> JsonData {
+		public List<Favorite> JsonData {
 			get {
 				return _data;
+			}
+		}
+
+		public string CellNibName {
+			get {
+				return "TitleCellViewController";
 			}
 		}
 		#endregion
@@ -52,10 +58,10 @@ namespace dk.kirkeapp {
 
 			this.NavigationItem.Title = "Favoritter";
 
-			_data = new List<string> { "Fadervor", "Trosbekendelsen" };
+			_data = new List<Favorite> { new Favorite { Title = "Fadervor" }, new Favorite { Title = "Trosbekendelsen" } };
 
-			this.FavoritesTableView.DataSource = new JsonDataSource<string>(this);
-			this.FavoritesTableView.Delegate = new JsonDataListDelegate<string>(this, this);
+			this.FavoritesTableView.DataSource = new JsonDataSource<Favorite>(this);
+			this.FavoritesTableView.Delegate = new JsonDataListDelegate<Favorite>(this, this);
 		}
 	}
 }
