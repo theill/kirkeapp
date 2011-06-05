@@ -1,8 +1,11 @@
+#region Using directives
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+
+#endregion
 
 namespace dk.kirkeapp {
 	public partial class EventCellViewController : UIViewController, IJsonCellController {
@@ -40,7 +43,5 @@ namespace dk.kirkeapp {
 			this.TitleLabel.Text = options.ContainsKey("Title") ? (string)options["Title"] : string.Empty;
 			this.ActiveAtLabel.Text = (options.ContainsKey("ActiveAt") ? Convert.ToDateTime(options["ActiveAt"]) : DateTime.Now).ToString("d/M-yyyy HH:mm");
 		}
-
 	}
 }
-

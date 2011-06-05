@@ -7,11 +7,11 @@ using MonoTouch.Foundation;
 
 namespace dk.kirkeapp {
 	public class JsonDataListDelegate<T> : UITableViewDelegate {
-//		UIViewController _controller;
+		UIViewController _controller;
 		IJsonDataSource<T> _appd;
 
 		public JsonDataListDelegate(UIViewController controller, IJsonDataSource<T> appd) {
-//			_controller = controller;
+			_controller = controller;
 			_appd = appd;
 		}
 
@@ -29,4 +29,3 @@ namespace dk.kirkeapp {
 		}
 	}
 }
-

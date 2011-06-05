@@ -3,24 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kirkeapp", "kirkeapp\kirkeapp.csproj", "{A4413383-141A-47A2-A9B7-46E555805A31}"
 EndProject
-Project("{9344bdbb-3e7f-41fc-a0dd-8665d75ee146}") = "Packages", "Packages.mdproj", "{6A874CFA-6FBE-4C01-8693-2B90A21CA53E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
 		Release|iPhoneSimulator = Release|iPhoneSimulator
 		Debug|iPhone = Debug|iPhone
 		Release|iPhone = Release|iPhone
+		Distribution|iPhone = Distribution|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6A874CFA-6FBE-4C01-8693-2B90A21CA53E}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{6A874CFA-6FBE-4C01-8693-2B90A21CA53E}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{6A874CFA-6FBE-4C01-8693-2B90A21CA53E}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{6A874CFA-6FBE-4C01-8693-2B90A21CA53E}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Debug|iPhone.Build.0 = Debug|iPhone
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{A4413383-141A-47A2-A9B7-46E555805A31}.Distribution|iPhone.ActiveCfg = Distribution|iPhone
+		{A4413383-141A-47A2-A9B7-46E555805A31}.Distribution|iPhone.Build.0 = Distribution|iPhone
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Release|iPhone.ActiveCfg = Release|iPhone
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Release|iPhone.Build.0 = Release|iPhone
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
