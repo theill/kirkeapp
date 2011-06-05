@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ItemType>PackagingProject</ItemType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6A874CFA-6FBE-4C01-8693-2B90A21CA53E}</ProjectGuid>
+    <Packages>
+      <Packages xmlns="">
+        <Package name="Tarball">
+          <Builder TargetDirectory="kirkeapp" DefaultConfiguration="Debug|iPhoneSimulator" ctype="TarballDeployTarget">
+            <ChildEntries>
+              <SolutionItemReference path="kirkeapp\kirkeapp.csproj" />
+            </ChildEntries>
+            <RootEntry path="kirkeapp.sln" id=":root:" />
+          </Builder>
+        </Package>
+      </Packages>
+    </Packages>
+  </PropertyGroup>
+</Project>

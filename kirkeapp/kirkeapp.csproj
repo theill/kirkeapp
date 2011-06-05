@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A4413383-141A-47A2-A9B7-46E555805A31}</ProjectGuid>
+    <ProjectTypeGuids>{E613F3A2-FE9C-494F-B74E-F63BCB86FEA6};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>dk.kirkeapp</RootNamespace>
+    <MainNibFile>MainWindow.xib</MainNibFile>
+    <AssemblyName>kirkeapp</AssemblyName>
+    <MtouchMinimumOS>3.0</MtouchMinimumOS>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>True</MtouchDebug>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <ConsolePause>false</ConsolePause>
+    <MtouchUseSGen>false</MtouchUseSGen>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <MtouchArch>ARMv6</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>False</MtouchDebug>
+    <MtouchUseSGen>false</MtouchUseSGen>
+    <ConsolePause>false</ConsolePause>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <MtouchArch>ARMv6</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchUseSGen>false</MtouchUseSGen>
+    <MtouchDebug>True</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <ConsolePause>false</ConsolePause>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <MtouchArch>ARMv6</MtouchArch>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchUseSGen>false</MtouchUseSGen>
+    <MtouchDebug>False</MtouchDebug>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchArch>ARMv6</MtouchArch>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="MainWindow.xib.designer.cs">
+      <DependentUpon>MainWindow.xib</DependentUpon>
+    </Compile>
+    <Compile Include="RootViewController.xib.cs">
+      <DependentUpon>RootViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="RootViewController.xib.designer.cs">
+      <DependentUpon>RootViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="MessagesViewController.xib.cs">
+      <DependentUpon>MessagesViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="MessagesViewController.xib.designer.cs">
+      <DependentUpon>MessagesViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="BackgroundViewController.cs" />
+    <Compile Include="CalendarViewController.xib.cs">
+      <DependentUpon>CalendarViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="CalendarViewController.xib.designer.cs">
+      <DependentUpon>CalendarViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="DonationsViewController.xib.cs">
+      <DependentUpon>DonationsViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="DonationsViewController.xib.designer.cs">
+      <DependentUpon>DonationsViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="Message.cs" />
+    <Compile Include="MessageViewController.xib.cs">
+      <DependentUpon>MessageViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="MessageViewController.xib.designer.cs">
+      <DependentUpon>MessageViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="Conversation.cs" />
+    <Compile Include="Event.cs" />
+    <Compile Include="JsonDataSource.cs" />
+    <Compile Include="JsonDataListDelegate.cs" />
+    <Compile Include="BibleViewController.xib.cs">
+      <DependentUpon>BibleViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="BibleViewController.xib.designer.cs">
+      <DependentUpon>BibleViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="Library.cs" />
+    <Compile Include="Book.cs" />
+    <Compile Include="Chapter.cs" />
+    <Compile Include="Section.cs" />
+    <Compile Include="PsalmsViewController.xib.cs">
+      <DependentUpon>PsalmsViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="PsalmsViewController.xib.designer.cs">
+      <DependentUpon>PsalmsViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="FavoritesViewController.xib.cs">
+      <DependentUpon>FavoritesViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="FavoritesViewController.xib.designer.cs">
+      <DependentUpon>FavoritesViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="AboutViewController.xib.cs">
+      <DependentUpon>AboutViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="AboutViewController.xib.designer.cs">
+      <DependentUpon>AboutViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="Category.cs" />
+    <Compile Include="DraggableImageView.cs" />
+    <Compile Include="LogOnViewController.xib.cs">
+      <DependentUpon>LogOnViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="LogOnViewController.xib.designer.cs">
+      <DependentUpon>LogOnViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="MessageCellViewController.xib.cs">
+      <DependentUpon>MessageCellViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="MessageCellViewController.xib.designer.cs">
+      <DependentUpon>MessageCellViewController.xib</DependentUpon>
+    </Compile>
+    <Compile Include="IJsonData.cs" />
+    <Compile Include="IJsonDataSource.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainWindow.xib" />
+    <Page Include="RootViewController.xib" />
+    <Page Include="MessagesViewController.xib" />
+    <Page Include="CalendarViewController.xib" />
+    <Page Include="DonationsViewController.xib" />
+    <Page Include="MessageViewController.xib" />
+    <Page Include="BibleViewController.xib" />
+    <Page Include="PsalmsViewController.xib" />
+    <Page Include="FavoritesViewController.xib" />
+    <Page Include="AboutViewController.xib" />
+    <Page Include="LogOnViewController.xib" />
+    <Page Include="MessageCellViewController.xib" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Images\" />
+    <Folder Include="Settings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\main-screen.png" />
+    <Content Include="Images\paper%402x.png" />
+    <Content Include="Images\paper-light%402x.png" />
+    <Content Include="Images\dark-gradient%402x.png" />
+    <Content Include="Images\coins.png" />
+    <Content Include="Images\arrow.png" />
+    <Content Include="Images\box.png" />
+    <Content Include="Images\multiple-coins.png" />
+    <Content Include="Images\single-coin.png" />
+    <Content Include="Images\calendar-icon.png" />
+    <Content Include="Images\messages-icon.png" />
+    <Content Include="Images\plus-icon.png" />
+    <Content Include="Settings.plist">
+    </Content>
+    <Content Include="Images\fuckoff.xml" />
+    <Content Include="Settings.xml" />
+    <Content Include="Settings\App.plist" />
+  </ItemGroup>
+</Project>
