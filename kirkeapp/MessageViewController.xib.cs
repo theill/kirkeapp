@@ -69,7 +69,6 @@ namespace dk.kirkeapp {
 		void KeyboardWillShow(NSNotification notification) {
 			var kbdBounds = (notification.UserInfo.ObjectForKey(UIKeyboard.BoundsUserInfoKey) as NSValue).RectangleFValue;
 
-			Console.WriteLine("Keyboard will show");
 			UIView.BeginAnimations("scrollIntoView");
 			UIView.SetAnimationDuration(0.3);
 			viewComposing.Frame = ComputeComposerSize(kbdBounds);

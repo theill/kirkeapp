@@ -63,6 +63,7 @@
     <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchArch>ARMv6</MtouchArch>
     <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -77,6 +78,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchArch>ARMv6</MtouchArch>
     <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|iPhone' ">
     <DebugType>none</DebugType>
@@ -256,10 +258,7 @@
     <Content Include="Images\calendar-icon.png" />
     <Content Include="Images\messages-icon.png" />
     <Content Include="Images\plus-icon.png" />
-    <Content Include="Settings.plist">
-    </Content>
     <Content Include="Images\fuckoff.xml" />
-    <Content Include="Settings.xml" />
     <Content Include="Settings\App.plist" />
   </ItemGroup>
 </Project>

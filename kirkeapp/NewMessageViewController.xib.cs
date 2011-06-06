@@ -37,11 +37,13 @@ namespace dk.kirkeapp {
 
 			this.NavigationItem.Title = "Ny besked";
 
-//			this.NavigationItem.LeftBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Cancel);
-//			this.NavigationItem.RightBarButtonItem = new UIBarButtonItem("Send", UIBarButtonItemStyle.Bordered, (sender, e) => {
-//				Console.WriteLine("Let's send this message");
-//				this.NavigationController.PopViewControllerAnimated(true);
-//			});
+			this.NavigationItem.LeftBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Cancel);
+			this.NavigationItem.RightBarButtonItem = new UIBarButtonItem("Send", UIBarButtonItemStyle.Bordered, (sender, e) => {
+				Console.WriteLine("Let's send this message");
+				this.NavigationController.PopViewControllerAnimated(true);
+			});
+
+			this.MessageTextView.BecomeFirstResponder();
 		}
 	}
 }
