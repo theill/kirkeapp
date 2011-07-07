@@ -75,10 +75,11 @@
     <MtouchDebug>False</MtouchDebug>
     <MtouchUseThumb>false</MtouchUseThumb>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution: Peter Theill</CodesignKey>
     <MtouchArch>ARMv6</MtouchArch>
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchI18n />
+    <CodesignProvision>2F6B6662-177E-4D66-9CE6-B2F87A847F8C</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|iPhone' ">
     <DebugType>none</DebugType>
@@ -92,9 +93,9 @@
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARMv6</MtouchArch>
     <MtouchUseLlvm>false</MtouchUseLlvm>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignKey>iPhone Distribution: Peter Theill</CodesignKey>
     <MtouchI18n />
-    <CodesignProvision>275DBEE6-6851-4D4F-A023-012C3ECA1ACB</CodesignProvision>
+    <CodesignProvision>2F6B6662-177E-4D66-9CE6-B2F87A847F8C</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -109,9 +110,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Json" />
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="System.Data" />
+    <Reference Include="Mono.Data.Tds" />
+    <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -222,6 +228,8 @@
     <Compile Include="NewMessageViewController.xib.designer.cs">
       <DependentUpon>NewMessageViewController.xib</DependentUpon>
     </Compile>
+    <Compile Include="SQLite.cs" />
+    <Compile Include="CellData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xib" />
@@ -260,5 +268,14 @@
     <Content Include="Images\plus-icon.png" />
     <Content Include="Images\fuckoff.xml" />
     <Content Include="Settings\App.plist" />
+    <Content Include="Images\bg-normal.png" />
+    <Content Include="Images\bg-normal%402x.png" />
+    <Content Include="Databases\kirkeapp.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\podio-sharp\podio-sharp.csproj">
+      <Project>{E6128ECB-4EC2-4073-9C18-891860DF3290}</Project>
+      <Name>podio-sharp</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -19,6 +19,8 @@ namespace dk.kirkeapp {
 		
 		private MonoTouch.UIKit.UITableView __mt_CategoriesTableView;
 		
+		private MonoTouch.UIKit.UISearchBar __mt_SearchBar;
+		
 		#pragma warning disable 0169
 		[MonoTouch.Foundation.Connect("view")]
 		private MonoTouch.UIKit.UIView view {
@@ -41,6 +43,18 @@ namespace dk.kirkeapp {
 			set {
 				this.__mt_CategoriesTableView = value;
 				this.SetNativeField("CategoriesTableView", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("SearchBar")]
+		private MonoTouch.UIKit.UISearchBar SearchBar {
+			get {
+				this.__mt_SearchBar = ((MonoTouch.UIKit.UISearchBar)(this.GetNativeField("SearchBar")));
+				return this.__mt_SearchBar;
+			}
+			set {
+				this.__mt_SearchBar = value;
+				this.SetNativeField("SearchBar", value);
 			}
 		}
 	}

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kirkeapp", "kirkeapp\kirkeapp.csproj", "{A4413383-141A-47A2-A9B7-46E555805A31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "podio-sharp", "podio-sharp\podio-sharp.csproj", "{E6128ECB-4EC2-4073-9C18-891860DF3290}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -22,6 +24,16 @@ Global
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Release|iPhone.Build.0 = Release|iPhone
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{E6128ECB-4EC2-4073-9C18-891860DF3290}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{E6128ECB-4EC2-4073-9C18-891860DF3290}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{E6128ECB-4EC2-4073-9C18-891860DF3290}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{E6128ECB-4EC2-4073-9C18-891860DF3290}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{E6128ECB-4EC2-4073-9C18-891860DF3290}.Distribution|iPhone.ActiveCfg = Debug|Any CPU
+		{E6128ECB-4EC2-4073-9C18-891860DF3290}.Distribution|iPhone.Build.0 = Debug|Any CPU
+		{E6128ECB-4EC2-4073-9C18-891860DF3290}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{E6128ECB-4EC2-4073-9C18-891860DF3290}.Release|iPhone.Build.0 = Release|Any CPU
+		{E6128ECB-4EC2-4073-9C18-891860DF3290}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{E6128ECB-4EC2-4073-9C18-891860DF3290}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = kirkeapp\kirkeapp.csproj

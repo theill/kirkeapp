@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using System.Json;
 
 #endregion
 
@@ -57,11 +58,34 @@ namespace dk.kirkeapp {
 
 			NavigationItem.Title = "Kalender";
 
-			_data = new List<Event>() { new Event { Title = "Sommerfest", ActiveAt = DateTime.Parse("2011-03-02") } };
+			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 
-			this.CalendarTableView.DataSource = new JsonDataSource<Event>(this);
-			this.CalendarTableView.Delegate = new JsonDataListDelegate<Event>(this, this);
+			var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+
+			appDelegate.PodioClient._get(string.Format("/calendar/app/{0}/?app_id={0}&date_from={1}&date_to=2020-01-01&types=item", appDelegate.PodioEventsAppID, today), (rsp) => {
+				JsonArray items = (JsonArray)rsp;
+
+				_data = new List<Event>();
+				foreach (JsonValue item in items) {
+					Console.WriteLine("test3");
+					_data.Add(new Event { Title = item["title"], ActiveAt = DateTime.Parse(item["start"]) });
+					//				item["start"]
+					//				item["end"]
+					//				item["title"]
+					//				item["id"]
+				}
+				//[{"start":"2011-06-16","group":"Event","org":{"type":"free","premium":false,"name":"Kirkeapp","logo":null,"url":"https:\/\/kirkeapp.podio.com\/","url_label":"kirkeapp","image":null,"org_id":20617},"title":"Pigekoret kommer og spiller","link":"https:\/\/kirkeapp.podio.com\/kokkedal\/item\/685323","end":"2011-06-16","app":{"item_name":"Event","url_label":"events","icon":"44.png","app_id":291877,"name":"Events"},"space":{"url":"https:\/\/kirkeapp.podio.com\/kokkedal\/","url_label":"kokkedal","space_id":55853,"name":"Kokkedal"},"type":"item","id":685323}]
+
+				InvokeOnMainThread(() => {
+					this.CalendarTableView.DataSource = new JsonDataSource<Event>(this);
+					this.CalendarTableView.Delegate = new JsonDataListDelegate<Event>(this, this, (evt) => {
+						Console.WriteLine("Event {0} has been selected", evt);
+					});
+					this.CalendarTableView.ReloadData();
+				});
+			}, (error) => {
+				Console.WriteLine("Unable to read calendar events");
+			});
 		}
 	}
 }
-

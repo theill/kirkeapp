@@ -10,10 +10,15 @@ namespace dk.kirkeapp {
 	public class JsonDataSource<T> : UITableViewDataSource where T : IJsonData {
 		public static NSString kCellIdentifier = new NSString("CellIdentifier");
 		private IJsonDataSource<T> _appd;
+		private string _filter;
 		private Dictionary<int, IJsonCellController> controllers = new Dictionary<int, IJsonCellController>();
 
 		public JsonDataSource(IJsonDataSource<T> appd) {
 			_appd = appd;
+		}
+
+		public JsonDataSource(IJsonDataSource<T> appd, string filter) : this(appd) {
+			_filter = filter;
 		}
 
 		public override int RowsInSection(UITableView tableview, int section) {

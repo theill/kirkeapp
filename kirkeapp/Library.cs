@@ -7,6 +7,11 @@ using System.Collections.Generic;
 
 namespace dk.kirkeapp {
 	public class Library : IJsonData {
+		public int ID {
+			get;
+			set;
+		}
+
 		public string Name {
 			get;
 			set;

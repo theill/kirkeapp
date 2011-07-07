@@ -34,6 +34,8 @@ namespace dk.kirkeapp {
 		
 		#endregion
 
+		public Message PrimaryMessage { get; set; }
+
 		public int ListCount {
 			get {
 				return _messages.Count;
@@ -54,18 +56,6 @@ namespace dk.kirkeapp {
 
 		List<Message> _messages = new List<Message>();
 
-		private Conversation _conversation;
-		public Conversation Conversation {
-			get {
-				return _conversation;
-			}
-
-			set {
-				_conversation = value;
-				_messages = value.Messages;
-			}
-		}
-
 		void KeyboardWillShow(NSNotification notification) {
 			var kbdBounds = (notification.UserInfo.ObjectForKey(UIKeyboard.BoundsUserInfoKey) as NSValue).RectangleFValue;
 
@@ -85,7 +75,7 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
-			this.NavigationItem.Title = Conversation.Messages.First().From;
+			this.NavigationItem.Title = PrimaryMessage.From;
 
 			this.tblMessages.DataSource = new JsonDataSource<Message>(this);
 

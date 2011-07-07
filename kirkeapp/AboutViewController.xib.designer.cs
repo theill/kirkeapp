@@ -19,6 +19,14 @@ namespace dk.kirkeapp {
 		
 		private MonoTouch.MapKit.MKMapView __mt_AddressMapView;
 		
+		private MonoTouch.UIKit.UILabel __mt_DescriptionLabel;
+		
+		private MonoTouch.UIKit.UILabel __mt_Address1Label;
+		
+		private MonoTouch.UIKit.UILabel __mt_Address2Label;
+		
+		private MonoTouch.UIKit.UILabel __mt_NameLabel;
+		
 		#pragma warning disable 0169
 		[MonoTouch.Foundation.Connect("view")]
 		private MonoTouch.UIKit.UIView view {
@@ -41,6 +49,54 @@ namespace dk.kirkeapp {
 			set {
 				this.__mt_AddressMapView = value;
 				this.SetNativeField("AddressMapView", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("DescriptionLabel")]
+		private MonoTouch.UIKit.UILabel DescriptionLabel {
+			get {
+				this.__mt_DescriptionLabel = ((MonoTouch.UIKit.UILabel)(this.GetNativeField("DescriptionLabel")));
+				return this.__mt_DescriptionLabel;
+			}
+			set {
+				this.__mt_DescriptionLabel = value;
+				this.SetNativeField("DescriptionLabel", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("Address1Label")]
+		private MonoTouch.UIKit.UILabel Address1Label {
+			get {
+				this.__mt_Address1Label = ((MonoTouch.UIKit.UILabel)(this.GetNativeField("Address1Label")));
+				return this.__mt_Address1Label;
+			}
+			set {
+				this.__mt_Address1Label = value;
+				this.SetNativeField("Address1Label", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("Address2Label")]
+		private MonoTouch.UIKit.UILabel Address2Label {
+			get {
+				this.__mt_Address2Label = ((MonoTouch.UIKit.UILabel)(this.GetNativeField("Address2Label")));
+				return this.__mt_Address2Label;
+			}
+			set {
+				this.__mt_Address2Label = value;
+				this.SetNativeField("Address2Label", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("NameLabel")]
+		private MonoTouch.UIKit.UILabel NameLabel {
+			get {
+				this.__mt_NameLabel = ((MonoTouch.UIKit.UILabel)(this.GetNativeField("NameLabel")));
+				return this.__mt_NameLabel;
+			}
+			set {
+				this.__mt_NameLabel = value;
+				this.SetNativeField("NameLabel", value);
 			}
 		}
 	}

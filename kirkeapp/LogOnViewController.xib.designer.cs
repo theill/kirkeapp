@@ -17,6 +17,10 @@ namespace dk.kirkeapp {
 		
 		private MonoTouch.UIKit.UIView __mt_view;
 		
+		private MonoTouch.UIKit.UITextField __mt_EmailTextField;
+		
+		private MonoTouch.UIKit.UITextField __mt_PasswordTextField;
+		
 		#pragma warning disable 0169
 		[MonoTouch.Foundation.Connect("view")]
 		private MonoTouch.UIKit.UIView view {
@@ -27,6 +31,30 @@ namespace dk.kirkeapp {
 			set {
 				this.__mt_view = value;
 				this.SetNativeField("view", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("EmailTextField")]
+		private MonoTouch.UIKit.UITextField EmailTextField {
+			get {
+				this.__mt_EmailTextField = ((MonoTouch.UIKit.UITextField)(this.GetNativeField("EmailTextField")));
+				return this.__mt_EmailTextField;
+			}
+			set {
+				this.__mt_EmailTextField = value;
+				this.SetNativeField("EmailTextField", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("PasswordTextField")]
+		private MonoTouch.UIKit.UITextField PasswordTextField {
+			get {
+				this.__mt_PasswordTextField = ((MonoTouch.UIKit.UITextField)(this.GetNativeField("PasswordTextField")));
+				return this.__mt_PasswordTextField;
+			}
+			set {
+				this.__mt_PasswordTextField = value;
+				this.SetNativeField("PasswordTextField", value);
 			}
 		}
 	}

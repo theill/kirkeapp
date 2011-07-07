@@ -61,7 +61,9 @@ namespace dk.kirkeapp {
 			_data = new List<Favorite> { new Favorite { Title = "Fadervor" }, new Favorite { Title = "Trosbekendelsen" } };
 
 			this.FavoritesTableView.DataSource = new JsonDataSource<Favorite>(this);
-			this.FavoritesTableView.Delegate = new JsonDataListDelegate<Favorite>(this, this);
+			this.FavoritesTableView.Delegate = new JsonDataListDelegate<Favorite>(this, this, (fav) => {
+				Console.WriteLine("Favorite {0} has been selected", fav);
+			});
 		}
 	}
 }
