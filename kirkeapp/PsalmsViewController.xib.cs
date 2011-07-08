@@ -8,23 +8,25 @@ using MonoTouch.UIKit;
 #endregion
 
 namespace dk.kirkeapp {
-	public class LeesPlankjeDataSource : UITableViewDataSource {
+	public class FilteringDataSource : UITableViewDataSource {
 		public static NSString kCellIdentifier = new NSString("CellIdentifier");
 		private List<CellData> _data = new List<CellData>();
 		private Dictionary<int, IJsonCellController> controllers = new Dictionary<int, IJsonCellController>();
 
-		public LeesPlankjeDataSource() {
+		public FilteringDataSource() {
 		}
 
-		public LeesPlankjeDataSource(string filter) {
+		public FilteringDataSource(string filter) {
 			using (var db = new SQLite.SQLiteConnection("Databases/kirkeapp.db")) {
-				_data = db.Query<CellData>("SELECT id AS ID, title AS Title FROM psalms WHERE no = ? ORDER BY no", filter);
-				Console.WriteLine("We got {0} data pieces", _data.Count);
+				if (!string.IsNullOrEmpty(filter)) {
+					_data = db.Query<CellData>("SELECT id AS ID, title AS Title FROM psalms WHERE no = ? ORDER BY no", filter);
+				} else {
+					_data = db.Query<CellData>("SELECT id AS ID, name AS Title FROM categories ORDER BY id");
+				}
 			}
 		}
 
 		public override UITableViewCell GetCell(UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath) {
-			Console.WriteLine("Getting cell at {0}", indexPath.Row);
 			IJsonCellController cellController = null;
 
 			var cell = tableView.DequeueReusableCell(JsonDataSource<CellData>.kCellIdentifier);
@@ -54,17 +56,40 @@ namespace dk.kirkeapp {
 	}
 
 	public class PsalmsSearch : UISearchBarDelegate {
+		private PsalmsViewController _controller;
 		private UITableView _tableView;
 
-		public PsalmsSearch(UITableView x) {
+		public PsalmsSearch(PsalmsViewController c, UITableView x) {
+			_controller = c;
 			_tableView = x;
 		}
 
-		public override void TextChanged(UISearchBar searchBar, string searchText) {
-			// TODO: Implement - see: http://go-mono.com/docs/index.aspx?link=T%3aMonoTouch.Foundation.ModelAttribute
-			Console.WriteLine("yes {0} and {1}", searchBar, searchText);
+		public override bool ShouldBeginEditing(UISearchBar searchBar) {
+			Console.WriteLine("Should BEGIN editing");
+			_tableView.Tag = 1;
+			return true;
+		}
 
-			_tableView.DataSource = new LeesPlankjeDataSource(searchText);
+		public override bool ShouldEndEditing(UISearchBar searchBar) {
+			Console.WriteLine("Should END editing");
+			_tableView.Tag = 0;
+			return true;
+		}
+
+		public override void TextChanged(UISearchBar searchBar, string searchText) {
+			_tableView.DataSource = new FilteringDataSource(searchText);
+			_tableView.Delegate = new JsonDataListDelegate<CellData>(_controller, _controller, (cell) => {
+				Console.WriteLine("Got a click on {0}", cell.Title);
+
+				var c = new PsalmViewController {
+					PsalmID = cell.ID
+				};
+
+				InvokeOnMainThread(() => {
+					_controller.NavigationController.PushViewController(c, true);
+				});
+			});
+
 			_tableView.ReloadData();
 		}
 	}
@@ -130,38 +155,41 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
-			this.NavigationItem.Title = GetTitleByLevel(this.Level);
+			NavigationItem.Title = GetTitleByLevel(this.Level);
 
-			this.CategoriesTableView.DataSource = new JsonDataSource<CellData>(this);
-			this.CategoriesTableView.Delegate = new JsonDataListDelegate<CellData>(this, this, (cell) => {
-				Console.WriteLine("Cell {0} has been selected", cell);
-
-				if (this.Level < 2) {
-					var c = new PsalmsViewController();
-					c.Level = this.Level + 1;
-					c.Cell = cell;
+			CategoriesTableView.DataSource = new JsonDataSource<CellData>(this);
+			CategoriesTableView.Delegate = new JsonDataListDelegate<CellData>(this, this, (cell) => {
+				if (this.Level < 1) {
+					var c = new PsalmsViewController {
+						Level = this.Level + 1,
+						Cell = cell
+					};
+					NavigationController.PushViewController(c, true);
+				} else {
+					var c = new PsalmViewController {
+						PsalmID = cell.ID
+					};
 					NavigationController.PushViewController(c, true);
 				}
 			});
 
-			this.SearchBar.Delegate = new PsalmsSearch(this.CategoriesTableView);
+			SearchBar.Delegate = new PsalmsSearch(this, this.CategoriesTableView);
 		}
 
 		public override void ViewDidAppear(bool animated) {
 			base.ViewDidAppear(animated);
-			Console.WriteLine("View did appear for level {0}", this.Level);
 
 			using (var db = new SQLite.SQLiteConnection("Databases/kirkeapp.db")) {
 				_data = db.Query<CellData>(GetQueryByLevel(this.Level), this.Cell.ID);
 			}
 
-			this.CategoriesTableView.ReloadData();
+			CategoriesTableView.ReloadData();
 		}
 
 		private string GetQueryByLevel(int level) {
 			switch (level) {
 			case 1:
-				return "SELECT id AS ID, title AS Title FROM psalms WHERE category_id = ? ORDER BY no";
+				return "SELECT id AS ID, (no || ' ' || title) AS Title FROM psalms WHERE category_id = ? ORDER BY no";
 			case 2:
 				return "SELECT id AS ID, content AS Title FROM verses WHERE psalm_id = ? ORDER BY no";
 			default:

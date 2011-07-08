@@ -60,54 +60,53 @@ namespace dk.kirkeapp {
 
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem("Konto", UIBarButtonItemStyle.Plain, AccountClick);
 
-			NavigationController.NavigationBar.Alpha = 0.80f;
-			NavigationController.NavigationBar.TintColor = UIColor.FromRGBA(128, 128, 128, 172);
+//			NavigationController.NavigationBar.Alpha = 0.40f;
+			NavigationController.NavigationBar.TintColor = UIColor.FromRGBA(128, 64, 0, 64);
 
-			UIImage image = UIImage.FromBundle("Images/bg-normal.png");
-			UIImageView a = new UIImageView(image);
-			a.Frame = new System.Drawing.RectangleF(0, -64, 320, 480);
-			this.View.AddSubview(a);
-			this.View.SendSubviewToBack(a);
+			btnMessages.SetBackgroundImage(UIImage.FromBundle("Images/messages-open.png"), UIControlState.Normal);
+			btnCalendar.SetBackgroundImage(UIImage.FromBundle("Images/empty-calendar.png"), UIControlState.Normal);
+			btnDonation.Hidden = true;
+			btnBible.SetBackgroundImage(UIImage.FromBundle("Images/tag.png"), UIControlState.Normal);
+			btnPsalms.SetBackgroundImage(UIImage.FromBundle("Images/music-off.png"), UIControlState.Normal);
+			btnFavorites.SetBackgroundImage(UIImage.FromBundle("Images/star-off.png"), UIControlState.Normal);
 
-			this.ChurchNameLabel.Text = appDelegate.ApplicationName;
-
-			btnMessages.TouchDown += delegate(object sender, EventArgs e) {
+			btnMessages.TouchUpInside += delegate(object sender, EventArgs e) {
 				Console.WriteLine("Displaying messages");
 				var c = new MessagesViewController();
 				NavigationController.PushViewController(c, true);
 			};
 
-			btnCalendar.TouchDown += delegate(object sender, EventArgs e) {
+			btnCalendar.TouchUpInside += delegate(object sender, EventArgs e) {
 				Console.WriteLine("Displaying calendar");
 				var c = new CalendarViewController();
 				NavigationController.PushViewController(c, true);
 			};
 
-			this.btnDonation.TouchDown += delegate(object sender, EventArgs e) {
+			this.btnDonation.TouchUpInside += delegate(object sender, EventArgs e) {
 				Console.WriteLine("Displaying Donations");
 				var c = new DonationsViewController();
 				NavigationController.PushViewController(c, true);
 			};
 
-			this.btnAbout.TouchDown += (sender, e) => {
+			this.btnAbout.TouchUpInside += (sender, e) => {
 				Console.WriteLine("Displaying about");
 				var c = new AboutViewController();
 				NavigationController.PushViewController(c, true);
 			};
 
-			this.btnBible.TouchDown += (sender, e) => {
+			this.btnBible.TouchUpInside += (sender, e) => {
 				Console.WriteLine("Displaying Bible");
 				var c = new BibleViewController();
 				NavigationController.PushViewController(c, true);
 			};
 
-			this.btnPsalms.TouchDown += (sender, e) => {
+			this.btnPsalms.TouchUpInside += (sender, e) => {
 				Console.WriteLine("Displaying psalms");
 				var c = new PsalmsViewController();
 				NavigationController.PushViewController(c, true);
 			};
 
-			this.btnFavorites.TouchDown += (sender, e) => {
+			this.btnFavorites.TouchUpInside += (sender, e) => {
 				Console.WriteLine("Displaying favorites");
 				var c = new FavoritesViewController();
 				NavigationController.PushViewController(c, true);

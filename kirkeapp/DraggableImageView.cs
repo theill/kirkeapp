@@ -1,6 +1,9 @@
+#region Using directives
 using System;
 using MonoTouch.UIKit;
 using System.Drawing;
+
+#endregion
 
 namespace dk.kirkeapp {
 	public delegate void OnDroppedImageHandler(PointF location);

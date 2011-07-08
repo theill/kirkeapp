@@ -62,13 +62,14 @@ namespace dk.kirkeapp {
 
 			var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
 
+			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 			appDelegate.PodioClient._get(string.Format("/calendar/app/{0}/?app_id={0}&date_from={1}&date_to=2020-01-01&types=item", appDelegate.PodioEventsAppID, today), (rsp) => {
+				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 				JsonArray items = (JsonArray)rsp;
 
 				_data = new List<Event>();
 				foreach (JsonValue item in items) {
-					Console.WriteLine("test3");
-					_data.Add(new Event { Title = item["title"], ActiveAt = DateTime.Parse(item["start"]) });
+					_data.Add(new Event { ID = item["id"], Title = item["title"], ActiveAt = DateTime.Parse(item["start"]) });
 					//				item["start"]
 					//				item["end"]
 					//				item["title"]
@@ -76,14 +77,41 @@ namespace dk.kirkeapp {
 				}
 				//[{"start":"2011-06-16","group":"Event","org":{"type":"free","premium":false,"name":"Kirkeapp","logo":null,"url":"https:\/\/kirkeapp.podio.com\/","url_label":"kirkeapp","image":null,"org_id":20617},"title":"Pigekoret kommer og spiller","link":"https:\/\/kirkeapp.podio.com\/kokkedal\/item\/685323","end":"2011-06-16","app":{"item_name":"Event","url_label":"events","icon":"44.png","app_id":291877,"name":"Events"},"space":{"url":"https:\/\/kirkeapp.podio.com\/kokkedal\/","url_label":"kokkedal","space_id":55853,"name":"Kokkedal"},"type":"item","id":685323}]
 
+				this.CalendarTableView.Delegate = new JsonDataListDelegate<Event>(this, this, (evt) => {
+					Console.WriteLine("Event {0} has been selected", evt);
+
+					string description = string.Empty;
+					appDelegate.PodioClient._get(string.Format("/item/{0}/value", evt.ID), (rsp2) => {
+						Console.WriteLine("Got {0}", rsp2);
+						JsonArray values = (JsonArray)rsp2;
+						foreach (var v in values) {
+							Console.WriteLine("Looking at {0}", v);
+							if (v["external_id"] == "description") {
+								description = v["values"][0]["value"];
+							}
+						}
+
+						InvokeOnMainThread(() => {
+//							NavigationController.PushViewController(new TextPageViewController {
+//								Title = evt.Title,
+//								Text = description
+//							}, true);
+							NavigationController.PushViewController(new WebPageViewController {
+								Title = evt.Title,
+								Html = description
+							}, true);
+						});
+					}, (error) => {
+						Console.WriteLine("Failed to get item");
+					});
+				});
+
 				InvokeOnMainThread(() => {
 					this.CalendarTableView.DataSource = new JsonDataSource<Event>(this);
-					this.CalendarTableView.Delegate = new JsonDataListDelegate<Event>(this, this, (evt) => {
-						Console.WriteLine("Event {0} has been selected", evt);
-					});
 					this.CalendarTableView.ReloadData();
 				});
 			}, (error) => {
+				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 				Console.WriteLine("Unable to read calendar events");
 			});
 		}

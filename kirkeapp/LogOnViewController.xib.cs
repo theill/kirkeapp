@@ -39,6 +39,8 @@ namespace dk.kirkeapp {
 
 			this.NavigationItem.HidesBackButton = true;
 
+			NavigationItem.Title = "Log ind";
+
 			this.NavigationItem.LeftBarButtonItem = new UIBarButtonItem("Annuller", UIBarButtonItemStyle.Plain, (sender, e) => {
 				InvokeOnMainThread(() => {
 					this.NavigationController.PopViewControllerAnimated(true);
@@ -59,12 +61,8 @@ namespace dk.kirkeapp {
 		}
 
 		void LogIn() {
-			Console.WriteLine("Logging in");
-
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 			appDelegate.PodioClient._get(string.Format("/contact/space/{0}/?contact_type=space&type=full", appDelegate.ActiveSpace.SpaceID), (rsp) => {
-				Console.WriteLine("Got list of space contacts");
-
 				List<Contact > contacts = new List<Contact>();
 				foreach (var v in (rsp as JsonArray)) {
 					contacts.Add(Contact.Parse(v));

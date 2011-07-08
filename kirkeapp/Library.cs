@@ -40,4 +40,3 @@ namespace dk.kirkeapp {
 		#endregion
 	}
 }
-

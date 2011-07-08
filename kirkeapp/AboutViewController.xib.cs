@@ -41,63 +41,51 @@ namespace dk.kirkeapp {
 
 			this.NavigationItem.Title = "Om";
 
-			UIImage image = UIImage.FromBundle("Images/bg-normal.png");
-			UIImageView a = new UIImageView(image);
-			this.View.AddSubview(a);
-			this.View.SendSubviewToBack(a);
-
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 
+			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 			appDelegate.PodioClient._get(string.Format("/item/app/{0}/", appDelegate.PodioPagesAppID), (rsp) => {
+				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
+
 				JsonArray items = (JsonArray)rsp["items"];
 
+				double latitude = 0, longitude = 0;
 				foreach (JsonValue item in items) {
 					if (item["title"] == "Forside") {
 						JsonArray fields = (JsonArray)item["fields"];
 						foreach (JsonObject field in fields) {
 //							 {"values": [{"value": "<p>Beskrivelse af Kokkedal kirke.</p>"}], "type": "text", "field_id": 2342768, "external_id": "beskrivelse", "label": "Beskrivelse"}
 
-							if (field.AsString("label") == "Beskrivelse") {
+							if (field.AsString("external_id") == "beskrivelse") {
 								InvokeOnMainThread(() => {
-									this.DescriptionLabel.Text = HtmlRemoval.StripTags(((JsonArray)field["values"])[0]["value"]);
+									this.DescriptionTextView.Text = HtmlRemoval.StripTags(field["values"][0]["value"]);
 								});
-							} else if (field.AsString("label") == "Lokation") {
+							} else if (field.AsString("external_id") == "lokation") {
 								InvokeOnMainThread(() => {
-									this.Address1Label.Text = ((JsonArray)field["values"])[0]["value"];
-									this.Address2Label.Text = "";
+									this.Address1Label.Text = field["values"][0]["value"];
 								});
+							} else if (field.AsString("external_id") == "latitude") {
+								latitude = Convert.ToDouble(field["values"][0].AsString("value"));
+							} else if (field.AsString("external_id") == "longitude") {
+								longitude = Convert.ToDouble(field["values"][0].AsString("value"));
 							}
 						}
 					}
 				}
+
+				CLLocation location = new CLLocation(latitude, longitude);
+				InvokeOnMainThread(() => {
+					AddressMapView.SetCenterCoordinate(location.Coordinate, true);
+
+//					MKCoordinateSpan span = new MKCoordinateSpan(0.005, 0.005);
+//					MKCoordinateRegion region = new MKCoordinateRegion(location.Coordinate, span);
+//					AddressMapView.SetRegion(region, true);
+				});
+
 			}, (error) => {
+				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 				Console.WriteLine("Unable to read info about church");
 			});
-
-			this.AddressMapView.Delegate = new MapViewDelegate(this);
-		}
-	}
-
-	public class MapViewDelegate : MKMapViewDelegate {
-
-//		private AboutViewController _appd;
-
-		public MapViewDelegate(AboutViewController appd) : base() {
-//			_appd = appd;
-		}
-
-		public override void DidUpdateUserLocation(MonoTouch.MapKit.MKMapView mapView, MonoTouch.MapKit.MKUserLocation userLocation) {
-			Console.WriteLine("DidUpdateUserLocation");
-
-//#if DEBUG
-//				CLLocation location = new CLLocation(55.66657164, 12.55914527);
-//#else
-			CLLocation location = userLocation.Location;
-//#endif
-			mapView.SetCenterCoordinate(location.Coordinate, true);
-			MKCoordinateSpan span = new MKCoordinateSpan(0.005, 0.005);
-			MKCoordinateRegion region = new MKCoordinateRegion(location.Coordinate, span);
-			mapView.SetRegion(region, true);
 		}
 	}
 }

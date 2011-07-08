@@ -6,6 +6,10 @@ using System.Collections.Generic;
 
 namespace dk.kirkeapp {
 	public class Event : IJsonData {
+		public int ID {
+			get;
+			set;
+		}
 		public string Title {
 			get;
 			set;

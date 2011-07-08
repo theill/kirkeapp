@@ -1,5 +1,8 @@
+#region Using directives
 using System;
 using System.Collections.Generic;
+
+#endregion
 
 namespace dk.kirkeapp {
 	public class Message : IJsonData {

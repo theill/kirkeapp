@@ -63,12 +63,13 @@ namespace com.podio {
 			req.Method = "GET";
 			req.Accept = "application/json";
 
+			Console.WriteLine("<= {0}", uri);
 			req.BeginGetResponse(ar => {
 				try {
 					var rsp = (HttpWebResponse)req.EndGetResponse(ar);
-					Stream stream = rsp.GetResponseStream();
-					using (var streamReader = new StreamReader(stream)) {
-						JsonValue root = JsonObject.Load(streamReader);
+					using (Stream stream = rsp.GetResponseStream()) {
+						JsonValue root = JsonObject.Load(stream);
+						Console.WriteLine("=> {0}", root);
 
 						completed.Invoke(root);
 					}

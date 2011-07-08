@@ -116,10 +116,30 @@ namespace dk.kirkeapp {
 			this.LibrariesTableView.Delegate = new JsonDataListDelegate<CellData>(this, this, (cell) => {
 				Console.WriteLine("Item {0} has been selected", cell.ID);
 
-				var c = new BibleViewController();
-				c.Level = this.Level + 1;
-				c.Cell = cell;
-				NavigationController.PushViewController(c, true);
+				if (this.Level < 2) {
+					InvokeOnMainThread(() => {
+						NavigationController.PushViewController(new BibleViewController {
+							Level = this.Level + 1,
+							Cell = cell
+						}, true);
+					});
+				} else {
+					using (var db = new SQLite.SQLiteConnection("Databases/kirkeapp.db")) {
+						var sections = db.Query<CellData>("SELECT id AS ID, content AS Title FROM sections WHERE chapter_id = ? ORDER BY ID", this.Cell.ID);
+
+						string html = string.Empty;
+						foreach (var section in sections) {
+							html += "<p>" + section.Title.Trim() + "</p>";
+						}
+
+						InvokeOnMainThread(() => {
+							NavigationController.PushViewController(new WebPageViewController {
+								Title = cell.Title,
+								Html = html
+							}, true);
+						});
+					}
+				}
 			});
 		}
 

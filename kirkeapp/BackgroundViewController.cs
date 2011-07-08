@@ -1,6 +1,9 @@
+#region Using directives
 using System;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
+
+#endregion
 
 namespace dk.kirkeapp {
 	public partial class BackgroundViewController : UIViewController {
@@ -18,10 +21,10 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
-//			UIImage image = UIImage.FromBundle("Images/paper.png");
-//			UIImageView a = new UIImageView(image);
-//			this.View.AddSubview(a);
-//			this.View.SendSubviewToBack(a);
+			UIImage image = UIImage.FromBundle("Images/bg-normal.png");
+			UIImageView a = new UIImageView(image);
+			this.View.AddSubview(a);
+			this.View.SendSubviewToBack(a);
 		}
 	}
 }

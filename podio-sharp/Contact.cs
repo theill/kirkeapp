@@ -1,6 +1,9 @@
+#region Using directives
 using System;
 using System.Json;
 using System.Collections.Generic;
+
+#endregion
 
 namespace com.podio {
 	public class Contact {

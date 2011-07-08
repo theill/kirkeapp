@@ -31,8 +31,6 @@ namespace dk.kirkeapp {
 		
 		private MonoTouch.UIKit.UIButton __mt_btnAbout;
 		
-		private MonoTouch.UIKit.UILabel __mt_ChurchNameLabel;
-		
 		#pragma warning disable 0169
 		[MonoTouch.Foundation.Connect("view")]
 		private MonoTouch.UIKit.UIView view {
@@ -127,18 +125,6 @@ namespace dk.kirkeapp {
 			set {
 				this.__mt_btnAbout = value;
 				this.SetNativeField("btnAbout", value);
-			}
-		}
-		
-		[MonoTouch.Foundation.Connect("ChurchNameLabel")]
-		private MonoTouch.UIKit.UILabel ChurchNameLabel {
-			get {
-				this.__mt_ChurchNameLabel = ((MonoTouch.UIKit.UILabel)(this.GetNativeField("ChurchNameLabel")));
-				return this.__mt_ChurchNameLabel;
-			}
-			set {
-				this.__mt_ChurchNameLabel = value;
-				this.SetNativeField("ChurchNameLabel", value);
 			}
 		}
 	}

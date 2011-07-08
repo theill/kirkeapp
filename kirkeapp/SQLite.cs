@@ -322,10 +322,10 @@ namespace SQLite
 		/// <returns>
 		/// An enumerable with one result for each row returned by the query.
 		/// </returns>
-		public List<T> Query<T> (string query, params object[] args) where T : new()
-		{
-			var cmd = CreateCommand (query, args);
-			return cmd.ExecuteQuery<T> ();
+		public List<T> Query<T>(string query, params object[] args) where T : new() {
+			Console.WriteLine("Q {0}", query);
+			var cmd = CreateCommand(query, args);
+			return cmd.ExecuteQuery<T>();
 		}
 
 		/// <summary>
