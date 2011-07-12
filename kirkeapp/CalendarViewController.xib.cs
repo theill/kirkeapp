@@ -7,6 +7,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using com.podio;
+using System.IO;
 
 #endregion
 
@@ -116,14 +117,34 @@ namespace dk.kirkeapp {
 							}
 						}
 
-						Console.WriteLine("Got file: {0}", file_id);
+						var filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format("podio-file-{0}", file_id));
+						if (!File.Exists(filename)) {
+							UIImage eventImage = null;
+							appDelegate.PodioClient._download(file_id, (image_filename) => {
+								Console.WriteLine("Downloaded file to: {0}", image_filename);
+								eventImage = UIImage.FromFile(image_filename);
+								InvokeOnMainThread(() => {
+									NavigationController.PushViewController(new WebPageViewController {
+										Title = evt.Title,
+										ImageFilename = filename,
+										Image = eventImage,
+										Html = description
+									}, true);
+								});
 
-						InvokeOnMainThread(() => {
-							NavigationController.PushViewController(new WebPageViewController {
+							}, (err) => {
+								Console.WriteLine("Failed to download file: {0}", err);
+							});
+						} else {
+							InvokeOnMainThread(() => {
+								NavigationController.PushViewController(new WebPageViewController {
 								Title = evt.Title,
+								ImageFilename = filename,
+								Image = UIImage.FromFile(filename),
 								Html = description
 							}, true);
-						});
+							});
+						}
 					}, (error) => {
 						Console.WriteLine("Failed to get item");
 						UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;

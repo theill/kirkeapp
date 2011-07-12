@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using System.IO;
 
 #endregion
 
@@ -42,6 +43,16 @@ namespace dk.kirkeapp {
 			set;
 		}
 
+		public UIImage Image {
+			get;
+			set;
+		}
+
+		public string ImageFilename {
+			get;
+			set;
+		}
+
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
@@ -55,14 +66,17 @@ namespace dk.kirkeapp {
 			View.AddSubview(a);
 
 			if (string.IsNullOrEmpty(this.Css)) {
-				this.Css = @"body { background-color: rgb(250, 249, 235); }
+				this.Css = @"body { background-color: rgb(250, 249, 235); margin: 0; padding: 6px; }
 body, p { font-family: Helvetica; font-size: 12pt; }
-a { color: rgb(141, 58, 5); }";
+a { color: rgb(141, 58, 5); }
+img.primary { -webkit-transform-style:preserve-3d; -webkit-transform: rotate(-2deg); }";
 			}
 
+			NSUrl imageUrl = NSUrl.FromFilename(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ImageFilename));
+			Console.WriteLine("We have a file: {0}", imageUrl.ToString());
 //			this.WebView.Delegate = new WebPageViewDelegate(this);
-			this.WebView.LoadHtmlString(string.Format("<html><head><style>{0}</style></head><body><div id='body'>{1}</div></body></html>", this.Css, this.Html), new NSUrl("http://kirkeapp.dk/"));
-			this.WebView.BackgroundColor = UIColor.FromRGB(250, 249, 235);
+			WebView.LoadHtmlString(string.Format("<html><head><style>{0}</style></head><body><img class='primary' src='{2}' width='300' /><div id='body'>{1}</div></body></html>", this.Css, this.Html, imageUrl.ToString()), null);
+			WebView.BackgroundColor = UIColor.FromRGB(250, 249, 235);
 
 			if (WebView.Subviews.Length > 0) {
 				foreach (var shadowView in WebView.Subviews[0].Subviews) {

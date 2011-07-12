@@ -15,7 +15,7 @@
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <BundleIdentifier>dk.kirkeapp</BundleIdentifier>
     <BundleDisplayName>Kirkeapp</BundleDisplayName>
-    <BundleVersion>1.1</BundleVersion>
+    <BundleVersion>0.9.1</BundleVersion>
     <BundleIcon>Icon.png</BundleIcon>
     <BundleIconHigh>Icon@2x.png</BundleIconHigh>
   </PropertyGroup>

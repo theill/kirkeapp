@@ -1,4 +1,4 @@
-#region Using directives
+	#region Using directives
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,38 +86,26 @@ namespace dk.kirkeapp {
 				foreach (JsonObject item in items) {
 					Message m = new Message();
 					m.ID = item.AsInt32("item_id");
-					m.Content = item.AsString("title");
+					m.Title = item.AsString("title");
 					DateTime sentAt;
 					DateTime.TryParse(item["initial_revision"].AsString("created_on"), out sentAt);
 					m.SentAt = sentAt;
+
+					int authorProfileID = 0, recipientProfileID = 0;
 
 					JsonArray fields = (JsonArray)item["fields"];
 					foreach (JsonObject field in fields) {
 						string external_id = field.AsString("external_id");
 
-						if (external_id == "title") {
-							m.Title = field["values"][0].AsString("value");
-						} else if (external_id == "body") {
+						if (external_id == "body") {
 							m.Content = HtmlRemoval.StripTags(field["values"][0].AsString("value"));
 						} else if (external_id == "author") {
 							m.From = field["values"][0]["value"].AsString("name");
+							authorProfileID = field["values"][0]["value"].AsInt32("profile_id");
 						} else if (external_id == "modtager") {
 							m.To = field["values"][0]["value"].AsString("name");
+							recipientProfileID = field["values"][0]["value"].AsInt32("profile_id");
 						}
-
-						// set defaults
-						if (string.IsNullOrEmpty(m.Title)) {
-							m.Title = "Unavngivet";
-						}
-
-						if (string.IsNullOrEmpty(m.From)) {
-							m.From = "Ukendt";
-						}
-
-						if (string.IsNullOrEmpty(m.To)) {
-							m.To = "Ukendt";
-						}
-
 						#region Example of returned fields
 //"fields": [
 //        {
@@ -210,7 +198,26 @@ namespace dk.kirkeapp {
 						#endregion
 					}
 
-					_data.Add(m);
+					// set defaults
+					if (!string.IsNullOrEmpty(m.Title) && !string.IsNullOrEmpty(m.Content)) {
+						m.Content = m.Title + ": " + m.Content;
+					} else if (!string.IsNullOrEmpty(m.Title)) {
+						m.Content = m.Title;
+					}
+
+					if (string.IsNullOrEmpty(m.From)) {
+						m.From = "Ukendt";
+					}
+
+					if (string.IsNullOrEmpty(m.To)) {
+						m.To = "Ukendt";
+					}
+
+					if (authorProfileID == appDelegate.ActiveContact.ProfileID || recipientProfileID == appDelegate.ActiveContact.ProfileID) {
+						_data.Add(m);
+					} else {
+						Console.WriteLine("Not gonna add {0} since profile [{1}, {2}] doesn't match logged on {3}", m.Title, authorProfileID, recipientProfileID, appDelegate.ActiveContact.ProfileID);
+					}
 				}
 
 				InvokeOnMainThread(() => {

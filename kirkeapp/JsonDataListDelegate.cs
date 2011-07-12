@@ -24,7 +24,7 @@ namespace dk.kirkeapp {
 
 			OptionDictionary options = e.ToOptions();
 			if (options != null && options.ContainsKey("Content")) {
-				string text = e.ToOptions()["Content"].ToString();
+				string text = (string)options["Content"] ?? "";
 
 				SizeF size = tableView.StringSize(text, defaultRenderingFont, new SizeF(300f, 640f), UILineBreakMode.WordWrap);
 				return Math.Max(size.Height + 35f, 64f);

@@ -48,6 +48,8 @@ namespace dk.kirkeapp {
 			OptionDictionary options = new OptionDictionary();
 			options.Add("ID", this.ID);
 			options.Add("From", this.From);
+			options.Add("To", this.To);
+			options.Add("Title", this.Title);
 			options.Add("Content", this.Content);
 			options.Add("SentAt", this.SentAt.ToString());
 			return options;

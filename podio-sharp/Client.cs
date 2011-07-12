@@ -82,6 +82,43 @@ namespace com.podio {
 			}, null);
 		}
 
+		public void _download(int file_id, Action<string> completed, Action<string> failed) {
+			HttpWebRequest req = (HttpWebRequest)WebRequest.Create(this.api_url + "/file/" + file_id + "/raw");
+			req.Headers.Add("Authorization", string.Format("OAuth2 {0}", this.oauth_token));
+			req.Method = "GET";
+
+			Console.WriteLine("<= {0}", file_id);
+			req.BeginGetResponse(ar => {
+				try {
+					var rsp = (HttpWebResponse)req.EndGetResponse(ar);
+					using (Stream stream = rsp.GetResponseStream()) {
+						var filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format("podio-file-{0}", file_id));
+
+						using (Stream localStream = File.Create(filename)) {
+							byte[] buffer = new byte[1024];
+							int bytesRead;
+
+							int totalBytes = 0;
+							do {
+								bytesRead = stream.Read(buffer, 0, buffer.Length);
+								localStream.Write(buffer, 0, bytesRead);
+								totalBytes += bytesRead;
+							} while (bytesRead > 0);
+
+							Console.WriteLine("bytes read {0}", totalBytes);
+						}
+
+						completed.Invoke(filename);
+					}
+				} catch (Exception x) {
+					Console.WriteLine("Unable to DOWNLOAD for file {0}", file_id);
+					Console.WriteLine(x);
+
+					failed.Invoke(x.Message);
+				}
+			}, null);
+		}
+
 		public void _post(string uri, JsonValue data, Action<JsonValue> completed, Action<string> failed) {
 //			curl -H 'Authorization: OAuth2 c37768fc5473133b2a8bd7d2c1b2ff30cd25bc2b8d2857d3b0a631671ab6bf1e119cac96aa745ebf6583272f361c9d645afac1cc620209f0631b57f6bf63296c' -X GET https://api.podio.com/space/url?url=https%3a%2f%2fkirkeapp.podio.com%2fkokkedal%2f
 			HttpWebRequest req = (HttpWebRequest)WebRequest.Create(this.api_url + uri);
