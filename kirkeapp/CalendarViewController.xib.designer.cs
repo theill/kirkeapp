@@ -19,6 +19,8 @@ namespace dk.kirkeapp {
 		
 		private MonoTouch.UIKit.UITableView __mt_CalendarTableView;
 		
+		private MonoTouch.UIKit.UILabel __mt_EmptyLabel;
+		
 		#pragma warning disable 0169
 		[MonoTouch.Foundation.Connect("view")]
 		private MonoTouch.UIKit.UIView view {
@@ -41,6 +43,18 @@ namespace dk.kirkeapp {
 			set {
 				this.__mt_CalendarTableView = value;
 				this.SetNativeField("CalendarTableView", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("EmptyLabel")]
+		private MonoTouch.UIKit.UILabel EmptyLabel {
+			get {
+				this.__mt_EmptyLabel = ((MonoTouch.UIKit.UILabel)(this.GetNativeField("EmptyLabel")));
+				return this.__mt_EmptyLabel;
+			}
+			set {
+				this.__mt_EmptyLabel = value;
+				this.SetNativeField("EmptyLabel", value);
 			}
 		}
 	}

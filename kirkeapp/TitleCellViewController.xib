@@ -69,13 +69,12 @@
 								</object>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MCAwIDAAA</bytes>
+									<bytes key="NSRGB">MC4yMzkyMTU2ODYzIDAuMTA5ODAzOTIxNiAwLjA1ODgyMzUyOTQxAA</bytes>
 								</object>
-								<object class="NSColor" key="IBUIHighlightedColor" id="90264274">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MQA</bytes>
+								<object class="NSColor" key="IBUIHighlightedColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC41NTI5NDExNzY1IDAuMjI3NDUwOTgwNCAwLjAxOTYwNzg0MzE0AA</bytes>
 								</object>
-								<reference key="IBUIShadowColor" ref="90264274"/>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 								<float key="IBUIMinimumFontSize">12</float>

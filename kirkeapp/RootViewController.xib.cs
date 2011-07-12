@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Json;
+using System.Collections.Generic;
 
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
@@ -31,6 +32,26 @@ namespace dk.kirkeapp {
 
 					Console.WriteLine("Got space id of {0} created at {1}", appDelegate.ActiveSpace.SpaceID, appDelegate.ActiveSpace.CreatedOn);
 
+					int profileID = AppDelegate.Defaults.IntForKey("profile_id");
+					if (profileID > 0) {
+						appDelegate.PodioClient._get(string.Format("/contact/{0}/v2", profileID), (rsp2) => {
+							Console.WriteLine("Got active contact: {0}", (rsp2 as JsonObject));
+
+							appDelegate.ActiveContact = Contact.Parse(rsp2);
+
+							InvokeOnMainThread(() => {
+								bool contactLoggedIn = appDelegate.ActiveContact != null;
+								btnMessages.Enabled = contactLoggedIn;
+								btnDonation.Enabled = contactLoggedIn;
+							});
+
+						}, (err) => {
+							Console.WriteLine("Desvaerre, det gik ikke .. fik {0}", err);
+
+			// FIXME: show error for user
+						});
+					}
+
 					InvokeOnMainThread(() => {
 						this.NavigationItem.Title = appDelegate.ActiveSpace.Name;
 					});
@@ -58,17 +79,28 @@ namespace dk.kirkeapp {
 
 			NavigationItem.Title = appDelegate.ApplicationName;
 
+			UIImage image = UIImage.FromBundle("Images/brown-gradient.png");
+			UIImageView a = new UIImageView(image);
+			View.AddSubview(a);
+
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem("Konto", UIBarButtonItemStyle.Plain, AccountClick);
 
 //			NavigationController.NavigationBar.Alpha = 0.40f;
-			NavigationController.NavigationBar.TintColor = UIColor.FromRGBA(128, 64, 0, 64);
+//			NavigationController.NavigationBar.TintColor = UIColor.FromRGBA(128, 128, 128, 64);
+			NavigationController.NavigationBar.TintColor = UIColor.FromRGB(158, 80, 23);
 
-			btnMessages.SetBackgroundImage(UIImage.FromBundle("Images/messages-open.png"), UIControlState.Normal);
-			btnCalendar.SetBackgroundImage(UIImage.FromBundle("Images/empty-calendar.png"), UIControlState.Normal);
+			btnMessages.SetBackgroundImage(UIImage.FromBundle("Images/mail_open.png"), UIControlState.Normal);
+			btnCalendar.SetBackgroundImage(UIImage.FromBundle("Images/calendar.png"), UIControlState.Normal);
 			btnDonation.Hidden = true;
-			btnBible.SetBackgroundImage(UIImage.FromBundle("Images/tag.png"), UIControlState.Normal);
-			btnPsalms.SetBackgroundImage(UIImage.FromBundle("Images/music-off.png"), UIControlState.Normal);
-			btnFavorites.SetBackgroundImage(UIImage.FromBundle("Images/star-off.png"), UIControlState.Normal);
+			btnBible.SetBackgroundImage(UIImage.FromBundle("Images/bookmark.png"), UIControlState.Normal);
+			btnPsalms.SetBackgroundImage(UIImage.FromBundle("Images/music.png"), UIControlState.Normal);
+			btnFavorites.SetBackgroundImage(UIImage.FromBundle("Images/favorite.png"), UIControlState.Normal);
+			btnMessages.SetTitle("", UIControlState.Normal);
+			btnCalendar.SetTitle("", UIControlState.Normal);
+			btnDonation.SetTitle("", UIControlState.Normal);
+			btnBible.SetTitle("", UIControlState.Normal);
+			btnPsalms.SetTitle("", UIControlState.Normal);
+			btnFavorites.SetTitle("", UIControlState.Normal);
 
 			btnMessages.TouchUpInside += delegate(object sender, EventArgs e) {
 				Console.WriteLine("Displaying messages");
@@ -111,16 +143,6 @@ namespace dk.kirkeapp {
 				var c = new FavoritesViewController();
 				NavigationController.PushViewController(c, true);
 			};
-		}
-
-		public override void ViewDidAppear(bool animated) {
-			base.ViewDidAppear(animated);
-
-			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
-			bool contactLoggedIn = appDelegate.ActiveContact != null;
-
-			btnMessages.Enabled = contactLoggedIn;
-			btnDonation.Enabled = contactLoggedIn;
 		}
 
 		void AccountClick(object sender, EventArgs e) {

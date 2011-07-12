@@ -104,14 +104,22 @@ namespace com.podio {
 
 						completed.Invoke(root);
 					}
-				} catch (Exception x) {
+				} catch (WebException x) {
 					Console.WriteLine("Unable to POST to {0}", uri);
+					if (x.Response != null) {
+						using (Stream stream = x.Response.GetResponseStream()) {
+							using (var streamReader = new StreamReader(stream)) {
+								var errorBody = streamReader.ReadToEnd();
+								Console.WriteLine("=> {0}", errorBody);
+							}
+						}
+					}
+
 					Console.WriteLine(x);
 
 					failed.Invoke(x.Message);
 				}
 			}, null);
 		}
-
 	}
 }

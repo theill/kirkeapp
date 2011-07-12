@@ -2,11 +2,13 @@
 using System;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
+using System.Drawing;
 
 #endregion
 
 namespace dk.kirkeapp {
-	public class JsonDataListDelegate<T> : UITableViewDelegate {
+	public class JsonDataListDelegate<T> : UITableViewDelegate where T : IJsonData {
+		private static UIFont defaultRenderingFont = UIFont.FromName("Helvetica", 13f);
 //		UIViewController _controller;
 		IJsonDataSource<T> _appd;
 		Action<T> _selected;
@@ -18,7 +20,17 @@ namespace dk.kirkeapp {
 		}
 
 		public override float GetHeightForRow(UITableView tableView, NSIndexPath indexPath) {
-			return 64f;
+			var e = _appd.JsonData[indexPath.Row];
+
+			OptionDictionary options = e.ToOptions();
+			if (options != null && options.ContainsKey("Content")) {
+				string text = e.ToOptions()["Content"].ToString();
+
+				SizeF size = tableView.StringSize(text, defaultRenderingFont, new SizeF(300f, 640f), UILineBreakMode.WordWrap);
+				return Math.Max(size.Height + 35f, 64f);
+			} else {
+				return 64f;
+			}
 		}
 
 		public override void RowSelected(UITableView tableView, NSIndexPath indexPath) {

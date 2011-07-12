@@ -157,6 +157,17 @@ namespace dk.kirkeapp {
 
 			NavigationItem.Title = GetTitleByLevel(this.Level);
 
+			UIImage image = UIImage.FromBundle("Images/double-paper.png");
+			UIImageView a = new UIImageView(image);
+			this.View.AddSubview(a);
+			this.View.InsertSubviewAbove(a, this.View.Subviews[0]);
+
+			image = UIImage.FromBundle("Images/brown-gradient.png");
+			a = new UIImageView(image);
+			View.AddSubview(a);
+
+			CategoriesTableView.SeparatorColor = UIColor.FromRGB(217, 212, 199);
+
 			CategoriesTableView.DataSource = new JsonDataSource<CellData>(this);
 			CategoriesTableView.Delegate = new JsonDataListDelegate<CellData>(this, this, (cell) => {
 				if (this.Level < 1) {

@@ -2,9 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
+
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using System.Drawing;
+
+using com.podio;
+using System.Json;
 
 #endregion
 
@@ -59,10 +63,16 @@ namespace dk.kirkeapp {
 		void KeyboardWillShow(NSNotification notification) {
 			var kbdBounds = (notification.UserInfo.ObjectForKey(UIKeyboard.BoundsUserInfoKey) as NSValue).RectangleFValue;
 
+			RectangleF frame = tblMessages.Frame;
+			float height = frame.Size.Height - kbdBounds.Height;
+
 			UIView.BeginAnimations("scrollIntoView");
 			UIView.SetAnimationDuration(0.3);
 			viewComposing.Frame = ComputeComposerSize(kbdBounds);
+			tblMessages.Frame = new RectangleF(frame.Location, new SizeF(tblMessages.Frame.Width, height));
 			UIView.CommitAnimations();
+
+			ScrollToLastRow();
 		}
 
 		RectangleF ComputeComposerSize(RectangleF kbdBounds) {
@@ -71,22 +81,95 @@ namespace dk.kirkeapp {
 			return new RectangleF(0, view.Height - kbdBounds.Height - viewComposing.Frame.Height, viewComposing.Frame.Width, viewComposing.Frame.Height);
 		}
 
+		void ScrollToLastRow() {
+			if (_messages.Count > 0) {
+				tblMessages.ScrollToRow(NSIndexPath.FromRowSection(_messages.Count - 1, 0), UITableViewScrollPosition.Top, false);
+			}
+		}
+
 
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
-			this.NavigationItem.Title = PrimaryMessage.From;
+			this.NavigationItem.Title = PrimaryMessage.From ?? "Ukendt";
 
-			this.tblMessages.DataSource = new JsonDataSource<Message>(this);
+			UIImage image = UIImage.FromBundle("Images/double-paper.png");
+			UIImageView a = new UIImageView(image);
+			this.View.AddSubview(a);
+			this.View.InsertSubviewAbove(a, this.View.Subviews[0]);
+
+			image = UIImage.FromBundle("Images/brown-gradient.png");
+			a = new UIImageView(image);
+			View.AddSubview(a);
+
+			tblMessages.SeparatorColor = UIColor.FromRGB(217, 212, 199);
+
+			_messages = new List<Message>();
+
+			// insert message as first comment
+			_messages.Add(PrimaryMessage);
+
+			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
+			appDelegate.PodioClient._get(string.Format("/comment/item/{0}/", PrimaryMessage.ID), (rsp) => {
+				Console.WriteLine("Got a message: {0}", rsp);
+
+				JsonArray items = (JsonArray)rsp;
+
+				foreach (JsonObject item in items) {
+					var m = new Message {
+						Title = item.AsString("value"),
+						Content = item.AsString("value"),
+						From = "asfd",
+						SentAt = item.AsDateTime("created_on")
+					};
+					_messages.Add(m);
+				}
+
+				InvokeOnMainThread(() => {
+					tblMessages.DataSource = new JsonDataSource<Message>(this);
+					tblMessages.ReloadData();
+
+					ScrollToLastRow();
+				});
+
+			}, (err) => {
+				Console.WriteLine("Failed to read comments for message");
+
+			});
+
+			this.tblMessages.Delegate = new JsonDataListDelegate<Message>(this, this, (msg) => {});
 
 			this.txtMessage.Started += (sender, e) => {
 				Console.WriteLine("Editing has started");
 			};
 
 			this.txtMessage.ShouldReturn = (textField) => {
-				textField.ResignFirstResponder();
-				Console.WriteLine("TODO: User entered {0}", textField.Text);
-				return true;
+				Console.WriteLine("TODO: Post what user entered: {0}", textField.Text);
+
+				// comment
+				JsonObject comment = new JsonObject();
+				comment.Add("external_id", new JsonPrimitive(appDelegate.ActiveContact.ProfileID.ToString()));
+				comment.Add("value", new JsonPrimitive(textField.Text));
+
+				appDelegate.PodioClient._post(string.Format("/comment/item/{0}/", PrimaryMessage.ID), comment, (rsp) => {
+					Console.WriteLine("Vi har nu smidt noget IND i Podio: {0}", rsp);
+
+					InvokeOnMainThread(() => {
+						_messages.Add(new Message { From = appDelegate.ActiveContact.Name, Title = textField.Text, Content = textField.Text, SentAt = DateTime.Now });
+						tblMessages.ReloadData();
+
+						ScrollToLastRow();
+
+						textField.Text = "";
+					});
+
+				}, (err) => {
+					Console.WriteLine("Desvaerre, det gik ikke .. fik {0}", err);
+
+					// FIXME: show error for user
+				});
+
+				return false;
 			};
 		}
 	}

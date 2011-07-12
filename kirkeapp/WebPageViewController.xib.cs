@@ -45,14 +45,32 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
+			UIImage image = UIImage.FromBundle("Images/double-paper.png");
+			UIImageView a = new UIImageView(image);
+			this.View.AddSubview(a);
+			this.View.InsertSubviewAbove(a, this.View.Subviews[0]);
+
+			image = UIImage.FromBundle("Images/brown-gradient.png");
+			a = new UIImageView(image);
+			View.AddSubview(a);
+
 			if (string.IsNullOrEmpty(this.Css)) {
-				this.Css = "body, p { font-family: Helvetica; font-size: 12pt; }";
+				this.Css = @"body { background-color: rgb(250, 249, 235); }
+body, p { font-family: Helvetica; font-size: 12pt; }
+a { color: rgb(141, 58, 5); }";
 			}
 
 //			this.WebView.Delegate = new WebPageViewDelegate(this);
-			this.WebView.LoadHtmlString(string.Format("<html><head><style>{0}</style></head><body style='background-color:transparent'><div id='body'>{1}</div></body></html>", this.Css, this.Html), new NSUrl("http://kirkeapp.dk/"));
-			this.WebView.BackgroundColor = UIColor.Clear;
-			this.WebView.Opaque = false;
+			this.WebView.LoadHtmlString(string.Format("<html><head><style>{0}</style></head><body><div id='body'>{1}</div></body></html>", this.Css, this.Html), new NSUrl("http://kirkeapp.dk/"));
+			this.WebView.BackgroundColor = UIColor.FromRGB(250, 249, 235);
+
+			if (WebView.Subviews.Length > 0) {
+				foreach (var shadowView in WebView.Subviews[0].Subviews) {
+					shadowView.Hidden = true;
+				}
+
+				WebView.Subviews[0].Subviews.Last().Hidden = false;
+			}
 		}
 
 //		public class WebPageViewDelegate : UIWebViewDelegate {

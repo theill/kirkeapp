@@ -73,6 +73,17 @@ namespace dk.kirkeapp {
 
 			this.NavigationItem.Title = GetTitleByLevel(this.Level);
 
+			UIImage image = UIImage.FromBundle("Images/double-paper.png");
+			UIImageView a = new UIImageView(image);
+			this.View.AddSubview(a);
+			this.View.InsertSubviewAbove(a, this.View.Subviews[0]);
+
+			image = UIImage.FromBundle("Images/brown-gradient.png");
+			a = new UIImageView(image);
+			View.AddSubview(a);
+			
+			LibrariesTableView.SeparatorColor = UIColor.FromRGB(217, 212, 199);
+
 //			var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Stocks.db");
 
 //			// copy to database
@@ -125,7 +136,8 @@ namespace dk.kirkeapp {
 					});
 				} else {
 					using (var db = new SQLite.SQLiteConnection("Databases/kirkeapp.db")) {
-						var sections = db.Query<CellData>("SELECT id AS ID, content AS Title FROM sections WHERE chapter_id = ? ORDER BY ID", this.Cell.ID);
+						Console.WriteLine("Chapter ID => {0}", cell.ID);
+						var sections = db.Query<CellData>("SELECT id AS ID, content AS Title FROM sections WHERE chapter_id = ? ORDER BY ID", cell.ID);
 
 						string html = string.Empty;
 						foreach (var section in sections) {
@@ -159,7 +171,7 @@ namespace dk.kirkeapp {
 			case 1:
 				return "SELECT id AS ID, name AS Title FROM books WHERE library_id = ? ORDER BY ID";
 			case 2:
-				return "SELECT id AS ID, title AS Title FROM chapters WHERE book_id = ? ORDER BY ID";
+				return "SELECT id AS ID, IFNULL(title, 'Kapitel ' || number) AS Title, number AS Number FROM chapters WHERE book_id = ? ORDER BY ID";
 			case 3:
 				return "SELECT id AS ID, content AS Title FROM sections WHERE chapter_id = ? ORDER BY ID";
 			default:

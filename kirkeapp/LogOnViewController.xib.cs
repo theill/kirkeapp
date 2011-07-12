@@ -41,6 +41,9 @@ namespace dk.kirkeapp {
 
 			NavigationItem.Title = "Log ind";
 
+			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
+			DescriptionLabel.Text = string.Format("Hvis du er tilknyttet kirken har du mulighed for skrive og modtage beskeder direkte fra præsten.\n\nKontakt {0} hvis du ønsker at blive oprettet som bruger.", appDelegate.ApplicationName);
+
 			this.NavigationItem.LeftBarButtonItem = new UIBarButtonItem("Annuller", UIBarButtonItemStyle.Plain, (sender, e) => {
 				InvokeOnMainThread(() => {
 					this.NavigationController.PopViewControllerAnimated(true);
@@ -69,7 +72,7 @@ namespace dk.kirkeapp {
 				}
 
 				Contact contact = contacts.Find((c) => {
-					return c.Mail.Contains(this.EmailTextField.Text);
+					return c.Mails.Contains(this.EmailTextField.Text);
 				});
 
 				if (contact != null) {
@@ -77,11 +80,18 @@ namespace dk.kirkeapp {
 
 					appDelegate.ActiveContact = contact;
 
+					// store contact in app settings so user doesn't have to log on next time
+					AppDelegate.Defaults.SetInt(contact.ProfileID, "profile_id");
+
 					InvokeOnMainThread(() => {
 						this.NavigationController.PopViewControllerAnimated(true);
 					});
 				} else {
 					Console.WriteLine("Did not find contact");
+
+					InvokeOnMainThread(() => {
+						UserNotFoundLabel.Hidden = false;
+					});
 				}
 
 			}, (err) => {
@@ -89,7 +99,6 @@ namespace dk.kirkeapp {
 
 				// FIXME: show error for user
 			});
-
 		}
 	}
 }

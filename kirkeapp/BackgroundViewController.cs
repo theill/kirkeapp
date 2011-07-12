@@ -21,7 +21,7 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
-			UIImage image = UIImage.FromBundle("Images/bg-normal.png");
+			UIImage image = UIImage.FromBundle("Images/wood-bg.png");
 			UIImageView a = new UIImageView(image);
 			this.View.AddSubview(a);
 			this.View.SendSubviewToBack(a);

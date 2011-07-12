@@ -14,7 +14,13 @@ namespace dk.kirkeapp {
 			get;
 			set;
 		}
-		public DateTime ActiveAt {
+
+		public DateTime ActiveStartAt {
+			get;
+			set;
+		}
+
+		public DateTime ActiveEndAt {
 			get;
 			set;
 		}
@@ -23,14 +29,15 @@ namespace dk.kirkeapp {
 		}
 
 		public override string ToString() {
-			return string.Format("[Event: Title={0}, ActiveAt={1}]", Title, ActiveAt);
+			return string.Format("[Event: Title={0}, ActiveStartAt={1}, ActiveEndAt={2}]", Title, ActiveStartAt, ActiveEndAt);
 		}
 
 		#region IJsonData implementation
 		public OptionDictionary ToOptions() {
 			OptionDictionary options = new OptionDictionary();
 			options.Add("Title", this.Title);
-			options.Add("ActiveAt", this.ActiveAt.ToString());
+			options.Add("ActiveStartAt", this.ActiveStartAt.ToString());
+			options.Add("ActiveEndAt", this.ActiveEndAt.ToString());
 			return options;
 		}
 		#endregion

@@ -18,6 +18,10 @@ namespace dk.kirkeapp {
 
 	// The name AppDelegate is referenced in the MainWindow.xib file.
 	public partial class AppDelegate : UIApplicationDelegate {
+		public static NSUserDefaults Defaults = NSUserDefaults.StandardUserDefaults;
+
+		public static string FAVORITE_TAG = "favorit";
+
 		private string _applicationName;
 
 		public string ApplicationName {

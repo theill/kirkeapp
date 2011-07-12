@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">768</int>
-		<string key="IBDocument.SystemVersion">10J869</string>
+		<string key="IBDocument.SystemVersion">10K540</string>
 		<string key="IBDocument.InterfaceBuilderVersion">823</string>
-		<string key="IBDocument.AppKitVersion">1038.35</string>
+		<string key="IBDocument.AppKitVersion">1038.36</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -50,7 +50,7 @@
 							<object class="IBUILabel" id="1049370613">
 								<reference key="NSNextResponder" ref="33926238"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 5}, {280, 21}}</string>
+								<string key="NSFrame">{{10, 5}, {292, 21}}</string>
 								<reference key="NSSuperview" ref="33926238"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -60,51 +60,25 @@
 								<string key="IBUIText">Paulus, Daniel</string>
 								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">Helvetica-Bold</string>
-									<double key="NSSize">12</double>
+									<double key="NSSize">13</double>
 									<int key="NSfFlags">16</int>
 								</object>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MCAwIDAAA</bytes>
+									<bytes key="NSRGB">MC4yMzkyMTU2ODYzIDAuMTA5ODAzOTIxNiAwLjA1ODgyMzUyOTQxAA</bytes>
 								</object>
-								<object class="NSColor" key="IBUIHighlightedColor" id="704649019">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MQA</bytes>
+								<object class="NSColor" key="IBUIHighlightedColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC41NTI5NDExNzY1IDAuMjI3NDUwOTgwNCAwLjAxOTYwNzg0MzE0AA</bytes>
 								</object>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 								<float key="IBUIMinimumFontSize">10</float>
-							</object>
-							<object class="IBUILabel" id="521864244">
-								<reference key="NSNextResponder" ref="33926238"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 23}, {280, 21}}</string>
-								<reference key="NSSuperview" ref="33926238"/>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClipsSubviews">YES</bool>
-								<int key="IBUIContentMode">7</int>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">Hvad siger du til det?</string>
-								<object class="NSFont" key="IBUIFont" id="588621242">
-									<string key="NSName">Helvetica</string>
-									<double key="NSSize">11</double>
-									<int key="NSfFlags">16</int>
-								</object>
-								<object class="NSColor" key="IBUITextColor">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
-								</object>
-								<reference key="IBUIHighlightedColor" ref="704649019"/>
-								<int key="IBUIBaselineAdjustment">1</int>
-								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-								<float key="IBUIMinimumFontSize">10</float>
-								<int key="IBUINumberOfLines">2</int>
 							</object>
 							<object class="IBUILabel" id="846280789">
 								<reference key="NSNextResponder" ref="33926238"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{200, 5}, {100, 21}}</string>
+								<int key="NSvFlags">289</int>
+								<string key="NSFrame">{{202, 5}, {100, 21}}</string>
 								<reference key="NSSuperview" ref="33926238"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -112,19 +86,48 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">5/6-2011</string>
-								<reference key="IBUIFont" ref="588621242"/>
+								<object class="NSFont" key="IBUIFont" id="24779146">
+									<string key="NSName">Helvetica</string>
+									<double key="NSSize">13</double>
+									<int key="NSfFlags">16</int>
+								</object>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+									<bytes key="NSRGB">MC4yNDMxMzcyNTQ5IDAuMTEzNzI1NDkwMiAwLjA1ODgyMzUyOTQxAA</bytes>
 								</object>
-								<reference key="IBUIHighlightedColor" ref="704649019"/>
+								<object class="NSColor" key="IBUIHighlightedColor" id="230886808">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC41NTI5NDExNzY1IDAuMjI3NDUwOTgwNCAwLjAxOTYwNzg0MzE0AA</bytes>
+								</object>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUITextAlignment">2</int>
 							</object>
+							<object class="IBUILabel" id="521864244">
+								<reference key="NSNextResponder" ref="33926238"/>
+								<int key="NSvFlags">290</int>
+								<string key="NSFrame">{{10, 25}, {292, 30}}</string>
+								<reference key="NSSuperview" ref="33926238"/>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<int key="IBUIContentMode">7</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<string key="IBUIText">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </string>
+								<reference key="IBUIFont" ref="24779146"/>
+								<object class="NSColor" key="IBUITextColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC42MzEzNzI1NDkgMC42IDAuNDkwMTk2MDc4NAA</bytes>
+								</object>
+								<reference key="IBUIHighlightedColor" ref="230886808"/>
+								<int key="IBUIBaselineAdjustment">1</int>
+								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+								<float key="IBUIMinimumFontSize">10</float>
+								<int key="IBUINumberOfLines">0</int>
+							</object>
 						</object>
-						<string key="NSFrameSize">{320, 64}</string>
+						<string key="NSFrameSize">{312, 64}</string>
 						<reference key="NSSuperview" ref="619586963"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -137,11 +140,11 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</object>
-				<string key="NSFrameSize">{320, 64}</string>
+				<string key="NSFrameSize">{312, 64}</string>
 				<reference key="NSSuperview"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MSAxIDEAA</bytes>
+					<int key="NSColorSpace">3</int>
+					<bytes key="NSWhite">MQA</bytes>
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISeparatorStyle">1</int>
@@ -210,8 +213,8 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="521864244"/>
-							<reference ref="846280789"/>
 							<reference ref="1049370613"/>
+							<reference ref="846280789"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -257,9 +260,9 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDgQAAwbAAAA</bytes>
+						<bytes key="NSTransformStruct">AUNSAABAoAAAA</bytes>
 					</object>
-					<string>{{535, 670}, {320, 64}}</string>
+					<string>{{640, 695}, {312, 64}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">

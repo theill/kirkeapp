@@ -40,8 +40,28 @@ namespace dk.kirkeapp {
 		}
 
 		public void Configure(OptionDictionary options) {
+			Console.WriteLine("Let's configure it");
 			this.TitleLabel.Text = options.ContainsKey("Title") ? (string)options["Title"] : string.Empty;
-			this.ActiveAtLabel.Text = (options.ContainsKey("ActiveAt") ? Convert.ToDateTime(options["ActiveAt"]) : DateTime.Now).ToString("d/M-yyyy HH:mm");
+
+			string active = string.Empty;
+
+			DateTime activeStartAt = options.ContainsKey("ActiveStartAt") ? Convert.ToDateTime(options["ActiveStartAt"]) : DateTime.Now;
+			if (activeStartAt.Hour == 0 && activeStartAt.Minute == 0) {
+				active = activeStartAt.ToString("d/M-yyyy");
+			} else {
+				active = activeStartAt.ToString("d/M-yyyy HH:mm");
+			}
+
+			DateTime activeEndAt = options.ContainsKey("ActiveEndAt") ? Convert.ToDateTime(options["ActiveEndAt"]) : DateTime.Now;
+			if (activeStartAt != activeEndAt) {
+				if (activeEndAt.Hour == 0 && activeEndAt.Minute == 0) {
+					active += " - " + activeEndAt.ToString("d/M-yyyy");
+				} else {
+					active += " - " + activeEndAt.ToString("d/M-yyyy HH:mm");
+				}
+			}
+
+			this.ActiveAtLabel.Text = active;
 		}
 	}
 }

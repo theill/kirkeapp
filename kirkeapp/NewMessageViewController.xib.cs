@@ -54,6 +54,7 @@ namespace dk.kirkeapp {
 				// title
 				JsonObject title = new JsonObject();
 				title.Add("external_id", new JsonPrimitive("title"));
+				title.Add("type", new JsonPrimitive("title"));
 
 				List<JsonValue > titleValues = new List<JsonValue>();
 				JsonObject v = new JsonObject();
@@ -66,15 +67,16 @@ namespace dk.kirkeapp {
 				// author
 				JsonObject author = new JsonObject();
 				author.Add("external_id", new JsonPrimitive("author"));
+				author.Add("type", new JsonPrimitive("contact"));
 
 				List<JsonValue > authorValues = new List<JsonValue>();
 				v = new JsonObject();
-				v.Add("value", "Peter Theill");
+				v.Add("value", new JsonPrimitive(appDelegate.ActiveContact.ProfileID));
+
 				authorValues.Add(v);
 
 				author.Add("values", new JsonArray(authorValues.ToArray()));
 				fields.Add(author);
-
 
 
 				JsonObject data = new JsonObject();

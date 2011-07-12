@@ -21,8 +21,6 @@ namespace dk.kirkeapp {
 		
 		private MonoTouch.UIKit.UITextField __mt_txtMessage;
 		
-		private MonoTouch.UIKit.UIButton __mt_btnSend;
-		
 		private MonoTouch.UIKit.UIView __mt_viewComposing;
 		
 		#pragma warning disable 0169
@@ -59,18 +57,6 @@ namespace dk.kirkeapp {
 			set {
 				this.__mt_txtMessage = value;
 				this.SetNativeField("txtMessage", value);
-			}
-		}
-		
-		[MonoTouch.Foundation.Connect("btnSend")]
-		private MonoTouch.UIKit.UIButton btnSend {
-			get {
-				this.__mt_btnSend = ((MonoTouch.UIKit.UIButton)(this.GetNativeField("btnSend")));
-				return this.__mt_btnSend;
-			}
-			set {
-				this.__mt_btnSend = value;
-				this.SetNativeField("btnSend", value);
 			}
 		}
 		

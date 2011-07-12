@@ -74,18 +74,60 @@ namespace dk.kirkeapp {
 				}
 
 				CLLocation location = new CLLocation(latitude, longitude);
+				MKCoordinateSpan span = new MKCoordinateSpan(0.005, 0.005);
+				MKCoordinateRegion region = new MKCoordinateRegion(location.Coordinate, span);
+
 				InvokeOnMainThread(() => {
 					AddressMapView.SetCenterCoordinate(location.Coordinate, true);
+					AddressMapView.SetRegion(region, true);
 
-//					MKCoordinateSpan span = new MKCoordinateSpan(0.005, 0.005);
-//					MKCoordinateRegion region = new MKCoordinateRegion(location.Coordinate, span);
-//					AddressMapView.SetRegion(region, true);
+					MyAnnotation a = new MyAnnotation(location.Coordinate, "", "");
+					AddressMapView.AddAnnotationObject(a);
 				});
 
 			}, (error) => {
 				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 				Console.WriteLine("Unable to read info about church");
 			});
+		}
+	}
+
+	/// <summary>
+	/// MKAnnotation is an abstract class (in Objective C I think it's a protocol).
+	/// Therefore we must create our own implementation of it. Since all the properties
+	/// are read-only, we have to pass them in via a constructor.
+	/// </summary>
+	public class MyAnnotation : MKAnnotation {
+		private CLLocationCoordinate2D _coordinate;
+		private string _title, _subtitle;
+
+		public override CLLocationCoordinate2D Coordinate {
+			get {
+				return _coordinate;
+			}
+			set {
+				_coordinate = value;
+			}
+		}
+
+		public override string Title {
+			get {
+				return _title;
+			}
+		}
+
+		public override string Subtitle {
+			get {
+				return _subtitle;
+			}
+		}
+		/// <summary>
+		/// custom constructor
+		/// </summary>
+		public MyAnnotation(CLLocationCoordinate2D coord, string t, string s) : base() {
+			_coordinate = coord;
+			_title = t; 
+			_subtitle = s;
 		}
 	}
 }

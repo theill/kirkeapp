@@ -10,6 +10,12 @@ namespace dk.kirkeapp {
 			get;
 			set;
 		}
+
+		public string Content {
+			get;
+			set;
+		}
+		
 		public Favorite() {
 		}
 

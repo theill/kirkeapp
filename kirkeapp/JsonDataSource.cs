@@ -36,6 +36,8 @@ namespace dk.kirkeapp {
 
 				NSBundle.MainBundle.LoadNib(_appd.CellNibName, (NSObject)cellController, null);
 				cell = cellController.ViewCell;
+				cell.SelectedBackgroundView = new UIView(); // important to create it - otherwise you can't set color
+				cell.SelectedBackgroundView.BackgroundColor = UIColor.FromRGB(235, 232, 217);
 
 				cell.Tag = Environment.TickCount;
 				controllers.Add(cell.Tag, cellController);

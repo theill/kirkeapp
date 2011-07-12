@@ -15,7 +15,7 @@
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <BundleIdentifier>dk.kirkeapp</BundleIdentifier>
     <BundleDisplayName>Kirkeapp</BundleDisplayName>
-    <BundleVersion>1.0</BundleVersion>
+    <BundleVersion>1.1</BundleVersion>
     <BundleIcon>Icon.png</BundleIcon>
     <BundleIconHigh>Icon@2x.png</BundleIconHigh>
   </PropertyGroup>
@@ -281,7 +281,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\main-screen.png" />
-    <Content Include="Images\paper%402x.png" />
     <Content Include="Images\paper-light%402x.png" />
     <Content Include="Images\dark-gradient%402x.png" />
     <Content Include="Images\coins.png" />
@@ -310,6 +309,19 @@
     <Content Include="Images\star-on.png" />
     <Content Include="Images\stars.png" />
     <Content Include="Images\tag.png" />
+    <Content Include="Images\favorite.png" />
+    <Content Include="Images\bookmark.png" />
+    <Content Include="Images\calendar.png" />
+    <Content Include="Images\mail_open.png" />
+    <Content Include="Images\music.png" />
+    <Content Include="Images\cell-light%402x.png" />
+    <Content Include="Images\old-paper%402x.png" />
+    <Content Include="Images\double-paper%402x.png" />
+    <Content Include="Images\wood-bg%402x.png" />
+    <Content Include="Images\ornament-down%402x.png" />
+    <Content Include="Images\ornament-vertical%402x.png" />
+    <Content Include="Images\inner-page%402x.png" />
+    <Content Include="Images\brown-gradient%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\podio-sharp\podio-sharp.csproj">

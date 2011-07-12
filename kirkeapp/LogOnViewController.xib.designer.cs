@@ -21,6 +21,10 @@ namespace dk.kirkeapp {
 		
 		private MonoTouch.UIKit.UITextField __mt_PasswordTextField;
 		
+		private MonoTouch.UIKit.UILabel __mt_DescriptionLabel;
+		
+		private MonoTouch.UIKit.UILabel __mt_UserNotFoundLabel;
+		
 		#pragma warning disable 0169
 		[MonoTouch.Foundation.Connect("view")]
 		private MonoTouch.UIKit.UIView view {
@@ -55,6 +59,30 @@ namespace dk.kirkeapp {
 			set {
 				this.__mt_PasswordTextField = value;
 				this.SetNativeField("PasswordTextField", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("DescriptionLabel")]
+		private MonoTouch.UIKit.UILabel DescriptionLabel {
+			get {
+				this.__mt_DescriptionLabel = ((MonoTouch.UIKit.UILabel)(this.GetNativeField("DescriptionLabel")));
+				return this.__mt_DescriptionLabel;
+			}
+			set {
+				this.__mt_DescriptionLabel = value;
+				this.SetNativeField("DescriptionLabel", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("UserNotFoundLabel")]
+		private MonoTouch.UIKit.UILabel UserNotFoundLabel {
+			get {
+				this.__mt_UserNotFoundLabel = ((MonoTouch.UIKit.UILabel)(this.GetNativeField("UserNotFoundLabel")));
+				return this.__mt_UserNotFoundLabel;
+			}
+			set {
+				this.__mt_UserNotFoundLabel = value;
+				this.SetNativeField("UserNotFoundLabel", value);
 			}
 		}
 	}

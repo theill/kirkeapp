@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Json;
+
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using com.podio;
-using System.Json;
 
 #endregion
 
@@ -60,6 +61,17 @@ namespace dk.kirkeapp {
 
 			NavigationItem.Title = "Beskeder";
 
+			UIImage image = UIImage.FromBundle("Images/double-paper.png");
+			UIImageView a = new UIImageView(image);
+			this.View.AddSubview(a);
+			this.View.InsertSubviewAbove(a, this.View.Subviews[0]);
+
+			image = UIImage.FromBundle("Images/brown-gradient.png");
+			a = new UIImageView(image);
+			View.AddSubview(a);
+
+			tblMessages.SeparatorColor = UIColor.FromRGB(217, 212, 199);
+
 			this.NavigationItem.RightBarButtonItem = new UIBarButtonItem("Ny", UIBarButtonItemStyle.Plain, (sender, e) => {
 				var c = new NewMessageViewController();
 				NavigationController.PushViewController(c, true);
@@ -73,6 +85,7 @@ namespace dk.kirkeapp {
 
 				foreach (JsonObject item in items) {
 					Message m = new Message();
+					m.ID = item.AsInt32("item_id");
 					m.Content = item.AsString("title");
 					DateTime sentAt;
 					DateTime.TryParse(item["initial_revision"].AsString("created_on"), out sentAt);
@@ -83,13 +96,26 @@ namespace dk.kirkeapp {
 						string external_id = field.AsString("external_id");
 
 						if (external_id == "title") {
-							m.Title = field["values"][0]["value"];
+							m.Title = field["values"][0].AsString("value");
 						} else if (external_id == "body") {
-							m.Content = HtmlRemoval.StripTags(field["values"][0]["value"]);
+							m.Content = HtmlRemoval.StripTags(field["values"][0].AsString("value"));
 						} else if (external_id == "author") {
-							m.From = field["values"][0]["value"]["name"];
+							m.From = field["values"][0]["value"].AsString("name");
 						} else if (external_id == "modtager") {
-							m.To = field["values"][0]["value"]["name"];
+							m.To = field["values"][0]["value"].AsString("name");
+						}
+
+						// set defaults
+						if (string.IsNullOrEmpty(m.Title)) {
+							m.Title = "Unavngivet";
+						}
+
+						if (string.IsNullOrEmpty(m.From)) {
+							m.From = "Ukendt";
+						}
+
+						if (string.IsNullOrEmpty(m.To)) {
+							m.To = "Ukendt";
 						}
 
 						#region Example of returned fields
