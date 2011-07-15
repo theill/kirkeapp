@@ -95,8 +95,13 @@
 				<reference key="IBUIBackgroundColor" ref="799606029"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISeparatorStyle">1</int>
+				<int key="IBUISelectionStyle">0</int>
 				<int key="IBUIAccessoryType">1</int>
 				<reference key="IBUIContentView" ref="354032285"/>
+				<object class="NSColor" key="IBUISelectedTextColor">
+					<int key="NSColorSpace">1</int>
+					<bytes key="NSRGB">MC41NTI5NDExNzY1IDAuMjI3NDUwOTgwNCAwLjAxOTYwNzg0MzE0AA</bytes>
+				</object>
 			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">

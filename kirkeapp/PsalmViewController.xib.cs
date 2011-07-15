@@ -45,24 +45,33 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
+			string text = string.Empty;
+
 			using (var db = new SQLite.SQLiteConnection("Databases/kirkeapp.db")) {
 				var psalms = db.Query<Psalm>("SELECT id AS ID, no AS No, title AS Title, melody AS Melody, author AS Author FROM psalms WHERE id = ?", this.PsalmID);
 				if (psalms != null && psalms.Count > 0) {
 					this.Psalm = psalms[0];
 
 					var verses = db.Query<Verse>("SELECT no AS No, content AS Content FROM verses WHERE psalm_id = ? ORDER BY no", this.PsalmID);
-					string text = string.Join("", verses.ConvertAll((verse) => {
+					text = string.Join("", verses.ConvertAll((verse) => {
 						return string.Format("{0}\n{1}\n\n", verse.No, verse.Content);
 					}));
-
-					NavigationItem.Title = Psalm.Title;
-
-					NoLabel.Text = Psalm.No.ToString();
-					CaptionLabel.Text = Psalm.Title;
-					AuthorLabel.Text = Psalm.Author;
-					VersesTextView.Text = text;
 				}
 			}
+
+			NavigationItem.Title = Psalm.No.ToString();
+
+			UIImage image = UIImage.FromBundle("Images/brown-gradient.png");
+			UIImageView a = new UIImageView(image);
+			View.AddSubview(a);
+
+			NoLabel.Text = Psalm.No.ToString();
+			CaptionLabel.Text = Psalm.Title;
+			AuthorLabel.Text = Psalm.Author;
+			VersesTextView.Text = text;
+
+			VersesTextView.Frame = new System.Drawing.RectangleF(10, 100, 274, VersesTextView.ContentSize.Height);
+			ContentScrollView.ContentSize = new System.Drawing.SizeF(304, 120 + VersesTextView.ContentSize.Height);
 		}
 	}
 }

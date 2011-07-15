@@ -23,9 +23,12 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
+			btnMessages.Enabled = false;
+			btnDonation.Enabled = false;
+
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 
-			appDelegate.PodioClient.authenticate_with_credentials("admin@kirkeapp.dk", "belle0", (oauth_token) => {
+			appDelegate.PodioClient.authenticate_with_credentials(AppDelegate.PODIO_USERNAME, AppDelegate.PODIO_PASSWORD, (oauth_token) => {
 				appDelegate.PodioClient._get(string.Format("/space/url?url={0}", appDelegate.PodioSpaceUrl), (rsp) => {
 					Console.WriteLine("Got info from space");
 					appDelegate.ActiveSpace = Space.Parse(rsp);
@@ -64,19 +67,6 @@ namespace dk.kirkeapp {
 				Console.WriteLine("Failed to authenticate!");
 			});
 
-//			JsonValue item;
-//
-//			item = appDelegate.PodioClient._get("/item/685323");
-//			Console.WriteLine("Got item " + item.ToString());
-//
-////			item = client._get(string.Format("/space/url?info=false&url={0}", System.Web.HttpUtility.UrlEncode("https://kirkeapp.podio.com/kokkedal/")));
-////			// {"post_on_new_member":true,"url_label":"kokkedal","created_on":"2011-06-13 05:51:54","org":{"type":"free","premium":false,"name":"Kirkeapp","logo":null,"url":"https:\/\/kirkeapp.podio.com\/","url_label":"kirkeapp","image":null,"org_id":20617},"subscribed":1,"name":"Kokkedal","post_on_new_app":true,"rights":["add_app","add_contact","add_status","add_task","add_widget","subscribe","view"],"url":"https:\/\/kirkeapp.podio.com\/kokkedal\/","space_id":55853,"org_id":20617,"created_by":{"link":"https:\/\/podio.com\/-\/contacts\/5183","avatar":2596,"user_id":5183,"image":{"link":"https:\/\/download.podio.com\/2596","file_id":2596},"profile_id":5183,"type":"user","name":"Peter Theill"},"role":"regular"}
-////			Console.WriteLine("Got space " + item);
-//
-//			item = appDelegate.PodioClient._get("/calendar/app/291877/?app_id=291877&date_from=2010-01-01&date_to=2020-01-01&types=item");
-////[{"start":"2011-06-16","group":"Event","org":{"type":"free","premium":false,"name":"Kirkeapp","logo":null,"url":"https:\/\/kirkeapp.podio.com\/","url_label":"kirkeapp","image":null,"org_id":20617},"title":"Pigekoret kommer og spiller","link":"https:\/\/kirkeapp.podio.com\/kokkedal\/item\/685323","end":"2011-06-16","app":{"item_name":"Event","url_label":"events","icon":"44.png","app_id":291877,"name":"Events"},"space":{"url":"https:\/\/kirkeapp.podio.com\/kokkedal\/","url_label":"kokkedal","space_id":55853,"name":"Kokkedal"},"type":"item","id":685323}]
-//			Console.WriteLine("Got items " + item.ToString());
-
 			NavigationItem.Title = appDelegate.ApplicationName;
 
 			UIImage image = UIImage.FromBundle("Images/brown-gradient.png");
@@ -102,19 +92,19 @@ namespace dk.kirkeapp {
 			btnPsalms.SetTitle("", UIControlState.Normal);
 			btnFavorites.SetTitle("", UIControlState.Normal);
 
-			btnMessages.TouchUpInside += delegate(object sender, EventArgs e) {
+			btnMessages.TouchUpInside += (sender, e) => {
 				Console.WriteLine("Displaying messages");
 				var c = new MessagesViewController();
 				NavigationController.PushViewController(c, true);
 			};
 
-			btnCalendar.TouchUpInside += delegate(object sender, EventArgs e) {
+			btnCalendar.TouchUpInside += (sender, e) => {
 				Console.WriteLine("Displaying calendar");
 				var c = new CalendarViewController();
 				NavigationController.PushViewController(c, true);
 			};
 
-			this.btnDonation.TouchUpInside += delegate(object sender, EventArgs e) {
+			this.btnDonation.TouchUpInside += (sender, e) => {
 				Console.WriteLine("Displaying Donations");
 				var c = new DonationsViewController();
 				NavigationController.PushViewController(c, true);
@@ -145,10 +135,18 @@ namespace dk.kirkeapp {
 			};
 		}
 
+		public override void ViewDidAppear(bool animated) {
+			base.ViewDidAppear(animated);
+
+			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
+			bool contactLoggedIn = appDelegate.ActiveContact != null;
+			btnMessages.Enabled = contactLoggedIn;
+			btnDonation.Enabled = contactLoggedIn;
+		}
+
 		void AccountClick(object sender, EventArgs e) {
 			Console.WriteLine("Log in");
-			var c = new LogOnViewController();
-			this.NavigationController.PushViewController(c, false);
+			this.NavigationController.PushViewController(new LogOnViewController(), false);
 		}
 
 		public override void DidReceiveMemoryWarning() {
@@ -164,8 +162,5 @@ namespace dk.kirkeapp {
 			
 			base.ViewDidUnload();
 		}
-		
 	}
-	
 }
-

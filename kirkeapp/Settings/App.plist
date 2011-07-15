@@ -6,17 +6,19 @@
 	<string>Kokkedal Kirke</string>
 	<key>ApplicationUrl</key>
 	<string>http://kokkedal.kirkeapp.dk/</string>
+	<key>PodioChurchProfileID</key>
+	<string>2671439</string>
 	<key>PodioClientID</key>
 	<string>kirkeapp</string>
 	<key>PodioClientSecret</key>
 	<string>8tv8mJmfXuop1zPI4z3RrUmy1RszQ4MsxzBEkYZxNdqcPDAf1Nclm2mZSeYqN3zU</string>
-	<key>PodioSpaceUrl</key>
-	<string>https://kirkeapp.podio.com/kokkedal/</string>
 	<key>PodioEventsAppID</key>
 	<string>291877</string>
 	<key>PodioMessagesAppID</key>
 	<string>289471</string>
 	<key>PodioPagesAppID</key>
 	<string>340654</string>
+	<key>PodioSpaceUrl</key>
+	<string>https://kirkeapp.podio.com/kokkedal/</string>
 </dict>
 </plist>

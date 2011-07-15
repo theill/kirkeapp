@@ -8,11 +8,17 @@ using MonoTouch.MapKit;
 using MonoTouch.CoreLocation;
 using System.Json;
 using com.podio;
+using System.Globalization;
 
 #endregion
 
 namespace dk.kirkeapp {
 	public partial class AboutViewController : BackgroundViewController {
+		public string Address {
+			get {
+				return Address1Label.Text;
+			}
+		}
 		#region Constructors
 		
 		// The IntPtr and initWithCoder constructors are required for items that need 
@@ -39,7 +45,13 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
-			this.NavigationItem.Title = "Om";
+			NavigationItem.Title = "Om";
+
+			UIImage image = UIImage.FromBundle("Images/brown-gradient.png");
+			UIImageView a = new UIImageView(image);
+			View.AddSubview(a);
+
+			Address1Label.Text = "";
 
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 
@@ -49,6 +61,7 @@ namespace dk.kirkeapp {
 
 				JsonArray items = (JsonArray)rsp["items"];
 
+				string description = string.Empty, address = string.Empty;
 				double latitude = 0, longitude = 0;
 				foreach (JsonValue item in items) {
 					if (item["title"] == "Forside") {
@@ -57,32 +70,35 @@ namespace dk.kirkeapp {
 //							 {"values": [{"value": "<p>Beskrivelse af Kokkedal kirke.</p>"}], "type": "text", "field_id": 2342768, "external_id": "beskrivelse", "label": "Beskrivelse"}
 
 							if (field.AsString("external_id") == "beskrivelse") {
-								InvokeOnMainThread(() => {
-									this.DescriptionTextView.Text = HtmlRemoval.StripTags(field["values"][0]["value"]);
-								});
+								description = HtmlRemoval.StripTags(field["values"][0]["value"]);
 							} else if (field.AsString("external_id") == "lokation") {
-								InvokeOnMainThread(() => {
-									this.Address1Label.Text = field["values"][0]["value"];
-								});
+								address = field["values"][0]["value"];
 							} else if (field.AsString("external_id") == "latitude") {
-								latitude = Convert.ToDouble(field["values"][0].AsString("value"));
+								latitude = Convert.ToDouble(field["values"][0].AsString("value"), appDelegate.EnglishFormatProvider);
 							} else if (field.AsString("external_id") == "longitude") {
-								longitude = Convert.ToDouble(field["values"][0].AsString("value"));
+								longitude = Convert.ToDouble(field["values"][0].AsString("value"), appDelegate.EnglishFormatProvider);
 							}
 						}
 					}
 				}
 
-				CLLocation location = new CLLocation(latitude, longitude);
-				MKCoordinateSpan span = new MKCoordinateSpan(0.005, 0.005);
-				MKCoordinateRegion region = new MKCoordinateRegion(location.Coordinate, span);
-
 				InvokeOnMainThread(() => {
-					AddressMapView.SetCenterCoordinate(location.Coordinate, true);
-					AddressMapView.SetRegion(region, true);
+					DescriptionTextView.Text = description;
+					Address1Label.Text = address;
 
-					MyAnnotation a = new MyAnnotation(location.Coordinate, "", "");
-					AddressMapView.AddAnnotationObject(a);
+					AddressMapView.Delegate = new MapViewDelegate(appDelegate);
+
+					if (latitude != 0.0 && longitude != 0.0) {
+						CLLocationCoordinate2D coord = new CLLocationCoordinate2D(latitude, longitude);
+						MKCoordinateSpan span = new MKCoordinateSpan(0.005, 0.005);
+						MKCoordinateRegion region = new MKCoordinateRegion(coord, span);
+
+						AddressMapView.SetCenterCoordinate(coord, true);
+						AddressMapView.SetRegion(region, true);
+
+						MyAnnotation annotation = new MyAnnotation(coord, appDelegate.ApplicationName, "Vis i fuldskærm");
+						AddressMapView.AddAnnotationObject(annotation);
+					}
 				});
 
 			}, (error) => {
@@ -90,6 +106,13 @@ namespace dk.kirkeapp {
 				Console.WriteLine("Unable to read info about church");
 			});
 		}
+
+//		public override void ViewDidAppear(bool animated) {
+//			base.ViewDidAppear(animated);
+//
+//			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
+//			AddressMapView.Delegate = new MapViewDelegate(appDelegate);
+//		}
 	}
 
 	/// <summary>
@@ -124,10 +147,53 @@ namespace dk.kirkeapp {
 		/// <summary>
 		/// custom constructor
 		/// </summary>
-		public MyAnnotation(CLLocationCoordinate2D coord, string t, string s) : base() {
+		public MyAnnotation(CLLocationCoordinate2D coord, string title, string subtitle) : base() {
 			_coordinate = coord;
-			_title = t; 
-			_subtitle = s;
+			_title = title;
+			_subtitle = subtitle;
+		}
+	}
+
+
+	/// <summary>
+	///
+	/// </summary>
+	public class MapViewDelegate : MKMapViewDelegate {
+		private AppDelegate _appd;
+
+		public MapViewDelegate(AppDelegate appd):base() {
+			_appd = appd;
+		}
+
+		public override MKAnnotationView GetViewForAnnotation(MKMapView mapView, NSObject annotation) {
+			Console.WriteLine("attempt to get view for MKAnnotation " + annotation);
+			try {
+				var anv = mapView.DequeueReusableAnnotation("thislocation");
+				if (anv == null) {
+					var pinanv = new MKPinAnnotationView(annotation, "thislocation");
+					pinanv.AnimatesDrop = true;
+					pinanv.PinColor = MKPinAnnotationColor.Red;
+					pinanv.CanShowCallout = false;
+
+					UIButton btn = UIButton.FromType(UIButtonType.DetailDisclosure);
+					btn.TouchUpInside += (sender, e) => {
+						Console.WriteLine("Going to start maps app");
+//						Console.WriteLine("We have coord: {0} and {1}", mapView.CenterCoordinate.Latitude, mapView.CenterCoordinate.Longitude);
+//						string url = string.Format("http://maps.google.com/maps?ll={0},{1}", mapView.CenterCoordinate.Latitude.ToString(_appd.EnglishFormatProvider), mapView.CenterCoordinate.Longitude.ToString(_appd.EnglishFormatProvider));
+//						string url = string.Format("http://maps.google.com/maps?saddr={0}", _appd.Address);
+//						Console.WriteLine("Got url {0}", url);
+//						UIApplication.SharedApplication.OpenUrl(NSUrl.FromString(url));
+					};
+					pinanv.RightCalloutAccessoryView = btn;
+					anv = pinanv;
+				} else {
+					anv.Annotation = annotation;
+				}
+				return anv;
+			} catch (Exception ex) {
+				Console.WriteLine("GetViewForAnnotation Exception " + ex);
+				return null;
+			}
 		}
 	}
 }

@@ -43,11 +43,6 @@ namespace dk.kirkeapp {
 			set;
 		}
 
-		public UIImage Image {
-			get;
-			set;
-		}
-
 		public string ImageFilename {
 			get;
 			set;
@@ -69,13 +64,18 @@ namespace dk.kirkeapp {
 				this.Css = @"body { background-color: rgb(250, 249, 235); margin: 0; padding: 6px; }
 body, p { font-family: Helvetica; font-size: 12pt; }
 a { color: rgb(141, 58, 5); }
-img.primary { -webkit-transform-style:preserve-3d; -webkit-transform: rotate(-2deg); }";
+//img.primary { -webkit-transform-style:preserve-3d; -webkit-transform: rotate(-2deg); }";
 			}
 
-			NSUrl imageUrl = NSUrl.FromFilename(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ImageFilename));
-			Console.WriteLine("We have a file: {0}", imageUrl.ToString());
+			string imageHtml = string.Empty;
+			if (!string.IsNullOrEmpty(ImageFilename)) {
+				NSUrl imageUrl = NSUrl.FromFilename(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ImageFilename));
+				Console.WriteLine("We have a file: {0}", imageUrl.ToString());
+				imageHtml = string.Format("<img class='primary' src='{0}' width='300' />", imageUrl.ToString());
+			}
+
 //			this.WebView.Delegate = new WebPageViewDelegate(this);
-			WebView.LoadHtmlString(string.Format("<html><head><style>{0}</style></head><body><img class='primary' src='{2}' width='300' /><div id='body'>{1}</div></body></html>", this.Css, this.Html, imageUrl.ToString()), null);
+			WebView.LoadHtmlString(string.Format("<html><head><style>{0}</style></head><body><div id='body'>{2}{1}</div></body></html>", this.Css, this.Html, imageHtml), null);
 			WebView.BackgroundColor = UIColor.FromRGB(250, 249, 235);
 
 			if (WebView.Subviews.Length > 0) {

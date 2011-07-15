@@ -8,20 +8,23 @@ using MonoTouch.UIKit;
 #endregion
 
 namespace dk.kirkeapp {
-	public class FilteringDataSource : UITableViewDataSource {
+	public class FilteringDataSource : UITableViewSource {
 		public static NSString kCellIdentifier = new NSString("CellIdentifier");
 		private List<CellData> _data = new List<CellData>();
 		private Dictionary<int, IJsonCellController> controllers = new Dictionary<int, IJsonCellController>();
+		private Action<CellData> _selected;
 
 		public FilteringDataSource() {
 		}
 
-		public FilteringDataSource(string filter) {
+		public FilteringDataSource(string filter, Action<CellData> selected) {
+			_selected = selected;
+
 			using (var db = new SQLite.SQLiteConnection("Databases/kirkeapp.db")) {
 				if (!string.IsNullOrEmpty(filter)) {
-					_data = db.Query<CellData>("SELECT id AS ID, title AS Title FROM psalms WHERE no = ? ORDER BY no", filter);
+					_data = db.Query<CellData>("SELECT id AS ID, title AS Title FROM psalms WHERE no = ? OR title LIKE ? ORDER BY no", filter, "%" + filter + "%");
 				} else {
-					_data = db.Query<CellData>("SELECT id AS ID, name AS Title FROM categories ORDER BY id");
+					_data = new List<CellData>();
 				}
 			}
 		}
@@ -35,6 +38,9 @@ namespace dk.kirkeapp {
 
 				NSBundle.MainBundle.LoadNib("TitleCellViewController", (NSObject)cellController, null);
 				cell = cellController.ViewCell;
+				cell.SelectionStyle = UITableViewCellSelectionStyle.Blue;
+				cell.SelectedBackgroundView = new UIView(); // important to create it - otherwise you can't set color
+				cell.SelectedBackgroundView.BackgroundColor = UIColor.FromRGB(235, 232, 217);
 
 				cell.Tag = Environment.TickCount;
 				controllers.Add(cell.Tag, cellController);
@@ -52,6 +58,19 @@ namespace dk.kirkeapp {
 
 		public override int RowsInSection(UITableView tableview, int section) {
 			return _data.Count;
+		}
+
+		public override float GetHeightForRow(UITableView tableView, NSIndexPath indexPath) {
+			return 64f;
+		}
+
+		public override void RowSelected(UITableView tableView, NSIndexPath indexPath) {
+			Console.WriteLine("Selected {0}", indexPath.Row);
+			var e = _data[indexPath.Row];
+
+			if (_selected != null) {
+				_selected.Invoke(e);
+			}
 		}
 	}
 
@@ -77,18 +96,24 @@ namespace dk.kirkeapp {
 		}
 
 		public override void TextChanged(UISearchBar searchBar, string searchText) {
-			_tableView.DataSource = new FilteringDataSource(searchText);
-			_tableView.Delegate = new JsonDataListDelegate<CellData>(_controller, _controller, (cell) => {
-				Console.WriteLine("Got a click on {0}", cell.Title);
-
-				var c = new PsalmViewController {
-					PsalmID = cell.ID
-				};
-
+			_tableView.Source = new FilteringDataSource(searchText, (cell) => {
 				InvokeOnMainThread(() => {
-					_controller.NavigationController.PushViewController(c, true);
+					_controller.NavigationController.PushViewController(new PsalmViewController {
+						PsalmID = cell.ID
+					}, true);
 				});
 			});
+//			_tableView.DataSource = new FilteringDataSource(searchText);
+//			_tableView.Delegate = new FilteringDelegate();
+//			_tableView.Delegate = new JsonDataListDelegate<CellData>(_controller, _controller, (cell) => {
+//				Console.WriteLine("Got a click on {0}", cell.Title);
+//
+//				InvokeOnMainThread(() => {
+//					_controller.NavigationController.PushViewController(new PsalmViewController {
+//					PsalmID = cell.ID
+//				}, true);
+//				});
+//			});
 
 			_tableView.ReloadData();
 		}
@@ -155,7 +180,7 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
-			NavigationItem.Title = GetTitleByLevel(this.Level);
+			NavigationItem.Title = "Salmer";
 
 			UIImage image = UIImage.FromBundle("Images/double-paper.png");
 			UIImageView a = new UIImageView(image);
@@ -168,53 +193,8 @@ namespace dk.kirkeapp {
 
 			CategoriesTableView.SeparatorColor = UIColor.FromRGB(217, 212, 199);
 
-			CategoriesTableView.DataSource = new JsonDataSource<CellData>(this);
-			CategoriesTableView.Delegate = new JsonDataListDelegate<CellData>(this, this, (cell) => {
-				if (this.Level < 1) {
-					var c = new PsalmsViewController {
-						Level = this.Level + 1,
-						Cell = cell
-					};
-					NavigationController.PushViewController(c, true);
-				} else {
-					var c = new PsalmViewController {
-						PsalmID = cell.ID
-					};
-					NavigationController.PushViewController(c, true);
-				}
-			});
-
 			SearchBar.Delegate = new PsalmsSearch(this, this.CategoriesTableView);
-		}
-
-		public override void ViewDidAppear(bool animated) {
-			base.ViewDidAppear(animated);
-
-			using (var db = new SQLite.SQLiteConnection("Databases/kirkeapp.db")) {
-				_data = db.Query<CellData>(GetQueryByLevel(this.Level), this.Cell.ID);
-			}
-
-			CategoriesTableView.ReloadData();
-		}
-
-		private string GetQueryByLevel(int level) {
-			switch (level) {
-			case 1:
-				return "SELECT id AS ID, (no || ' ' || title) AS Title FROM psalms WHERE category_id = ? ORDER BY no";
-			case 2:
-				return "SELECT id AS ID, content AS Title FROM verses WHERE psalm_id = ? ORDER BY no";
-			default:
-				return "SELECT id AS ID, name AS Title FROM categories ORDER BY id";
-			}
-		}
-
-		private string GetTitleByLevel(int level) {
-			switch (level) {
-			case 0:
-				return "Salmer";
-			default:
-				return this.Cell != null ? this.Cell.Title : "Ukendt";
-			}
+			SearchBar.BecomeFirstResponder();
 		}
 	}
 }

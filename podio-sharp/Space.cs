@@ -1,5 +1,7 @@
+#region Using directives
 using System;
 using System.Json;
+#endregion
 
 namespace com.podio {
 	public class Space {
@@ -45,4 +47,3 @@ namespace com.podio {
 		}
 	}
 }
-

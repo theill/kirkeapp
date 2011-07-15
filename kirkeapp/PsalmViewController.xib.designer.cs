@@ -25,6 +25,8 @@ namespace dk.kirkeapp {
 		
 		private MonoTouch.UIKit.UITextView __mt_VersesTextView;
 		
+		private MonoTouch.UIKit.UIScrollView __mt_ContentScrollView;
+		
 		#pragma warning disable 0169
 		[MonoTouch.Foundation.Connect("view")]
 		private MonoTouch.UIKit.UIView view {
@@ -83,6 +85,18 @@ namespace dk.kirkeapp {
 			set {
 				this.__mt_VersesTextView = value;
 				this.SetNativeField("VersesTextView", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("ContentScrollView")]
+		private MonoTouch.UIKit.UIScrollView ContentScrollView {
+			get {
+				this.__mt_ContentScrollView = ((MonoTouch.UIKit.UIScrollView)(this.GetNativeField("ContentScrollView")));
+				return this.__mt_ContentScrollView;
+			}
+			set {
+				this.__mt_ContentScrollView = value;
+				this.SetNativeField("ContentScrollView", value);
 			}
 		}
 	}

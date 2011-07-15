@@ -58,7 +58,7 @@ namespace dk.kirkeapp {
 
 				List<JsonValue > titleValues = new List<JsonValue>();
 				JsonObject v = new JsonObject();
-				v.Add("value", this.MessageTextView.Text);
+				v.Add("value", this.MessageTextView.Text.Trim());
 				titleValues.Add(v);
 
 				title.Add("values", new JsonArray(titleValues.ToArray()));
@@ -77,6 +77,20 @@ namespace dk.kirkeapp {
 
 				author.Add("values", new JsonArray(authorValues.ToArray()));
 				fields.Add(author);
+
+				// recipient
+				JsonObject recipient = new JsonObject();
+				recipient.Add("external_id", new JsonPrimitive("modtager"));
+				recipient.Add("type", new JsonPrimitive("user"));
+
+				List<JsonValue > recipientValues = new List<JsonValue>();
+				v = new JsonObject();
+				v.Add("value", new JsonPrimitive(Convert.ToInt32(appDelegate.PodioChurchProfileID)));
+
+				recipientValues.Add(v);
+
+				recipient.Add("values", new JsonArray(recipientValues.ToArray()));
+				fields.Add(recipient);
 
 
 				JsonObject data = new JsonObject();

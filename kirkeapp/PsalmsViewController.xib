@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="8"/>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -68,16 +68,23 @@
 						<reference key="NSSuperview" ref="191373211"/>
 						<int key="IBUIContentMode">3</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<int key="IBBarStyle">2</int>
+						<int key="IBBarStyle">1</int>
 						<string key="IBText"/>
 						<string key="IBPrompt"/>
-						<string key="IBPlaceholder">Søg salmenummer</string>
+						<string key="IBPlaceholder">Skriv titel eller nummer</string>
+						<object class="NSColor" key="IBTintColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4yNDMxMzcyNTQ5IDAuMTEzNzI1NDkwMiAwLjA1ODgyMzUyOTQxAA</bytes>
+						</object>
 						<object class="IBUITextInputTraits" key="IBTextInputTraits">
 							<int key="IBUIAutocorrectionType">1</int>
-							<int key="IBUIKeyboardType">4</int>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
-						<reference key="IBScopeButtonTitles" ref="0"/>
+						<object class="NSArray" key="IBScopeButtonTitles">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>Scope</string>
+							<string>Scope</string>
+						</object>
 					</object>
 				</object>
 				<string key="NSFrameSize">{320, 416}</string>

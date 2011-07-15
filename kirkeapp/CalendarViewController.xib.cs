@@ -118,31 +118,28 @@ namespace dk.kirkeapp {
 						}
 
 						var filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format("podio-file-{0}", file_id));
-						if (!File.Exists(filename)) {
-							UIImage eventImage = null;
+						if (File.Exists(filename)) {
+							Console.WriteLine("File {0} already exists", filename);
+							InvokeOnMainThread(() => {
+								NavigationController.PushViewController(new WebPageViewController {
+								Title = evt.Title,
+								ImageFilename = filename,
+								Html = description
+							}, true);
+							});
+						} else {
 							appDelegate.PodioClient._download(file_id, (image_filename) => {
 								Console.WriteLine("Downloaded file to: {0}", image_filename);
-								eventImage = UIImage.FromFile(image_filename);
 								InvokeOnMainThread(() => {
 									NavigationController.PushViewController(new WebPageViewController {
 										Title = evt.Title,
-										ImageFilename = filename,
-										Image = eventImage,
+										ImageFilename = image_filename,
 										Html = description
 									}, true);
 								});
 
 							}, (err) => {
 								Console.WriteLine("Failed to download file: {0}", err);
-							});
-						} else {
-							InvokeOnMainThread(() => {
-								NavigationController.PushViewController(new WebPageViewController {
-								Title = evt.Title,
-								ImageFilename = filename,
-								Image = UIImage.FromFile(filename),
-								Html = description
-							}, true);
 							});
 						}
 					}, (error) => {

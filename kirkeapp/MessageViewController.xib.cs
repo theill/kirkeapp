@@ -119,7 +119,7 @@ namespace dk.kirkeapp {
 					var m = new Message {
 						Title = item.AsString("value"),
 						Content = item.AsString("value"),
-						From = "asfd",
+						From = item["created_by"].AsString("name"),
 						SentAt = item.AsDateTime("created_on")
 					};
 					_messages.Add(m);
