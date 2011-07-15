@@ -58,6 +58,10 @@
     <Compile Include="IJsonDataSource.cs" />
     <Compile Include="OptionDictionary.cs" />
     <Compile Include="IJsonCellController.cs" />
+    <Compile Include="Psalm.cs" />
+    <Compile Include="Favorite.cs" />
+    <Compile Include="Verse.cs" />
+    <Compile Include="CellData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\podio-sharp\podio-sharp.csproj">

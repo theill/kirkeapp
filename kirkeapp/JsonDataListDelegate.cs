@@ -22,9 +22,7 @@ namespace dk.kirkeapp {
 		}
 
 		public override float GetHeightForRow(UITableView tableView, NSIndexPath indexPath) {
-			Console.WriteLine("Asking for height of row {0} with {1} elements", indexPath.Row, _appd.ListCount);
 			if (_appd.ListCount <= indexPath.Row) {
-				Console.WriteLine("We actually do not have a row here");
 				return 64f;
 			}
 

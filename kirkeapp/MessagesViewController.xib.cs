@@ -108,12 +108,9 @@ namespace dk.kirkeapp {
 					destinationProfiles.Add(m.AuthorProfileID);
 					destinationProfiles.Add(m.RecipientProfileID);
 					destinationProfiles.AddRange(ExpandProfilesInGroup(m.RecipientGroupID));
-					Console.WriteLine("After group has been expanded we have: {0}", destinationProfiles);
 
 					if (destinationProfiles.Contains(appDelegate.ActiveContact.ProfileID)) {
 						_data.Add(m);
-					} else {
-						Console.WriteLine("Not gonna add {0} since profile [{1}, {2}] doesn't match logged on {3}", m.Title, m.AuthorProfileID, m.RecipientProfileID, appDelegate.ActiveContact.ProfileID);
 					}
 				}
 
@@ -121,9 +118,7 @@ namespace dk.kirkeapp {
 					tblMessages.DataSource = new JsonDataSource<Message>(this);
 					tblMessages.ReloadData();
 				});
-			}, (error) => {
-				Console.WriteLine("Unable to read messages");
-			});
+			}, (error) => AppDelegate.GenericErrorHandling(error));
 		}
 	}
 }

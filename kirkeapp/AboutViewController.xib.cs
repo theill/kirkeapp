@@ -52,7 +52,8 @@ namespace dk.kirkeapp {
 			View.AddSubview(a);
 
 			Address1Label.Text = "";
-
+			DescriptionTextView.Text = "";
+			
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 
 			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;

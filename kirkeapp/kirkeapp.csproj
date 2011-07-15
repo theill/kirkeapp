@@ -15,7 +15,7 @@
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <BundleIdentifier>dk.kirkeapp</BundleIdentifier>
     <BundleDisplayName>Kirkeapp</BundleDisplayName>
-    <BundleVersion>0.9.3</BundleVersion>
+    <BundleVersion>0.9.4</BundleVersion>
     <BundleIcon>Icon.png</BundleIcon>
     <BundleIconHigh>Icon@2x.png</BundleIconHigh>
   </PropertyGroup>
@@ -169,8 +169,6 @@
     <Compile Include="BibleViewController.xib.designer.cs">
       <DependentUpon>BibleViewController.xib</DependentUpon>
     </Compile>
-    <Compile Include="Chapter.cs" />
-    <Compile Include="Section.cs" />
     <Compile Include="PsalmsViewController.xib.cs">
       <DependentUpon>PsalmsViewController.xib</DependentUpon>
     </Compile>
@@ -202,7 +200,6 @@
     <Compile Include="MessageCellViewController.xib.designer.cs">
       <DependentUpon>MessageCellViewController.xib</DependentUpon>
     </Compile>
-    <Compile Include="Favorite.cs" />
     <Compile Include="EventCellViewController.xib.cs">
       <DependentUpon>EventCellViewController.xib</DependentUpon>
     </Compile>
@@ -222,7 +219,6 @@
       <DependentUpon>NewMessageViewController.xib</DependentUpon>
     </Compile>
     <Compile Include="SQLite.cs" />
-    <Compile Include="CellData.cs" />
     <Compile Include="TextPageViewController.xib.cs">
       <DependentUpon>TextPageViewController.xib</DependentUpon>
     </Compile>
@@ -241,8 +237,6 @@
     <Compile Include="PsalmViewController.xib.designer.cs">
       <DependentUpon>PsalmViewController.xib</DependentUpon>
     </Compile>
-    <Compile Include="Verse.cs" />
-    <Compile Include="Psalm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xib" />
@@ -278,7 +272,6 @@
     <Content Include="Images\box.png" />
     <Content Include="Images\multiple-coins.png" />
     <Content Include="Images\single-coin.png" />
-    <Content Include="Images\calendar-icon.png" />
     <Content Include="Images\messages-icon.png" />
     <Content Include="Images\plus-icon.png" />
     <Content Include="Settings\App.plist" />
@@ -307,7 +300,6 @@
     <Content Include="Images\cell-light%402x.png" />
     <Content Include="Images\old-paper%402x.png" />
     <Content Include="Images\double-paper%402x.png" />
-    <Content Include="Images\wood-bg%402x.png" />
     <Content Include="Images\ornament-down%402x.png" />
     <Content Include="Images\ornament-vertical%402x.png" />
     <Content Include="Images\inner-page%402x.png" />
@@ -315,6 +307,19 @@
     <Content Include="Images\test-buttons.png" />
     <Content Include="Images\wood-with-buttons-bg%402x.png" />
     <Content Include="Images\main-icons%402x.png" />
+    <Content Include="Images\old-wood-bg%402x.png" />
+    <Content Include="Images\bible-icon%402x.png" />
+    <Content Include="Images\calendar-icon%402x.png" />
+    <Content Include="Images\favorites-icon%402x.png" />
+    <Content Include="Images\mail-icon%402x.png" />
+    <Content Include="Images\psalms-icon%402x.png" />
+    <Content Include="Images\wood-bg%402x.png" />
+    <Content Include="Images\old-calendar-icon.png" />
+    <Content Include="Images\bible-icon-selected%402x.png" />
+    <Content Include="Images\calendar-icon-selected%402x.png" />
+    <Content Include="Images\favorites-icon-selected%402x.png" />
+    <Content Include="Images\mail-icon-selected%402x.png" />
+    <Content Include="Images\psalms-icon-selected%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\podio-sharp\podio-sharp.csproj">

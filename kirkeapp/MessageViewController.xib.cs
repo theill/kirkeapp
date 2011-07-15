@@ -146,8 +146,6 @@ namespace dk.kirkeapp {
 			};
 
 			this.txtMessage.ShouldReturn = (textField) => {
-				Console.WriteLine("TODO: Post what user entered: {0}", textField.Text);
-
 				// comment
 				JsonObject comment = new JsonObject();
 				comment.Add("external_id", new JsonPrimitive(appDelegate.ActiveContact.ProfileID.ToString()));
@@ -164,12 +162,9 @@ namespace dk.kirkeapp {
 						textField.Text = "";
 					});
 
-				}, (err) => {
-					Console.WriteLine("Desvaerre, det gik ikke .. fik {0}", err);
+				}, (err) => AppDelegate.GenericErrorHandling(err));
 
-					// FIXME: show error for user
-				});
-
+				// do not close keyboard box to allow user to keep entering messages
 				return false;
 			};
 		}

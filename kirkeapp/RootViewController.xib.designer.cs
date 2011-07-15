@@ -31,6 +31,8 @@ namespace dk.kirkeapp {
 		
 		private MonoTouch.UIKit.UIButton __mt_btnAbout;
 		
+		private MonoTouch.UIKit.UILabel __mt_TitleLabel;
+		
 		#pragma warning disable 0169
 		[MonoTouch.Foundation.Connect("view")]
 		private MonoTouch.UIKit.UIView view {
@@ -125,6 +127,18 @@ namespace dk.kirkeapp {
 			set {
 				this.__mt_btnAbout = value;
 				this.SetNativeField("btnAbout", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("TitleLabel")]
+		private MonoTouch.UIKit.UILabel TitleLabel {
+			get {
+				this.__mt_TitleLabel = ((MonoTouch.UIKit.UILabel)(this.GetNativeField("TitleLabel")));
+				return this.__mt_TitleLabel;
+			}
+			set {
+				this.__mt_TitleLabel = value;
+				this.SetNativeField("TitleLabel", value);
 			}
 		}
 	}

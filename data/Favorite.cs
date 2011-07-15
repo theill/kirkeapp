@@ -1,37 +1,33 @@
+#region Using directives
 using System;
+using System.Collections.Generic;
+
 using dk.kirkeapp.data;
 
-namespace dk.kirkeapp {
-	public class CellData : IJsonData {
-		public int ID {
-			get;
-			set;
-		}
+#endregion
 
+namespace dk.kirkeapp.data {
+	public class Favorite : IJsonData {
 		public string Title {
 			get;
 			set;
 		}
 
-		public string Description {
+		public string Content {
 			get;
 			set;
+		}
+		
+		public Favorite() {
 		}
 
 		#region IJsonData implementation
 		public OptionDictionary ToOptions() {
 			OptionDictionary options = new OptionDictionary();
-			options.Add("ID", this.ID);
-
-			// done to support "Title" cell renderer
 			options.Add("Title", this.Title);
 			return options;
 		}
-
 		#endregion
-
-		public CellData() {
-		}
 	}
 }
 

@@ -177,8 +177,12 @@ namespace dk.kirkeapp {
 		public override void OnActivated(UIApplication application) {
 		}
 		
-		public override void WillTerminate (UIApplication application) {
+		public override void WillTerminate(UIApplication application) {
 			// save data here
+		}
+
+		public static void GenericErrorHandling(string errorMessage) {
+			Console.WriteLine("Failed to handle message: {0}", errorMessage);
 		}
 	}
 }

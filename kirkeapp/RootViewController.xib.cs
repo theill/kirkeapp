@@ -51,6 +51,36 @@ namespace dk.kirkeapp {
 			});
 		}
 
+		public void Authenticated(string oauthToken) {
+			// read all groups to figure out what messages are available for a given profile
+			LoadGroups();
+
+			// initialize active space
+			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
+			appDelegate.PodioClient._get(string.Format("/space/url?url={0}", appDelegate.PodioSpaceUrl), (rsp) => {
+				appDelegate.ActiveSpace = Space.FromJson(rsp);
+
+				int profileID = AppDelegate.Defaults.IntForKey("profile_id");
+				if (profileID > 0) {
+					appDelegate.PodioClient._get(string.Format("/contact/{0}/v2", profileID), (rsp2) => {
+
+						appDelegate.ActiveContact = Contact.FromJson(rsp2);
+
+						InvokeOnMainThread(() => {
+							bool contactLoggedIn = appDelegate.ActiveContact != null;
+							btnMessages.Enabled = contactLoggedIn;
+							btnDonation.Enabled = contactLoggedIn;
+						});
+
+					}, AppDelegate.GenericErrorHandling);
+				}
+
+				InvokeOnMainThread(() => {
+					NavigationItem.Title = TitleLabel.Text = appDelegate.ActiveSpace.Name;
+				});
+			}, AppDelegate.GenericErrorHandling);
+		}
+
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
@@ -58,50 +88,7 @@ namespace dk.kirkeapp {
 			btnDonation.Enabled = false;
 
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
-
-			appDelegate.PodioClient.Authenticate(AppDelegate.PODIO_USERNAME, AppDelegate.PODIO_PASSWORD, (oauth_token) => {
-
-				LoadGroups();
-
-				appDelegate.PodioClient._get(string.Format("/space/url?url={0}", appDelegate.PodioSpaceUrl), (rsp) => {
-					Console.WriteLine("Got info from space");
-					appDelegate.ActiveSpace = Space.FromJson(rsp);
-
-					Console.WriteLine("Got space id of {0} created at {1}", appDelegate.ActiveSpace.SpaceID, appDelegate.ActiveSpace.CreatedOn);
-
-					int profileID = AppDelegate.Defaults.IntForKey("profile_id");
-					if (profileID > 0) {
-						appDelegate.PodioClient._get(string.Format("/contact/{0}/v2", profileID), (rsp2) => {
-							Console.WriteLine("Got active contact: {0}", (rsp2 as JsonObject));
-
-							appDelegate.ActiveContact = Contact.FromJson(rsp2);
-
-							InvokeOnMainThread(() => {
-								bool contactLoggedIn = appDelegate.ActiveContact != null;
-								btnMessages.Enabled = contactLoggedIn;
-								btnDonation.Enabled = contactLoggedIn;
-							});
-
-						}, (err) => {
-							Console.WriteLine("Desvaerre, det gik ikke .. fik {0}", err);
-
-			// FIXME: show error for user
-						});
-					}
-
-					InvokeOnMainThread(() => {
-						this.NavigationItem.Title = appDelegate.ActiveSpace.Name;
-					});
-				}, (err) => {
-					Console.WriteLine("Failed to read info for space");
-
-				});
-
-			}, (err) => {
-				Console.WriteLine("Failed to authenticate!");
-			});
-
-			NavigationItem.Title = appDelegate.ApplicationName;
+			NavigationItem.Title = TitleLabel.Text = appDelegate.ApplicationName;
 
 			UIImage image = UIImage.FromBundle("Images/brown-gradient.png");
 			UIImageView a = new UIImageView(image);
@@ -110,15 +97,21 @@ namespace dk.kirkeapp {
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem("Konto", UIBarButtonItemStyle.Plain, AccountClick);
 
 //			NavigationController.NavigationBar.Alpha = 0.40f;
-//			NavigationController.NavigationBar.TintColor = UIColor.FromRGBA(128, 128, 128, 64);
 			NavigationController.NavigationBar.TintColor = UIColor.FromRGB(158, 80, 23);
 
-			btnMessages.SetBackgroundImage(UIImage.FromBundle("Images/mail_open.png"), UIControlState.Normal);
-			btnCalendar.SetBackgroundImage(UIImage.FromBundle("Images/calendar.png"), UIControlState.Normal);
+			btnMessages.SetBackgroundImage(UIImage.FromBundle("Images/mail-icon.png"), UIControlState.Normal);
+			btnCalendar.SetBackgroundImage(UIImage.FromBundle("Images/calendar-icon.png"), UIControlState.Normal);
 			btnDonation.Hidden = true;
-			btnBible.SetBackgroundImage(UIImage.FromBundle("Images/bookmark.png"), UIControlState.Normal);
-			btnPsalms.SetBackgroundImage(UIImage.FromBundle("Images/music.png"), UIControlState.Normal);
-			btnFavorites.SetBackgroundImage(UIImage.FromBundle("Images/favorite.png"), UIControlState.Normal);
+			btnBible.SetBackgroundImage(UIImage.FromBundle("Images/bible-icon.png"), UIControlState.Normal);
+			btnPsalms.SetBackgroundImage(UIImage.FromBundle("Images/psalms-icon.png"), UIControlState.Normal);
+			btnFavorites.SetBackgroundImage(UIImage.FromBundle("Images/favorites-icon.png"), UIControlState.Normal);
+
+			btnMessages.SetBackgroundImage(UIImage.FromBundle("Images/mail-icon-selected.png"), UIControlState.Highlighted);
+			btnCalendar.SetBackgroundImage(UIImage.FromBundle("Images/calendar-icon-selected.png"), UIControlState.Highlighted);
+			btnBible.SetBackgroundImage(UIImage.FromBundle("Images/bible-icon-selected.png"), UIControlState.Highlighted);
+			btnPsalms.SetBackgroundImage(UIImage.FromBundle("Images/psalms-icon-selected.png"), UIControlState.Highlighted);
+			btnFavorites.SetBackgroundImage(UIImage.FromBundle("Images/favorites-icon-selected.png"), UIControlState.Highlighted);
+
 			btnMessages.SetTitle("", UIControlState.Normal);
 			btnCalendar.SetTitle("", UIControlState.Normal);
 			btnDonation.SetTitle("", UIControlState.Normal);
@@ -126,54 +119,38 @@ namespace dk.kirkeapp {
 			btnPsalms.SetTitle("", UIControlState.Normal);
 			btnFavorites.SetTitle("", UIControlState.Normal);
 
-			btnMessages.SetBackgroundImage(new UIImage(), UIControlState.Normal);
-			btnMessages.SetBackgroundImage(new UIImage(), UIControlState.Normal);
-			btnCalendar.SetBackgroundImage(new UIImage(), UIControlState.Normal);
-			btnBible.SetBackgroundImage(new UIImage(), UIControlState.Normal);
-			btnPsalms.SetBackgroundImage(new UIImage(), UIControlState.Normal);
-			btnFavorites.SetBackgroundImage(new UIImage(), UIControlState.Normal);
-
 			btnMessages.TouchUpInside += (sender, e) => {
-				Console.WriteLine("Displaying messages");
-				var c = new MessagesViewController();
-				NavigationController.PushViewController(c, true);
+				NavigationController.PushViewController(new MessagesViewController(), true);
 			};
 
 			btnCalendar.TouchUpInside += (sender, e) => {
-				Console.WriteLine("Displaying calendar");
-				var c = new CalendarViewController();
-				NavigationController.PushViewController(c, true);
+				NavigationController.PushViewController(new CalendarViewController(), true);
 			};
 
 			this.btnDonation.TouchUpInside += (sender, e) => {
-				Console.WriteLine("Displaying Donations");
-				var c = new DonationsViewController();
-				NavigationController.PushViewController(c, true);
+				NavigationController.PushViewController(new DonationsViewController(), true);
 			};
 
 			this.btnAbout.TouchUpInside += (sender, e) => {
-				Console.WriteLine("Displaying about");
-				var c = new AboutViewController();
-				NavigationController.PushViewController(c, true);
+				NavigationController.PushViewController(new AboutViewController(), true);
 			};
 
 			this.btnBible.TouchUpInside += (sender, e) => {
-				Console.WriteLine("Displaying Bible");
-				var c = new BibleViewController();
-				NavigationController.PushViewController(c, true);
+				NavigationController.PushViewController(new BibleViewController(), true);
 			};
 
 			this.btnPsalms.TouchUpInside += (sender, e) => {
-				Console.WriteLine("Displaying psalms");
-				var c = new PsalmsViewController();
-				NavigationController.PushViewController(c, true);
+				NavigationController.PushViewController(new PsalmsViewController(), true);
 			};
 
 			this.btnFavorites.TouchUpInside += (sender, e) => {
-				Console.WriteLine("Displaying favorites");
-				var c = new FavoritesViewController();
-				NavigationController.PushViewController(c, true);
+				NavigationController.PushViewController(new FavoritesViewController(), true);
 			};
+
+//			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
+//			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
+
+			appDelegate.PodioClient.Authenticate(AppDelegate.PODIO_USERNAME, AppDelegate.PODIO_PASSWORD, Authenticated, AppDelegate.GenericErrorHandling);
 		}
 
 		public override void ViewDidAppear(bool animated) {
@@ -186,8 +163,7 @@ namespace dk.kirkeapp {
 		}
 
 		void AccountClick(object sender, EventArgs e) {
-			Console.WriteLine("Log in");
-			this.NavigationController.PushViewController(new LogOnViewController(), false);
+			NavigationController.PushViewController(new LogOnViewController(), false);
 		}
 
 		public override void DidReceiveMemoryWarning() {

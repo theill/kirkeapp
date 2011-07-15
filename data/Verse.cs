@@ -1,6 +1,6 @@
 using System;
 
-namespace dk.kirkeapp {
+namespace dk.kirkeapp.data {
 	public class Verse {
 		public int No {
 			get;
