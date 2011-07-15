@@ -14,4 +14,4 @@ zip -r ../$APP_NAME.ipa *
 cd ..
 rm -rf tozip
 
-curl http://testflightapp.com/api/builds.json -F file="@$BUILDDIR/$APP_NAME.ipa" -F api_token="$API_TOKEN" -F team_token="$TEAM_TOKEN" -F notes="$RELEASE_NOTES" -F notify=True -F replace=True -v
+curl http://testflightapp.com/api/builds.json -F file="@$BUILDDIR/$APP_NAME.ipa" -F api_token="$API_TOKEN" -F team_token="$TEAM_TOKEN" -F notes="$RELEASE_NOTES" -F distribution_lists="Internal" -F notify=True -F replace=True -v

@@ -92,6 +92,13 @@ namespace dk.kirkeapp {
 			btnPsalms.SetTitle("", UIControlState.Normal);
 			btnFavorites.SetTitle("", UIControlState.Normal);
 
+			btnMessages.SetBackgroundImage(new UIImage(), UIControlState.Normal);
+			btnMessages.SetBackgroundImage(new UIImage(), UIControlState.Normal);
+			btnCalendar.SetBackgroundImage(new UIImage(), UIControlState.Normal);
+			btnBible.SetBackgroundImage(new UIImage(), UIControlState.Normal);
+			btnPsalms.SetBackgroundImage(new UIImage(), UIControlState.Normal);
+			btnFavorites.SetBackgroundImage(new UIImage(), UIControlState.Normal);
+
 			btnMessages.TouchUpInside += (sender, e) => {
 				Console.WriteLine("Displaying messages");
 				var c = new MessagesViewController();

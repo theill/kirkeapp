@@ -15,7 +15,7 @@
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <BundleIdentifier>dk.kirkeapp</BundleIdentifier>
     <BundleDisplayName>Kirkeapp</BundleDisplayName>
-    <BundleVersion>0.9.2</BundleVersion>
+    <BundleVersion>0.9.3</BundleVersion>
     <BundleIcon>Icon.png</BundleIcon>
     <BundleIconHigh>Icon@2x.png</BundleIconHigh>
   </PropertyGroup>
@@ -322,6 +322,9 @@
     <Content Include="Images\ornament-vertical%402x.png" />
     <Content Include="Images\inner-page%402x.png" />
     <Content Include="Images\brown-gradient%402x.png" />
+    <Content Include="Images\test-buttons.png" />
+    <Content Include="Images\wood-with-buttons-bg%402x.png" />
+    <Content Include="Images\main-icons%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\podio-sharp\podio-sharp.csproj">
