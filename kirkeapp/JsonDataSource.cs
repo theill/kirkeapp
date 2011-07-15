@@ -4,6 +4,8 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using System.Collections.Generic;
 
+using dk.kirkeapp.data;
+
 #endregion
 
 namespace dk.kirkeapp {

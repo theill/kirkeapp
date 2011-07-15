@@ -20,7 +20,7 @@ namespace com.podio {
 			this.client_secret = client_secret;
 		}
 
-		public void authenticate_with_credentials(string username, string password, Action<string> completed, Action<string> failed) {
+		public void Authenticate(string username, string password, Action<string> completed, Action<string> failed) {
 //			curl -d 'grant_type=password&username=admin@kirkeapp.dk&password=belle0&client_id=kirkeapp&client_secret=8tv8mJmfXuop1zPI4z3RrUmy1RszQ4MsxzBEkYZxNdqcPDAf1Nclm2mZSeYqN3zU' -X POST https://api.podio.com/oauth/token
 //			{"access_token":"7ae976e80dcfa1f07a96d3608e5a97d9850a3c7703319acaa083cf3c2482059367d020c2b5f0ee8bd17336167c498e90dab3db0f63cfafac5c7ee52149017af0","token_type":"bearer","ref":{"type":"user","id":65964},"expires_in":28799,"refresh_token":"8e1e6ed6495c8c025480afc9e65afd14d4329f24b6f6bcebd1341579a2ab171906451636d0fa83f0c4be08e61ebd0be6c1e6e976ebf542dff558743536ad0e07"}
 
@@ -95,7 +95,7 @@ namespace com.podio {
 						var filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format("podio-file-{0}", file_id));
 
 						using (Stream localStream = File.Create(filename)) {
-							byte[] buffer = new byte[1024];
+							byte[] buffer = new byte[1024 * 4];
 							int bytesRead;
 
 							int totalBytes = 0;
@@ -104,8 +104,6 @@ namespace com.podio {
 								localStream.Write(buffer, 0, bytesRead);
 								totalBytes += bytesRead;
 							} while (bytesRead > 0);
-
-							Console.WriteLine("bytes read {0}", totalBytes);
 						}
 
 						completed.Invoke(filename);
@@ -129,7 +127,6 @@ namespace com.podio {
 
 			using (var sw = new StreamWriter(req.GetRequestStream())) {
 				data.Save(sw);
-				Console.WriteLine("Writing {0}", data.ToString());
 			}
 
 			req.BeginGetResponse(ar => {

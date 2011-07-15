@@ -7,6 +7,8 @@ using MonoTouch.UIKit;
 using Mono.Data.Sqlite;
 using System.IO;
 
+using dk.kirkeapp.data;
+
 #endregion
 
 namespace dk.kirkeapp {

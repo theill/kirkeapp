@@ -5,7 +5,7 @@ using MonoTouch.UIKit;
 
 #endregion
 
-namespace dk.kirkeapp {
+namespace dk.kirkeapp.data {
 	public interface IJsonCellController {
 		UITableViewCell ViewCell { get; }
 

@@ -9,6 +9,8 @@ using MonoTouch.UIKit;
 
 using com.podio;
 
+using dk.kirkeapp.data;
+
 #endregion
 
 namespace dk.kirkeapp {

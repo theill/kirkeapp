@@ -40,7 +40,7 @@ namespace com.podio {
 		public Contact() {
 		}
 
-		public static Contact Parse(JsonValue o) {
+		public static Contact FromJson(JsonValue o) {
 			// {"name": "John Doe", "external_id": null, "space_id": 55853, "profile_id": 2232002, "phone": ["+45 61715096"], "link": null, "mail": ["john@doe.com"], "type": "space", "image": null}
 			return new Contact {
 				Name = o.AsString("name"),

@@ -1,4 +1,5 @@
 using System;
+using dk.kirkeapp.data;
 
 namespace dk.kirkeapp {
 	public class CellData : IJsonData {

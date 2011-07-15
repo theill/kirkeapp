@@ -2,11 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Globalization;
+
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using System.IO;
+
 using com.podio;
-using System.Globalization;
+
+using dk.kirkeapp.data;
 
 #endregion
 
@@ -98,6 +102,14 @@ namespace dk.kirkeapp {
 			}
 		}
 
+		private string _podioGroupsAppID;
+
+		public string PodioGroupsAppID {
+			get {
+				return _podioGroupsAppID;
+			}
+		}
+
 		private com.podio.Client _client;
 
 		public com.podio.Client PodioClient {
@@ -112,6 +124,11 @@ namespace dk.kirkeapp {
 		}
 
 		public Contact ActiveContact {
+			get;
+			set;
+		}
+
+		public List<Group> Groups {
 			get;
 			set;
 		}
@@ -144,8 +161,11 @@ namespace dk.kirkeapp {
 			_podioMessagesAppID = prefs.ValueForKey(new NSString("PodioMessagesAppID")).ToString();
 			_podioEventsAppID = prefs.ValueForKey(new NSString("PodioEventsAppID")).ToString();
 			_podioPagesAppID = prefs.ValueForKey(new NSString("PodioPagesAppID")).ToString();
+			_podioGroupsAppID = prefs.ValueForKey(new NSString("PodioGroupsAppID")).ToString();
 
 			_client = new com.podio.Client(_podioClientID, _podioClientSecret);
+
+			Groups = new List<Group>();
 
 			window.AddSubview(navigationController.View);
 			window.MakeKeyAndVisible();
@@ -157,11 +177,8 @@ namespace dk.kirkeapp {
 		public override void OnActivated(UIApplication application) {
 		}
 		
-		/*
-		public override void WillTerminate (UIApplication application)
-		{
-			//Save data here
+		public override void WillTerminate (UIApplication application) {
+			// save data here
 		}
-		*/
 	}
 }

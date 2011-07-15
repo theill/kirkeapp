@@ -1,4 +1,4 @@
-	#region Using directives
+#region Using directives
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +9,12 @@ using MonoTouch.UIKit;
 
 using com.podio;
 
+using dk.kirkeapp.data;
 #endregion
 
 namespace dk.kirkeapp {
 	public partial class MessagesViewController : BackgroundViewController, IJsonDataSource<Message> {
-		private List<Message> _data;
+		private List<Message> _data = new List<Message>();
 
 		public int ListCount {
 			get {
@@ -72,7 +73,7 @@ namespace dk.kirkeapp {
 
 			tblMessages.SeparatorColor = UIColor.FromRGB(217, 212, 199);
 
-			this.NavigationItem.RightBarButtonItem = new UIBarButtonItem("Ny", UIBarButtonItemStyle.Plain, (sender, e) => {
+			NavigationItem.RightBarButtonItem = new UIBarButtonItem("Ny", UIBarButtonItemStyle.Plain, (sender, e) => {
 				var c = new NewMessageViewController();
 				NavigationController.PushViewController(c, true);
 			});
@@ -86,63 +87,39 @@ namespace dk.kirkeapp {
 			LoadMessages();
 		}
 
+		private List<int> ExpandProfilesInGroup(int groupID) {
+			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
+			Group g = appDelegate.Groups.Find((a) => a.ID == groupID);
+			return (g != null) ? g.Contacts.ConvertAll<int>((a) => {
+				return a.ProfileID; }) : new List<int>();
+		}
+
 		private void LoadMessages() {
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 			appDelegate.PodioClient._get(string.Format("/item/app/{0}/", appDelegate.PodioMessagesAppID), (rsp) => {
 				JsonArray items = (JsonArray)rsp["items"];
 
-				this._data = new List<Message>();
+				_data = new List<Message>();
 
 				foreach (JsonObject item in items) {
-					Message m = new Message();
-					m.ID = item.AsInt32("item_id");
-					m.Title = item.AsString("title");
-					DateTime sentAt;
-					DateTime.TryParse(item["initial_revision"].AsString("created_on"), out sentAt);
-					m.SentAt = sentAt;
+					Message m = Message.Parse(item);
 
-					int authorProfileID = 0, recipientProfileID = 0;
+					List<int > destinationProfiles = new List<int>();
+					destinationProfiles.Add(m.AuthorProfileID);
+					destinationProfiles.Add(m.RecipientProfileID);
+					destinationProfiles.AddRange(ExpandProfilesInGroup(m.RecipientGroupID));
+					Console.WriteLine("After group has been expanded we have: {0}", destinationProfiles);
 
-					JsonArray fields = (JsonArray)item["fields"];
-					foreach (JsonObject field in fields) {
-						string external_id = field.AsString("external_id");
-
-						if (external_id == "body") {
-							m.Content = HtmlRemoval.StripTags(field["values"][0].AsString("value"));
-						} else if (external_id == "author") {
-							m.From = field["values"][0]["value"].AsString("name");
-							authorProfileID = field["values"][0]["value"].AsInt32("profile_id");
-						} else if (external_id == "modtager") {
-							m.To = field["values"][0]["value"].AsString("name");
-							recipientProfileID = field["values"][0]["value"].AsInt32("profile_id");
-						}
-					}
-
-					// set defaults
-					if (!string.IsNullOrEmpty(m.Title) && !string.IsNullOrEmpty(m.Content)) {
-						m.Content = m.Title + ": " + m.Content;
-					} else if (!string.IsNullOrEmpty(m.Title)) {
-						m.Content = m.Title;
-					}
-
-					if (string.IsNullOrEmpty(m.From)) {
-						m.From = "Ukendt";
-					}
-
-					if (string.IsNullOrEmpty(m.To)) {
-						m.To = "Ukendt";
-					}
-
-					if (authorProfileID == appDelegate.ActiveContact.ProfileID || recipientProfileID == appDelegate.ActiveContact.ProfileID) {
+					if (destinationProfiles.Contains(appDelegate.ActiveContact.ProfileID)) {
 						_data.Add(m);
 					} else {
-						Console.WriteLine("Not gonna add {0} since profile [{1}, {2}] doesn't match logged on {3}", m.Title, authorProfileID, recipientProfileID, appDelegate.ActiveContact.ProfileID);
+						Console.WriteLine("Not gonna add {0} since profile [{1}, {2}] doesn't match logged on {3}", m.Title, m.AuthorProfileID, m.RecipientProfileID, appDelegate.ActiveContact.ProfileID);
 					}
 				}
 
 				InvokeOnMainThread(() => {
-					this.tblMessages.DataSource = new JsonDataSource<Message>(this);
-					this.tblMessages.ReloadData();
+					tblMessages.DataSource = new JsonDataSource<Message>(this);
+					tblMessages.ReloadData();
 				});
 			}, (error) => {
 				Console.WriteLine("Unable to read messages");
@@ -150,4 +127,3 @@ namespace dk.kirkeapp {
 		}
 	}
 }
-

@@ -44,20 +44,20 @@ namespace dk.kirkeapp {
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 			DescriptionLabel.Text = string.Format("Hvis du er tilknyttet kirken har du mulighed for skrive og modtage beskeder direkte fra præsten.\n\nKontakt {0} hvis du ønsker at blive oprettet som bruger.", appDelegate.ApplicationName);
 
-			this.NavigationItem.LeftBarButtonItem = new UIBarButtonItem("Annuller", UIBarButtonItemStyle.Plain, (sender, e) => {
+			NavigationItem.LeftBarButtonItem = new UIBarButtonItem("Annuller", UIBarButtonItemStyle.Plain, (sender, e) => {
 				InvokeOnMainThread(() => {
 					this.NavigationController.PopViewControllerAnimated(true);
 				});
 			});
 
-			this.EmailTextField.BecomeFirstResponder();
+			EmailTextField.BecomeFirstResponder();
 
-			this.EmailTextField.ShouldReturn = (textField) => {
+			EmailTextField.ShouldReturn = (textField) => {
 				Console.WriteLine("Bip bip - next field");
 				return true;
 			};
 
-			this.PasswordTextField.ShouldReturn = (textField) => {
+			PasswordTextField.ShouldReturn = (textField) => {
 				LogIn();
 				return textField.ResignFirstResponder();
 			};
@@ -68,16 +68,15 @@ namespace dk.kirkeapp {
 			appDelegate.PodioClient._get(string.Format("/contact/space/{0}/?contact_type=space&type=full", appDelegate.ActiveSpace.SpaceID), (rsp) => {
 				List<Contact > contacts = new List<Contact>();
 				foreach (var v in (rsp as JsonArray)) {
-					contacts.Add(Contact.Parse(v));
+					contacts.Add(Contact.FromJson(v));
 				}
 
 				Contact contact = contacts.Find((c) => {
+					// FIXME: doesn't take upper/lower into consideration
 					return c.Mails.Contains(this.EmailTextField.Text);
 				});
 
 				if (contact != null) {
-					Console.WriteLine("Found contact!");
-
 					appDelegate.ActiveContact = contact;
 
 					// store contact in app settings so user doesn't have to log on next time

@@ -5,6 +5,8 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+using dk.kirkeapp.data;
+
 #endregion
 
 namespace dk.kirkeapp {
@@ -144,7 +146,7 @@ namespace dk.kirkeapp {
 		
 		#endregion
 
-		#region IJsonDataSource[Category] implementation
+		#region IJsonDataSource[CellData] implementation
 		private List<CellData> _data = new List<CellData>();
 
 		public int ListCount {

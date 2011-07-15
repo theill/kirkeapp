@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kirkeapp", "kirkeapp\kirkea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "podio-sharp", "podio-sharp\podio-sharp.csproj", "{E6128ECB-4EC2-4073-9C18-891860DF3290}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dk.kirkeapp.data", "data\dk.kirkeapp.data.csproj", "{7B85E490-91BF-4088-AD31-F203F4724A57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -14,6 +16,16 @@ Global
 		Distribution|iPhone = Distribution|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B85E490-91BF-4088-AD31-F203F4724A57}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{7B85E490-91BF-4088-AD31-F203F4724A57}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{7B85E490-91BF-4088-AD31-F203F4724A57}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{7B85E490-91BF-4088-AD31-F203F4724A57}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{7B85E490-91BF-4088-AD31-F203F4724A57}.Distribution|iPhone.ActiveCfg = Debug|Any CPU
+		{7B85E490-91BF-4088-AD31-F203F4724A57}.Distribution|iPhone.Build.0 = Debug|Any CPU
+		{7B85E490-91BF-4088-AD31-F203F4724A57}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{7B85E490-91BF-4088-AD31-F203F4724A57}.Release|iPhone.Build.0 = Release|Any CPU
+		{7B85E490-91BF-4088-AD31-F203F4724A57}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{7B85E490-91BF-4088-AD31-F203F4724A57}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Debug|iPhone.Build.0 = Debug|iPhone
 		{A4413383-141A-47A2-A9B7-46E555805A31}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator

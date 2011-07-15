@@ -45,8 +45,6 @@ namespace dk.kirkeapp {
 			});
 
 			this.NavigationItem.RightBarButtonItem = new UIBarButtonItem("Send", UIBarButtonItemStyle.Bordered, (sender, e) => {
-				Console.WriteLine("Let's send this message");
-
 				var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 
 				List<JsonValue > fields = new List<JsonValue>();
@@ -129,7 +127,6 @@ namespace dk.kirkeapp {
 				#endregion
 
 				appDelegate.PodioClient._post(string.Format("/item/app/{0}/", appDelegate.PodioMessagesAppID), data, (rsp) => {
-					Console.WriteLine("Vi har nu smidt noget IND i Podio: {0}", rsp);
 
 					InvokeOnMainThread(() => {
 						this.NavigationController.PopViewControllerAnimated(true);

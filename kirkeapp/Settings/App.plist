@@ -18,6 +18,8 @@
 	<string>289471</string>
 	<key>PodioPagesAppID</key>
 	<string>340654</string>
+	<key>PodioGroupsAppID</key>
+	<string>367203</string>
 	<key>PodioSpaceUrl</key>
 	<string>https://kirkeapp.podio.com/kokkedal/</string>
 </dict>

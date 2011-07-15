@@ -5,6 +5,8 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
+using dk.kirkeapp.data;
+
 #endregion
 
 namespace dk.kirkeapp {
@@ -40,7 +42,6 @@ namespace dk.kirkeapp {
 		}
 
 		public void Configure(OptionDictionary options) {
-			Console.WriteLine("Let's configure it");
 			this.TitleLabel.Text = options.ContainsKey("Title") ? (string)options["Title"] : string.Empty;
 
 			string active = string.Empty;

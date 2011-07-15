@@ -177,7 +177,7 @@ namespace dk.kirkeapp {
 
 					UIButton btn = UIButton.FromType(UIButtonType.DetailDisclosure);
 					btn.TouchUpInside += (sender, e) => {
-						Console.WriteLine("Going to start maps app");
+						Console.WriteLine("Going to start maps app: {0}", _appd);
 //						Console.WriteLine("We have coord: {0} and {1}", mapView.CenterCoordinate.Latitude, mapView.CenterCoordinate.Longitude);
 //						string url = string.Format("http://maps.google.com/maps?ll={0},{1}", mapView.CenterCoordinate.Latitude.ToString(_appd.EnglishFormatProvider), mapView.CenterCoordinate.Longitude.ToString(_appd.EnglishFormatProvider));
 //						string url = string.Format("http://maps.google.com/maps?saddr={0}", _appd.Address);

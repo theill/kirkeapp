@@ -9,6 +9,8 @@ using MonoTouch.Foundation;
 
 using com.podio;
 
+using dk.kirkeapp.data;
+
 #endregion
 
 namespace dk.kirkeapp {
@@ -20,6 +22,35 @@ namespace dk.kirkeapp {
 		public RootViewController(NSCoder coder) : base (coder) {
 		}
 
+		void LoadGroups() {
+			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
+			appDelegate.PodioClient._get(string.Format("/item/app/{0}/", appDelegate.PodioGroupsAppID), (rsp) => {
+				List<Group > groups = new List<Group>();
+				foreach (JsonValue item in rsp["items"]) {
+					Item podioItem = Item.FromJson(item);
+
+					Group g = new Group {
+						ID = podioItem.ItemID,
+						Name = podioItem.Title,
+						Contacts = new List<Contact>()
+					};
+					foreach (var field in podioItem.Fields) {
+						if (field.ExternalID == "kontakt") {
+							foreach (var contact in field.Values) {
+								g.Contacts.Add(Contact.FromJson(contact.ObjectValue["value"] as JsonValue));
+							}
+						}
+					}
+
+					groups.Add(g);
+				}
+				appDelegate.Groups = groups;
+			}, (err) => {
+				Console.WriteLine("Failed to load groups");
+
+			});
+		}
+
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
@@ -28,10 +59,13 @@ namespace dk.kirkeapp {
 
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 
-			appDelegate.PodioClient.authenticate_with_credentials(AppDelegate.PODIO_USERNAME, AppDelegate.PODIO_PASSWORD, (oauth_token) => {
+			appDelegate.PodioClient.Authenticate(AppDelegate.PODIO_USERNAME, AppDelegate.PODIO_PASSWORD, (oauth_token) => {
+
+				LoadGroups();
+
 				appDelegate.PodioClient._get(string.Format("/space/url?url={0}", appDelegate.PodioSpaceUrl), (rsp) => {
 					Console.WriteLine("Got info from space");
-					appDelegate.ActiveSpace = Space.Parse(rsp);
+					appDelegate.ActiveSpace = Space.FromJson(rsp);
 
 					Console.WriteLine("Got space id of {0} created at {1}", appDelegate.ActiveSpace.SpaceID, appDelegate.ActiveSpace.CreatedOn);
 
@@ -40,7 +74,7 @@ namespace dk.kirkeapp {
 						appDelegate.PodioClient._get(string.Format("/contact/{0}/v2", profileID), (rsp2) => {
 							Console.WriteLine("Got active contact: {0}", (rsp2 as JsonObject));
 
-							appDelegate.ActiveContact = Contact.Parse(rsp2);
+							appDelegate.ActiveContact = Contact.FromJson(rsp2);
 
 							InvokeOnMainThread(() => {
 								bool contactLoggedIn = appDelegate.ActiveContact != null;

@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Json;
+using System.IO;
+
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using com.podio;
-using System.IO;
+
+using dk.kirkeapp.data;
 
 #endregion
 
@@ -117,31 +120,41 @@ namespace dk.kirkeapp {
 							}
 						}
 
-						var filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format("podio-file-{0}", file_id));
-						if (File.Exists(filename)) {
-							Console.WriteLine("File {0} already exists", filename);
-							InvokeOnMainThread(() => {
-								NavigationController.PushViewController(new WebPageViewController {
+						if (file_id > 0) {
+							var filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format("podio-file-{0}", file_id));
+							if (File.Exists(filename)) {
+								Console.WriteLine("File {0} already exists", filename);
+								InvokeOnMainThread(() => {
+									NavigationController.PushViewController(new WebPageViewController {
 								Title = evt.Title,
 								ImageFilename = filename,
 								Html = description
 							}, true);
-							});
-						} else {
-							appDelegate.PodioClient._download(file_id, (image_filename) => {
-								Console.WriteLine("Downloaded file to: {0}", image_filename);
-								InvokeOnMainThread(() => {
-									NavigationController.PushViewController(new WebPageViewController {
+								});
+							} else {
+								appDelegate.PodioClient._download(file_id, (image_filename) => {
+									Console.WriteLine("Downloaded file to: {0}", image_filename);
+									InvokeOnMainThread(() => {
+										NavigationController.PushViewController(new WebPageViewController {
 										Title = evt.Title,
 										ImageFilename = image_filename,
 										Html = description
 									}, true);
-								});
+									});
 
-							}, (err) => {
-								Console.WriteLine("Failed to download file: {0}", err);
+								}, (err) => {
+									Console.WriteLine("Failed to download file: {0}", err);
+								});
+							}
+						} else {
+							InvokeOnMainThread(() => {
+								NavigationController.PushViewController(new WebPageViewController {
+									Title = evt.Title,
+									Html = description
+								}, true);
 							});
 						}
+
 					}, (error) => {
 						Console.WriteLine("Failed to get item");
 						UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;

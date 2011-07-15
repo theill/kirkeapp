@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace dk.kirkeapp {
+namespace dk.kirkeapp.data {
 	public class Event : IJsonData {
 		public int ID {
 			get;

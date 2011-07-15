@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace dk.kirkeapp {
+namespace dk.kirkeapp.data {
 	public interface IJsonData {
 		OptionDictionary ToOptions();
 	}

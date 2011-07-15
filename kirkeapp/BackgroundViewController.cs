@@ -23,8 +23,8 @@ namespace dk.kirkeapp {
 
 			UIImage image = UIImage.FromBundle("Images/wood-bg.png");
 			UIImageView a = new UIImageView(image);
-			this.View.AddSubview(a);
-			this.View.SendSubviewToBack(a);
+			View.AddSubview(a);
+			View.SendSubviewToBack(a);
 		}
 	}
 }

@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
+using System.Json;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 using com.podio;
-using System.Json;
+
+using dk.kirkeapp.data;
 
 #endregion
 
@@ -152,7 +154,6 @@ namespace dk.kirkeapp {
 				comment.Add("value", new JsonPrimitive(textField.Text));
 
 				appDelegate.PodioClient._post(string.Format("/comment/item/{0}/", PrimaryMessage.ID), comment, (rsp) => {
-					Console.WriteLine("Vi har nu smidt noget IND i Podio: {0}", rsp);
 
 					InvokeOnMainThread(() => {
 						_messages.Add(new Message { From = appDelegate.ActiveContact.Name, Title = textField.Text, Content = textField.Text, SentAt = DateTime.Now });
