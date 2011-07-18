@@ -78,11 +78,11 @@
     <MtouchDebug>False</MtouchDebug>
     <MtouchUseThumb>false</MtouchUseThumb>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Distribution: Peter Theill</CodesignKey>
+    <CodesignKey>iPhone Distribution</CodesignKey>
     <MtouchArch>ARMv6</MtouchArch>
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchI18n />
-    <CodesignProvision>2F6B6662-177E-4D66-9CE6-B2F87A847F8C</CodesignProvision>
+    <CodesignProvision>BEB29D05-D84B-4965-8524-6AB9005EF67D</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|iPhone' ">
     <DebugType>none</DebugType>

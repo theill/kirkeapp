@@ -125,14 +125,14 @@ namespace dk.kirkeapp {
 //				}
 //			}
 
-			this.LibrariesTableView.DataSource = new JsonDataSource<CellData>(this);
-			this.LibrariesTableView.Delegate = new JsonDataListDelegate<CellData>(this, this, (cell) => {
+			LibrariesTableView.DataSource = new JsonDataSource<CellData>(this);
+			LibrariesTableView.Delegate = new JsonDataListDelegate<CellData>(this, this, (cell) => {
 				Log.WriteLine("Item {0} has been selected", cell.ID);
 
-				if (this.Level < 2) {
+				if (Level < 2) {
 					InvokeOnMainThread(() => {
 						NavigationController.PushViewController(new BibleViewController {
-							Level = this.Level + 1,
+							Level = Level + 1,
 							Cell = cell
 						}, true);
 					});

@@ -4,6 +4,8 @@
   <dict>
     <key>CFBundleDisplayName</key>
     <string>Kokkedal</string>
+    <key>CFBundleIdentifier</key>
+    <string>dk.kirkeapp.kokkedal</string>
     <key>CFBundleIconFiles</key>
     <array>
       <string>Icon.png</string>
