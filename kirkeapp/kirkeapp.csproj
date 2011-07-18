@@ -13,8 +13,8 @@
     <AssemblyName>kirkeapp</AssemblyName>
     <MtouchMinimumOS>3.0</MtouchMinimumOS>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <BundleIdentifier>dk.kirkeapp</BundleIdentifier>
-    <BundleDisplayName>Kirkeapp</BundleDisplayName>
+    <BundleIdentifier>dk.kirkeapp.kokkedal</BundleIdentifier>
+    <BundleDisplayName>Kokkedal</BundleDisplayName>
     <BundleVersion>0.9.4</BundleVersion>
     <BundleIcon>Icon.png</BundleIcon>
     <BundleIconHigh>Icon@2x.png</BundleIconHigh>
@@ -98,7 +98,8 @@
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <CodesignKey>iPhone Distribution: Peter Theill</CodesignKey>
     <MtouchI18n />
-    <CodesignProvision>2F6B6662-177E-4D66-9CE6-B2F87A847F8C</CodesignProvision>
+    <CodesignProvision>0B7A3E12-F007-4D80-A967-FB52991796AE</CodesignProvision>
+    <MtouchExtraArgs>-v</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -262,6 +263,7 @@
   <ItemGroup>
     <Folder Include="Images\" />
     <Folder Include="Settings\" />
+    <Folder Include="Images\churches\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\main-screen.png" />
@@ -308,18 +310,29 @@
     <Content Include="Images\wood-with-buttons-bg%402x.png" />
     <Content Include="Images\main-icons%402x.png" />
     <Content Include="Images\old-wood-bg%402x.png" />
-    <Content Include="Images\bible-icon%402x.png" />
-    <Content Include="Images\calendar-icon%402x.png" />
-    <Content Include="Images\favorites-icon%402x.png" />
-    <Content Include="Images\mail-icon%402x.png" />
-    <Content Include="Images\psalms-icon%402x.png" />
     <Content Include="Images\wood-bg%402x.png" />
     <Content Include="Images\old-calendar-icon.png" />
-    <Content Include="Images\bible-icon-selected%402x.png" />
-    <Content Include="Images\calendar-icon-selected%402x.png" />
-    <Content Include="Images\favorites-icon-selected%402x.png" />
-    <Content Include="Images\mail-icon-selected%402x.png" />
-    <Content Include="Images\psalms-icon-selected%402x.png" />
+    <Content Include="Images\buttons\bible-icon-selected.png" />
+    <Content Include="Images\buttons\bible-icon.png" />
+    <Content Include="Images\buttons\calendar-icon-selected.png" />
+    <Content Include="Images\buttons\calendar-icon.png" />
+    <Content Include="Images\buttons\favorites-icon-selected.png" />
+    <Content Include="Images\buttons\favorites-icon.png" />
+    <Content Include="Images\buttons\mail-icon-selected.png" />
+    <Content Include="Images\buttons\mail-icon.png" />
+    <Content Include="Images\buttons\psalms-icon-selected.png" />
+    <Content Include="Images\buttons\psalms-icon.png" />
+    <Content Include="Images\buttons\bible-icon%402x.png" />
+    <Content Include="Images\buttons\bible-icon-selected%402x.png" />
+    <Content Include="Images\buttons\calendar-icon%402x.png" />
+    <Content Include="Images\buttons\calendar-icon-selected%402x.png" />
+    <Content Include="Images\buttons\favorites-icon%402x.png" />
+    <Content Include="Images\buttons\favorites-icon-selected%402x.png" />
+    <Content Include="Images\buttons\psalms-icon%402x.png" />
+    <Content Include="Images\buttons\psalms-icon-selected%402x.png" />
+    <Content Include="Images\buttons\mail-icon%402x.png" />
+    <Content Include="Images\buttons\mail-icon-selected%402x.png" />
+    <Content Include="Images\churches\frontpage%402x.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\podio-sharp\podio-sharp.csproj">

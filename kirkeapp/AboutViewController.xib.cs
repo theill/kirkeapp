@@ -107,13 +107,6 @@ namespace dk.kirkeapp {
 				Console.WriteLine("Unable to read info about church");
 			});
 		}
-
-//		public override void ViewDidAppear(bool animated) {
-//			base.ViewDidAppear(animated);
-//
-//			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
-//			AddressMapView.Delegate = new MapViewDelegate(appDelegate);
-//		}
 	}
 
 	/// <summary>

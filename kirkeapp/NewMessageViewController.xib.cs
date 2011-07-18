@@ -132,11 +132,7 @@ namespace dk.kirkeapp {
 						this.NavigationController.PopViewControllerAnimated(true);
 					});
 
-				}, (err) => {
-					Console.WriteLine("Desvaerre, det gik ikke .. fik {0}", err);
-
-					// FIXME: show error for user
-				});
+				}, AppDelegate.GenericErrorHandling);
 
 			});
 

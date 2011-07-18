@@ -15,6 +15,9 @@ using dk.kirkeapp.data;
 #endregion
 
 namespace dk.kirkeapp {
+
+	// Font: http://openfontlibrary.org/font/gentium
+
 	public class Application {
 		static void Main(string[] args) {
 			UIApplication.Main(args);

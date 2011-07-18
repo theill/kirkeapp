@@ -88,7 +88,8 @@ namespace dk.kirkeapp {
 			btnDonation.Enabled = false;
 
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
-			NavigationItem.Title = TitleLabel.Text = appDelegate.ApplicationName;
+			NavigationItem.Title = "Kirken";
+			TitleLabel.Text = appDelegate.ApplicationName;
 
 			UIImage image = UIImage.FromBundle("Images/brown-gradient.png");
 			UIImageView a = new UIImageView(image);
@@ -99,18 +100,18 @@ namespace dk.kirkeapp {
 //			NavigationController.NavigationBar.Alpha = 0.40f;
 			NavigationController.NavigationBar.TintColor = UIColor.FromRGB(158, 80, 23);
 
-			btnMessages.SetBackgroundImage(UIImage.FromBundle("Images/mail-icon.png"), UIControlState.Normal);
-			btnCalendar.SetBackgroundImage(UIImage.FromBundle("Images/calendar-icon.png"), UIControlState.Normal);
+			btnMessages.SetBackgroundImage(UIImage.FromBundle("Images/buttons/mail-icon.png"), UIControlState.Normal);
+			btnCalendar.SetBackgroundImage(UIImage.FromBundle("Images/buttons/calendar-icon.png"), UIControlState.Normal);
 			btnDonation.Hidden = true;
-			btnBible.SetBackgroundImage(UIImage.FromBundle("Images/bible-icon.png"), UIControlState.Normal);
-			btnPsalms.SetBackgroundImage(UIImage.FromBundle("Images/psalms-icon.png"), UIControlState.Normal);
-			btnFavorites.SetBackgroundImage(UIImage.FromBundle("Images/favorites-icon.png"), UIControlState.Normal);
+			btnBible.SetBackgroundImage(UIImage.FromBundle("Images/buttons/bible-icon.png"), UIControlState.Normal);
+			btnPsalms.SetBackgroundImage(UIImage.FromBundle("Images/buttons/psalms-icon.png"), UIControlState.Normal);
+			btnFavorites.SetBackgroundImage(UIImage.FromBundle("Images/buttons/favorites-icon.png"), UIControlState.Normal);
 
-			btnMessages.SetBackgroundImage(UIImage.FromBundle("Images/mail-icon-selected.png"), UIControlState.Highlighted);
-			btnCalendar.SetBackgroundImage(UIImage.FromBundle("Images/calendar-icon-selected.png"), UIControlState.Highlighted);
-			btnBible.SetBackgroundImage(UIImage.FromBundle("Images/bible-icon-selected.png"), UIControlState.Highlighted);
-			btnPsalms.SetBackgroundImage(UIImage.FromBundle("Images/psalms-icon-selected.png"), UIControlState.Highlighted);
-			btnFavorites.SetBackgroundImage(UIImage.FromBundle("Images/favorites-icon-selected.png"), UIControlState.Highlighted);
+			btnMessages.SetBackgroundImage(UIImage.FromBundle("Images/buttons/mail-icon-selected.png"), UIControlState.Highlighted);
+			btnCalendar.SetBackgroundImage(UIImage.FromBundle("Images/buttons/calendar-icon-selected.png"), UIControlState.Highlighted);
+			btnBible.SetBackgroundImage(UIImage.FromBundle("Images/buttons/bible-icon-selected.png"), UIControlState.Highlighted);
+			btnPsalms.SetBackgroundImage(UIImage.FromBundle("Images/buttons/psalms-icon-selected.png"), UIControlState.Highlighted);
+			btnFavorites.SetBackgroundImage(UIImage.FromBundle("Images/buttons/favorites-icon-selected.png"), UIControlState.Highlighted);
 
 			btnMessages.SetTitle("", UIControlState.Normal);
 			btnCalendar.SetTitle("", UIControlState.Normal);
@@ -118,6 +119,8 @@ namespace dk.kirkeapp {
 			btnBible.SetTitle("", UIControlState.Normal);
 			btnPsalms.SetTitle("", UIControlState.Normal);
 			btnFavorites.SetTitle("", UIControlState.Normal);
+
+			FrontImage.Image = UIImage.FromBundle("Images/churches/frontpage.jpg");
 
 			btnMessages.TouchUpInside += (sender, e) => {
 				NavigationController.PushViewController(new MessagesViewController(), true);

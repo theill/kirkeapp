@@ -29,9 +29,11 @@ namespace dk.kirkeapp {
 		
 		private MonoTouch.UIKit.UIButton __mt_btnFavorites;
 		
+		private MonoTouch.UIKit.UILabel __mt_TitleLabel;
+		
 		private MonoTouch.UIKit.UIButton __mt_btnAbout;
 		
-		private MonoTouch.UIKit.UILabel __mt_TitleLabel;
+		private MonoTouch.UIKit.UIImageView __mt_FrontImage;
 		
 		#pragma warning disable 0169
 		[MonoTouch.Foundation.Connect("view")]
@@ -118,6 +120,18 @@ namespace dk.kirkeapp {
 			}
 		}
 		
+		[MonoTouch.Foundation.Connect("TitleLabel")]
+		private MonoTouch.UIKit.UILabel TitleLabel {
+			get {
+				this.__mt_TitleLabel = ((MonoTouch.UIKit.UILabel)(this.GetNativeField("TitleLabel")));
+				return this.__mt_TitleLabel;
+			}
+			set {
+				this.__mt_TitleLabel = value;
+				this.SetNativeField("TitleLabel", value);
+			}
+		}
+		
 		[MonoTouch.Foundation.Connect("btnAbout")]
 		private MonoTouch.UIKit.UIButton btnAbout {
 			get {
@@ -130,15 +144,15 @@ namespace dk.kirkeapp {
 			}
 		}
 		
-		[MonoTouch.Foundation.Connect("TitleLabel")]
-		private MonoTouch.UIKit.UILabel TitleLabel {
+		[MonoTouch.Foundation.Connect("FrontImage")]
+		private MonoTouch.UIKit.UIImageView FrontImage {
 			get {
-				this.__mt_TitleLabel = ((MonoTouch.UIKit.UILabel)(this.GetNativeField("TitleLabel")));
-				return this.__mt_TitleLabel;
+				this.__mt_FrontImage = ((MonoTouch.UIKit.UIImageView)(this.GetNativeField("FrontImage")));
+				return this.__mt_FrontImage;
 			}
 			set {
-				this.__mt_TitleLabel = value;
-				this.SetNativeField("TitleLabel", value);
+				this.__mt_FrontImage = value;
+				this.SetNativeField("FrontImage", value);
 			}
 		}
 	}
