@@ -55,15 +55,15 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
-			this.NavigationItem.Title = "Ny besked";
+			NavigationItem.Title = "Ny besked";
 
-			this.NavigationItem.LeftBarButtonItem = new UIBarButtonItem("Annuller", UIBarButtonItemStyle.Bordered, (sender, e) => {
+			NavigationItem.LeftBarButtonItem = new UIBarButtonItem("Annuller", UIBarButtonItemStyle.Bordered, (sender, e) => {
 				InvokeOnMainThread(() => {
 					this.NavigationController.PopViewControllerAnimated(true);
 				});
 			});
 
-			this.NavigationItem.RightBarButtonItem = new UIBarButtonItem("Send", UIBarButtonItemStyle.Bordered, (sender, e) => {
+			NavigationItem.RightBarButtonItem = new UIBarButtonItem("Send", UIBarButtonItemStyle.Bordered, (sender, e) => {
 				var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 
 				string message = MessageTextView.Text.Trim();

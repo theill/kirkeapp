@@ -92,21 +92,29 @@ namespace dk.kirkeapp.data {
 
 				if (external_id == "body") {
 					m.Content = HtmlRemoval.StripTags(field["values"][0].AsString("value"));
-				} else if (external_id == "author") {
+				}
+				else if (external_id == "author") {
 					m.From = field["values"][0]["value"].AsString("name");
 					m.AuthorProfileID = field["values"][0]["value"].AsInt32("profile_id");
-				} else if (external_id == "modtager") {
+				}
+				else if (external_id == "modtager") {
 					m.To = field["values"][0]["value"].AsString("name");
 					m.RecipientProfileID = field["values"][0]["value"].AsInt32("profile_id");
-				} else if (external_id == "modtager-gruppe") {
+				}
+				else if (external_id == "modtager-gruppe") {
 					m.RecipientGroupID = field["values"][0]["value"].AsInt32("item_id");
 				}
 			}
 
 			// set defaults
 			if (!string.IsNullOrEmpty(m.Title) && !string.IsNullOrEmpty(m.Content)) {
-				m.Content = m.Title + ": " + m.Content;
-			} else if (!string.IsNullOrEmpty(m.Title)) {
+				if (!m.Content.StartsWith(m.Title)) {
+					// patch content field to show title and content if they are different
+					// this is needed since we might fill out only title in some cases
+					m.Content = m.Title + ": " + m.Content;
+				}
+			}
+			else if (!string.IsNullOrEmpty(m.Title)) {
 				m.Content = m.Title;
 			}
 
