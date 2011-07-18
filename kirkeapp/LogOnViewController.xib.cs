@@ -53,7 +53,7 @@ namespace dk.kirkeapp {
 			EmailTextField.BecomeFirstResponder();
 
 			EmailTextField.ShouldReturn = (textField) => {
-				Console.WriteLine("Bip bip - next field");
+				PasswordTextField.BecomeFirstResponder();
 				return true;
 			};
 
@@ -86,18 +86,14 @@ namespace dk.kirkeapp {
 						this.NavigationController.PopViewControllerAnimated(true);
 					});
 				} else {
-					Console.WriteLine("Did not find contact");
+					Log.WriteLine("Did not find contact");
 
 					InvokeOnMainThread(() => {
 						UserNotFoundLabel.Hidden = false;
 					});
 				}
 
-			}, (err) => {
-				Console.WriteLine("Desvaerre, det gik ikke .. fik {0}", err);
-
-				// FIXME: show error for user
-			});
+			}, AppDelegate.GenericErrorHandling);
 		}
 	}
 }

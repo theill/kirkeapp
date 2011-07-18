@@ -104,7 +104,7 @@ namespace dk.kirkeapp {
 
 			}, (error) => {
 				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
-				Console.WriteLine("Unable to read info about church");
+				Log.WriteLine("Unable to read info about church");
 			});
 		}
 	}
@@ -160,7 +160,7 @@ namespace dk.kirkeapp {
 		}
 
 		public override MKAnnotationView GetViewForAnnotation(MKMapView mapView, NSObject annotation) {
-			Console.WriteLine("attempt to get view for MKAnnotation " + annotation);
+			Log.WriteLine("Attempt to get view for MKAnnotation " + annotation);
 			try {
 				var anv = mapView.DequeueReusableAnnotation("thislocation");
 				if (anv == null) {
@@ -171,7 +171,7 @@ namespace dk.kirkeapp {
 
 					UIButton btn = UIButton.FromType(UIButtonType.DetailDisclosure);
 					btn.TouchUpInside += (sender, e) => {
-						Console.WriteLine("Going to start maps app: {0}", _appd);
+						Log.WriteLine("Going to start maps app: {0}", _appd);
 //						Console.WriteLine("We have coord: {0} and {1}", mapView.CenterCoordinate.Latitude, mapView.CenterCoordinate.Longitude);
 //						string url = string.Format("http://maps.google.com/maps?ll={0},{1}", mapView.CenterCoordinate.Latitude.ToString(_appd.EnglishFormatProvider), mapView.CenterCoordinate.Longitude.ToString(_appd.EnglishFormatProvider));
 //						string url = string.Format("http://maps.google.com/maps?saddr={0}", _appd.Address);
@@ -185,7 +185,7 @@ namespace dk.kirkeapp {
 				}
 				return anv;
 			} catch (Exception ex) {
-				Console.WriteLine("GetViewForAnnotation Exception " + ex);
+				Log.WriteLine("GetViewForAnnotation Exception " + ex);
 				return null;
 			}
 		}

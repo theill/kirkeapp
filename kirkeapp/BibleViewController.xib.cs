@@ -127,7 +127,7 @@ namespace dk.kirkeapp {
 
 			this.LibrariesTableView.DataSource = new JsonDataSource<CellData>(this);
 			this.LibrariesTableView.Delegate = new JsonDataListDelegate<CellData>(this, this, (cell) => {
-				Console.WriteLine("Item {0} has been selected", cell.ID);
+				Log.WriteLine("Item {0} has been selected", cell.ID);
 
 				if (this.Level < 2) {
 					InvokeOnMainThread(() => {
@@ -138,7 +138,7 @@ namespace dk.kirkeapp {
 					});
 				} else {
 					using (var db = new SQLite.SQLiteConnection("Databases/kirkeapp.db")) {
-						Console.WriteLine("Chapter ID => {0}", cell.ID);
+						Log.WriteLine("Chapter ID => {0}", cell.ID);
 						var sections = db.Query<CellData>("SELECT id AS ID, content AS Title FROM sections WHERE chapter_id = ? ORDER BY ID", cell.ID);
 
 						string html = string.Empty;
@@ -159,7 +159,7 @@ namespace dk.kirkeapp {
 
 		public override void ViewDidAppear(bool animated) {
 			base.ViewDidAppear(animated);
-			Console.WriteLine("View did appear for level {0}", this.Level);
+			Log.WriteLine("View did appear for level {0}", this.Level);
 
 			using (var db = new SQLite.SQLiteConnection("Databases/kirkeapp.db")) {
 				_data = db.Query<CellData>(GetQueryByLevel(this.Level), this.Cell.ID);

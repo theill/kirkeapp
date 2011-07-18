@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using System.Linq.Expressions;
+using dk.kirkeapp;
 
 namespace SQLite
 {
@@ -323,7 +324,7 @@ namespace SQLite
 		/// An enumerable with one result for each row returned by the query.
 		/// </returns>
 		public List<T> Query<T>(string query, params object[] args) where T : new() {
-			Console.WriteLine("Q {0}", query);
+			Log.WriteLine("Q {0}", query);
 			var cmd = CreateCommand(query, args);
 			return cmd.ExecuteQuery<T>();
 		}

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Json;
 
 using com.podio;
+using System.Text.RegularExpressions;
 
 #endregion
 
@@ -55,6 +56,24 @@ namespace dk.kirkeapp.data {
 		}
 
 		public Message() {
+		}
+
+		public void PatchFields() {
+			if (string.IsNullOrEmpty(Content)) {
+				return;
+			}
+
+			if (Content.StartsWith("(via ")) {
+				Match m = Regex.Match(Content, "\\(via ([^\\)]*)\\)(.*)", RegexOptions.Multiline);
+				if (m.Groups.Count > 2) {
+					From = m.Groups[1].Value.Trim();
+					Content = m.Groups[2].Value.Trim();
+				}
+			}
+		}
+
+		public static string PatchContent(string fromName, string content) {
+			return string.Format("(via {0}) {1}", fromName, content);
 		}
 
 		public static Message Parse(JsonObject item) {

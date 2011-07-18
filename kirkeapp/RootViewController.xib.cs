@@ -45,10 +45,7 @@ namespace dk.kirkeapp {
 					groups.Add(g);
 				}
 				appDelegate.Groups = groups;
-			}, (err) => {
-				Console.WriteLine("Failed to load groups");
-
-			});
+			}, AppDelegate.GenericErrorHandling);
 		}
 
 		public void Authenticated(string oauthToken) {

@@ -11,6 +11,7 @@ using MonoTouch.UIKit;
 using com.podio;
 
 using dk.kirkeapp.data;
+using System.Diagnostics;
 
 #endregion
 
@@ -185,7 +186,7 @@ namespace dk.kirkeapp {
 		}
 
 		public static void GenericErrorHandling(string errorMessage) {
-			Console.WriteLine("Failed to handle message: {0}", errorMessage);
+			Log.WriteLine("Failed to handle message: {0}", errorMessage);
 		}
 	}
 }

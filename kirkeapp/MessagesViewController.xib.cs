@@ -64,8 +64,8 @@ namespace dk.kirkeapp {
 
 			UIImage image = UIImage.FromBundle("Images/double-paper.png");
 			UIImageView a = new UIImageView(image);
-			this.View.AddSubview(a);
-			this.View.InsertSubviewAbove(a, this.View.Subviews[0]);
+			View.AddSubview(a);
+			View.InsertSubviewAbove(a, this.View.Subviews[0]);
 
 			image = UIImage.FromBundle("Images/brown-gradient.png");
 			a = new UIImageView(image);
@@ -74,8 +74,7 @@ namespace dk.kirkeapp {
 			tblMessages.SeparatorColor = UIColor.FromRGB(217, 212, 199);
 
 			NavigationItem.RightBarButtonItem = new UIBarButtonItem("Ny", UIBarButtonItemStyle.Plain, (sender, e) => {
-				var c = new NewMessageViewController();
-				NavigationController.PushViewController(c, true);
+				NavigationController.PushViewController(new NewMessageViewController { MessageSent = MessageSent }, true);
 			});
 
 			tblMessages.Delegate = new JsonDataListDelegate<Message>(this, this, (msg) => {
@@ -85,6 +84,14 @@ namespace dk.kirkeapp {
 			});
 
 			LoadMessages();
+		}
+
+		void MessageSent() {
+			InvokeOnMainThread(() => {
+				NavigationController.PopViewControllerAnimated(true);
+
+				LoadMessages();
+			});
 		}
 
 		private List<int> ExpandProfilesInGroup(int groupID) {
@@ -118,7 +125,7 @@ namespace dk.kirkeapp {
 					tblMessages.DataSource = new JsonDataSource<Message>(this);
 					tblMessages.ReloadData();
 				});
-			}, (error) => AppDelegate.GenericErrorHandling(error));
+			}, AppDelegate.GenericErrorHandling);
 		}
 	}
 }

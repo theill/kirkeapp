@@ -70,7 +70,7 @@ a { color: rgb(141, 58, 5); }
 			string imageHtml = string.Empty;
 			if (!string.IsNullOrEmpty(ImageFilename)) {
 				NSUrl imageUrl = NSUrl.FromFilename(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ImageFilename));
-				Console.WriteLine("We have a file: {0}", imageUrl.ToString());
+				Log.WriteLine("We have a file: {0}", imageUrl.ToString());
 				imageHtml = string.Format("<img class='primary' src='{0}' width='300' />", imageUrl.ToString());
 			}
 

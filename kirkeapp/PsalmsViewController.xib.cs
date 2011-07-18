@@ -67,7 +67,7 @@ namespace dk.kirkeapp {
 		}
 
 		public override void RowSelected(UITableView tableView, NSIndexPath indexPath) {
-			Console.WriteLine("Selected {0}", indexPath.Row);
+			Log.WriteLine("Selected {0}", indexPath.Row);
 			var e = _data[indexPath.Row];
 
 			if (_selected != null) {
@@ -86,13 +86,11 @@ namespace dk.kirkeapp {
 		}
 
 		public override bool ShouldBeginEditing(UISearchBar searchBar) {
-			Console.WriteLine("Should BEGIN editing");
 			_tableView.Tag = 1;
 			return true;
 		}
 
 		public override bool ShouldEndEditing(UISearchBar searchBar) {
-			Console.WriteLine("Should END editing");
 			_tableView.Tag = 0;
 			return true;
 		}

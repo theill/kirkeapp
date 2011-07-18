@@ -93,12 +93,12 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
-			this.NavigationItem.Title = PrimaryMessage.From ?? "Ukendt";
+			NavigationItem.Title = PrimaryMessage.From ?? "Ukendt";
 
 			UIImage image = UIImage.FromBundle("Images/double-paper.png");
 			UIImageView a = new UIImageView(image);
-			this.View.AddSubview(a);
-			this.View.InsertSubviewAbove(a, this.View.Subviews[0]);
+			View.AddSubview(a);
+			View.InsertSubviewAbove(a, this.View.Subviews[0]);
 
 			image = UIImage.FromBundle("Images/brown-gradient.png");
 			a = new UIImageView(image);
@@ -113,7 +113,7 @@ namespace dk.kirkeapp {
 
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 			appDelegate.PodioClient._get(string.Format("/comment/item/{0}/", PrimaryMessage.ID), (rsp) => {
-				Console.WriteLine("Got a message: {0}", rsp);
+				Log.WriteLine("Got a message: {0}", rsp);
 
 				JsonArray items = (JsonArray)rsp;
 
@@ -124,6 +124,9 @@ namespace dk.kirkeapp {
 						From = item["created_by"].AsString("name"),
 						SentAt = item.AsDateTime("created_on")
 					};
+
+					m.PatchFields();
+
 					_messages.Add(m);
 				}
 
@@ -134,22 +137,19 @@ namespace dk.kirkeapp {
 					ScrollToLastRow();
 				});
 
-			}, (err) => {
-				Console.WriteLine("Failed to read comments for message");
+			}, AppDelegate.GenericErrorHandling);
 
-			});
+			tblMessages.Delegate = new JsonDataListDelegate<Message>(this, this, (msg) => {});
 
-			this.tblMessages.Delegate = new JsonDataListDelegate<Message>(this, this, (msg) => {});
+			txtMessage.ShouldReturn = (textField) => {
 
-			this.txtMessage.Started += (sender, e) => {
-				Console.WriteLine("Editing has started");
-			};
+				// FIXME: podio hack to have comments patched with user name
+				string msg = Message.PatchContent(appDelegate.ActiveContact.Name, textField.Text.Trim());
 
-			this.txtMessage.ShouldReturn = (textField) => {
 				// comment
 				JsonObject comment = new JsonObject();
 				comment.Add("external_id", new JsonPrimitive(appDelegate.ActiveContact.ProfileID.ToString()));
-				comment.Add("value", new JsonPrimitive(textField.Text));
+				comment.Add("value", new JsonPrimitive(msg));
 
 				appDelegate.PodioClient._post(string.Format("/comment/item/{0}/", PrimaryMessage.ID), comment, (rsp) => {
 

@@ -100,19 +100,19 @@ namespace dk.kirkeapp {
 				}
 
 				this.CalendarTableView.Delegate = new JsonDataListDelegate<Event>(this, this, (evt) => {
-					Console.WriteLine("Event {0} has been selected", evt);
+					Log.WriteLine("Event {0} has been selected", evt);
 
 					string description = string.Empty;
 					int file_id = 0;
 
 					UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 					appDelegate.PodioClient._get(string.Format("/item/{0}/value", evt.ID), (rsp2) => {
-						Console.WriteLine("Got {0}", rsp2);
+						Log.WriteLine("Got {0}", rsp2);
 						UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 
 						JsonArray values = (JsonArray)rsp2;
 						foreach (var v in values) {
-							Console.WriteLine("Looking at {0}", v);
+							Log.WriteLine("Looking at {0}", v);
 							if (v["external_id"] == "description") {
 								description = v["values"][0]["value"];
 							} else if (v["external_id"] == "image") {
@@ -123,7 +123,7 @@ namespace dk.kirkeapp {
 						if (file_id > 0) {
 							var filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format("podio-file-{0}", file_id));
 							if (File.Exists(filename)) {
-								Console.WriteLine("File {0} already exists", filename);
+								Log.WriteLine("File {0} already exists", filename);
 								InvokeOnMainThread(() => {
 									NavigationController.PushViewController(new WebPageViewController {
 								Title = evt.Title,
@@ -133,7 +133,7 @@ namespace dk.kirkeapp {
 								});
 							} else {
 								appDelegate.PodioClient._download(file_id, (image_filename) => {
-									Console.WriteLine("Downloaded file to: {0}", image_filename);
+									Log.WriteLine("Downloaded file to: {0}", image_filename);
 									InvokeOnMainThread(() => {
 										NavigationController.PushViewController(new WebPageViewController {
 										Title = evt.Title,
@@ -142,9 +142,7 @@ namespace dk.kirkeapp {
 									}, true);
 									});
 
-								}, (err) => {
-									Console.WriteLine("Failed to download file: {0}", err);
-								});
+								}, AppDelegate.GenericErrorHandling);
 							}
 						} else {
 							InvokeOnMainThread(() => {
@@ -156,7 +154,7 @@ namespace dk.kirkeapp {
 						}
 
 					}, (error) => {
-						Console.WriteLine("Failed to get item");
+						Log.WriteLine("Failed to get item");
 						UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 					});
 				});
@@ -167,7 +165,7 @@ namespace dk.kirkeapp {
 				});
 			}, (error) => {
 				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
-				Console.WriteLine("Unable to read calendar events");
+				Log.WriteLine("Unable to read calendar events");
 			});
 		}
 	}

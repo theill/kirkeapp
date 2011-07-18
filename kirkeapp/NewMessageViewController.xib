@@ -62,7 +62,7 @@
 					<object class="IBUITextView" id="39179418">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{8, 0}, {304, 234}}</string>
+						<string key="NSFrame">{{8, 0}, {304, 174}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="IBUIBackgroundColor" ref="469434863"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -194,7 +194,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>NewMessageViewController</string>
 					<string>UIResponder</string>
-					<string>{{357, 275}, {320, 480}}</string>
+					<string>{{470, 311}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">

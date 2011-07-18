@@ -219,11 +219,11 @@ namespace dk.kirkeapp {
 
 			}, (error) => {
 				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
-				Console.WriteLine("Unable to read pages");
+				Log.WriteLine("Unable to read pages");
 			});
 
 			this.FavoritesTableView.Delegate = new JsonDataListDelegate<Favorite>(this, this, (fav) => {
-				Console.WriteLine("Favorite {0} has been selected", fav);
+				Log.WriteLine("Favorite {0} has been selected", fav);
 
 				NavigationController.PushViewController(new WebPageViewController {
 					Title = fav.Title,

@@ -25,7 +25,7 @@ namespace dk.kirkeapp {
 
 		//This event occurs when you just touch the object
 		public override void TouchesBegan(MonoTouch.Foundation.NSSet touches, MonoTouch.UIKit.UIEvent e) {
-			Console.WriteLine("Touched the object");
+			Log.WriteLine("Touched the object");
 			Location = this.Frame.Location;
 
 			var touch = (UITouch)e.TouchesForView(this).AnyObject;
@@ -37,7 +37,7 @@ namespace dk.kirkeapp {
 		}
 		//This event occurs when you drag it around
 		public override void TouchesMoved(MonoTouch.Foundation.NSSet touches, MonoTouch.UIKit.UIEvent e) {
-			Console.WriteLine("Dragged the object");
+			Log.WriteLine("Dragged the object");
 			var bounds = Bounds;
 			var touch = (UITouch)e.TouchesForView(this).AnyObject;
 

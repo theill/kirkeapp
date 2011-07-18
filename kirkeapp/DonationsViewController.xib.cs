@@ -50,8 +50,8 @@ namespace dk.kirkeapp {
 			img.UserInteractionEnabled = true;
 			img.Hidden = false;
 			img.OnDroppedImage += (location) => {
-				Console.WriteLine("Dropped at {0}", location);
-				Console.WriteLine("Where is box image {0}", this.BoxImageView.Frame);
+				Log.WriteLine("Dropped at {0}", location);
+				Log.WriteLine("Where is box image {0}", this.BoxImageView.Frame);
 				if (this.BoxImageView.Frame.Contains(location)) {
 					InvokeOnMainThread(delegate {
 						UIAlertView v = new UIAlertView("Tak", "Ønsker du at donere 25 DKK til kirken?", null, "Nej", "Ja, tak");

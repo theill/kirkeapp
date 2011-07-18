@@ -15,7 +15,7 @@
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <BundleIdentifier>dk.kirkeapp.kokkedal</BundleIdentifier>
     <BundleDisplayName>Kokkedal</BundleDisplayName>
-    <BundleVersion>0.9.4</BundleVersion>
+    <BundleVersion>0.9.5</BundleVersion>
     <BundleIcon>Icon.png</BundleIcon>
     <BundleIconHigh>Icon@2x.png</BundleIconHigh>
   </PropertyGroup>
@@ -238,6 +238,8 @@
     <Compile Include="PsalmViewController.xib.designer.cs">
       <DependentUpon>PsalmViewController.xib</DependentUpon>
     </Compile>
+    <Compile Include="Log.cs" />
+    <Compile Include="ImageNavigationBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xib" />
@@ -266,7 +268,6 @@
     <Folder Include="Images\churches\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\main-screen.png" />
     <Content Include="Images\paper-light%402x.png" />
     <Content Include="Images\dark-gradient%402x.png" />
     <Content Include="Images\coins.png" />
@@ -277,8 +278,6 @@
     <Content Include="Images\messages-icon.png" />
     <Content Include="Images\plus-icon.png" />
     <Content Include="Settings\App.plist" />
-    <Content Include="Images\bg-normal.png" />
-    <Content Include="Images\bg-normal%402x.png" />
     <Content Include="Databases\kirkeapp.db" />
     <Content Include="Images\fade-out.png" />
     <Content Include="Icon-72.png" />
@@ -333,6 +332,7 @@
     <Content Include="Images\buttons\mail-icon%402x.png" />
     <Content Include="Images\buttons\mail-icon-selected%402x.png" />
     <Content Include="Images\churches\frontpage%402x.jpg" />
+    <Content Include="Images\navigationbar%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\podio-sharp\podio-sharp.csproj">
