@@ -73,12 +73,12 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
-			this.NavigationItem.Title = GetTitleByLevel(this.Level);
+			NavigationItem.Title = GetTitleByLevel(this.Level);
 
 			UIImage image = UIImage.FromBundle("Images/double-paper.png");
 			UIImageView a = new UIImageView(image);
-			this.View.AddSubview(a);
-			this.View.InsertSubviewAbove(a, this.View.Subviews[0]);
+			View.AddSubview(a);
+			View.InsertSubviewAbove(a, this.View.Subviews[0]);
 
 			image = UIImage.FromBundle("Images/brown-gradient.png");
 			a = new UIImageView(image);

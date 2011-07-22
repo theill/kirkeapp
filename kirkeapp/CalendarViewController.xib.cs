@@ -107,44 +107,30 @@ namespace dk.kirkeapp {
 
 					UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 					appDelegate.PodioClient._get(string.Format("/item/{0}/value", evt.ID), (rsp2) => {
-						Log.WriteLine("Got {0}", rsp2);
 						UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;
 
 						JsonArray values = (JsonArray)rsp2;
 						foreach (var v in values) {
-							Log.WriteLine("Looking at {0}", v);
 							if (v["external_id"] == "description") {
 								description = v["values"][0]["value"];
-							} else if (v["external_id"] == "image") {
+							}
+							else if (v["external_id"] == "image") {
 								file_id = v["values"][0]["value"].AsInt32("file_id");
 							}
 						}
 
 						if (file_id > 0) {
-							var filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format("podio-file-{0}", file_id));
-							if (File.Exists(filename)) {
-								Log.WriteLine("File {0} already exists", filename);
+							appDelegate.GetFile(file_id, (filename) => {
 								InvokeOnMainThread(() => {
 									NavigationController.PushViewController(new WebPageViewController {
-								Title = evt.Title,
-								ImageFilename = filename,
-								Html = description
-							}, true);
-								});
-							} else {
-								appDelegate.PodioClient._download(file_id, (image_filename) => {
-									Log.WriteLine("Downloaded file to: {0}", image_filename);
-									InvokeOnMainThread(() => {
-										NavigationController.PushViewController(new WebPageViewController {
 										Title = evt.Title,
-										ImageFilename = image_filename,
+										ImageFilename = filename,
 										Html = description
 									}, true);
-									});
-
-								}, AppDelegate.GenericErrorHandling);
-							}
-						} else {
+								});
+							});
+						}
+						else {
 							InvokeOnMainThread(() => {
 								NavigationController.PushViewController(new WebPageViewController {
 									Title = evt.Title,
@@ -160,8 +146,8 @@ namespace dk.kirkeapp {
 				});
 
 				InvokeOnMainThread(() => {
-					this.CalendarTableView.DataSource = new JsonDataSource<Event>(this);
-					this.CalendarTableView.ReloadData();
+					CalendarTableView.DataSource = new JsonDataSource<Event>(this);
+					CalendarTableView.ReloadData();
 				});
 			}, (error) => {
 				UIApplication.SharedApplication.NetworkActivityIndicatorVisible = false;

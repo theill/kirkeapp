@@ -25,6 +25,10 @@ namespace dk.kirkeapp {
 		
 		private MonoTouch.UIKit.UILabel __mt_UserNotFoundLabel;
 		
+		private MonoTouch.UIKit.UIButton __mt_CreateContactButton;
+		
+		private MonoTouch.UIKit.UIView __mt_NotFoundView;
+		
 		#pragma warning disable 0169
 		[MonoTouch.Foundation.Connect("view")]
 		private MonoTouch.UIKit.UIView view {
@@ -83,6 +87,30 @@ namespace dk.kirkeapp {
 			set {
 				this.__mt_UserNotFoundLabel = value;
 				this.SetNativeField("UserNotFoundLabel", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("CreateContactButton")]
+		private MonoTouch.UIKit.UIButton CreateContactButton {
+			get {
+				this.__mt_CreateContactButton = ((MonoTouch.UIKit.UIButton)(this.GetNativeField("CreateContactButton")));
+				return this.__mt_CreateContactButton;
+			}
+			set {
+				this.__mt_CreateContactButton = value;
+				this.SetNativeField("CreateContactButton", value);
+			}
+		}
+		
+		[MonoTouch.Foundation.Connect("NotFoundView")]
+		private MonoTouch.UIKit.UIView NotFoundView {
+			get {
+				this.__mt_NotFoundView = ((MonoTouch.UIKit.UIView)(this.GetNativeField("NotFoundView")));
+				return this.__mt_NotFoundView;
+			}
+			set {
+				this.__mt_NotFoundView = value;
+				this.SetNativeField("NotFoundView", value);
 			}
 		}
 	}

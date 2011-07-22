@@ -14,7 +14,7 @@
     <MtouchMinimumOS>3.0</MtouchMinimumOS>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <BundleIdentifier>dk.kirkeapp.kokkedal</BundleIdentifier>
-    <BundleDisplayName>Kokkedal</BundleDisplayName>
+    <BundleDisplayName>Kokkedal Kirke</BundleDisplayName>
     <BundleVersion>0.9.5</BundleVersion>
     <BundleIcon>Icon.png</BundleIcon>
     <BundleIconHigh>Icon@2x.png</BundleIconHigh>

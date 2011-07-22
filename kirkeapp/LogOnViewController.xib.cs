@@ -37,12 +37,13 @@ namespace dk.kirkeapp {
 		public override void ViewDidLoad() {
 			base.ViewDidLoad();
 
-			this.NavigationItem.HidesBackButton = true;
+			NavigationItem.HidesBackButton = true;
 
 			NavigationItem.Title = "Log ind";
 
-			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
-			DescriptionLabel.Text = string.Format("Hvis du er tilknyttet kirken har du mulighed for skrive og modtage beskeder direkte fra præsten.\n\nKontakt {0} hvis du ønsker at blive oprettet som bruger.", appDelegate.ApplicationName);
+			DescriptionLabel.Text = "Hvis du er tilknyttet kirken har du mulighed for skrive og modtage beskeder direkte fra præsten.\n\nDu vil få muligheden for at oprette en konto hvis du ikke allerede har en.";
+
+			NotFoundView.Hidden = true;
 
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem("Annuller", UIBarButtonItemStyle.Plain, (sender, e) => {
 				InvokeOnMainThread(() => {
@@ -61,11 +62,15 @@ namespace dk.kirkeapp {
 				LogIn();
 				return textField.ResignFirstResponder();
 			};
+
+			CreateContactButton.TouchUpInside += (sender, e) => {
+				CreateContact(EmailTextField.Text, PasswordTextField.Text);
+			};
 		}
 
 		void LogIn() {
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
-			appDelegate.PodioClient._get(string.Format("/contact/space/{0}/?contact_type=space&type=full", appDelegate.ActiveSpace.SpaceID), (rsp) => {
+			appDelegate.PodioClient._get(string.Format("/contact/space/{0}/?contact_type=space&required=skype&type=full", appDelegate.ActiveSpace.SpaceID), (rsp) => {
 				List<Contact > contacts = new List<Contact>();
 				foreach (var v in (rsp as JsonArray)) {
 					contacts.Add(Contact.FromJson(v));
@@ -73,7 +78,7 @@ namespace dk.kirkeapp {
 
 				Contact contact = contacts.Find((c) => {
 					// FIXME: doesn't take upper/lower into consideration
-					return c.Mails.Contains(this.EmailTextField.Text);
+					return c.Mails.Contains(EmailTextField.Text) && c.Skype == PasswordTextField.Text;
 				});
 
 				if (contact != null) {
@@ -83,15 +88,31 @@ namespace dk.kirkeapp {
 					AppDelegate.Defaults.SetInt(contact.ProfileID, "profile_id");
 
 					InvokeOnMainThread(() => {
-						this.NavigationController.PopViewControllerAnimated(true);
+						NavigationController.PopViewControllerAnimated(false);
 					});
-				} else {
+				}
+				else {
 					Log.WriteLine("Did not find contact");
 
 					InvokeOnMainThread(() => {
-						UserNotFoundLabel.Hidden = false;
+						NotFoundView.Hidden = false;
 					});
 				}
+
+			}, AppDelegate.GenericErrorHandling);
+		}
+
+		void CreateContact(string email, string password) {
+			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
+
+			JsonObject data = new JsonObject();
+			JsonArray mails = new JsonArray(new JsonPrimitive(email));
+			data.Add("name", email);
+			data.Add("mail", mails);
+			data.Add("skype", new JsonPrimitive(password));
+			appDelegate.PodioClient._post(string.Format("/contact/space/{0}/", appDelegate.ActiveSpace.SpaceID), data, (rsp) => {
+				Console.WriteLine("Got back {0}", rsp);
+				LogIn();
 
 			}, AppDelegate.GenericErrorHandling);
 		}

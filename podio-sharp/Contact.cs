@@ -37,6 +37,11 @@ namespace com.podio {
 			set;
 		}
 
+		public string Skype {
+			get;
+			set;
+		}
+
 		public Contact() {
 		}
 
@@ -48,6 +53,7 @@ namespace com.podio {
 				SpaceID = o.AsInt32("space_id"),
 				ProfileID = o.AsInt32("profile_id"),
 				Phones = o.AsListString("phone"),
+				Skype = o.AsString("skype"),
 				Mails = o.AsListString("mail")
 			};
 		}

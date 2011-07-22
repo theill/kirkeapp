@@ -43,14 +43,16 @@ namespace dk.kirkeapp {
 		}
 
 		public void Configure(OptionDictionary options) {
-			this.SubjectLabel.Text = options.ContainsKey("From") ? (string)options["From"] : string.Empty;
-			this.ContentLabel.Text = options.ContainsKey("Content") ? (string)options["Content"] : string.Empty;
-			this.DateLabel.Text = (options.ContainsKey("SentAt") ? Convert.ToDateTime(options["SentAt"]) : DateTime.Now).ToString("d/M-yyyy");
+			SubjectLabel.Text = options.ContainsKey("From") ? (string)options["From"] : string.Empty;
+			ContentLabel.Text = options.ContainsKey("Content") ? (string)options["Content"] : string.Empty;
 
-			if (!string.IsNullOrEmpty(this.ContentLabel.Text)) {
-				NSString a = new NSString(this.ContentLabel.Text);
-				SizeF size = a.StringSize(this.ContentLabel.Font, new SizeF(280, 9999), this.ContentLabel.LineBreakMode);
-				this.ContentLabel.Frame = new System.Drawing.RectangleF(this.ContentLabel.Frame.X, this.ContentLabel.Frame.Y, size.Width, size.Height);
+			DateTime sentAt = (options.ContainsKey("SentAt") ? Convert.ToDateTime(options["SentAt"]) : DateTime.Now);
+			DateLabel.Text = sentAt.Date == DateTime.Today ? sentAt.ToString("HH:mm") : sentAt.ToString("d/M-yyyy");
+
+			if (!string.IsNullOrEmpty(ContentLabel.Text)) {
+				NSString a = new NSString(ContentLabel.Text);
+				SizeF size = a.StringSize(ContentLabel.Font, new SizeF(280, 9999), ContentLabel.LineBreakMode);
+				ContentLabel.Frame = new System.Drawing.RectangleF(ContentLabel.Frame.X, ContentLabel.Frame.Y, size.Width, size.Height);
 			}
 		}
 	}

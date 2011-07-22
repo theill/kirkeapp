@@ -19,6 +19,16 @@ namespace dk.kirkeapp {
 
 	// Font: http://openfontlibrary.org/font/gentium
 
+	/**
+	 * Building for multiple churches
+	 *  + create a new git checkout for each church
+	 *  + git checkout kokkedal
+	 *  + build
+	 * 
+	 *
+	 *
+	 */
+
 	public class Application {
 		static void Main(string[] args) {
 			UIApplication.Main(args);
@@ -33,14 +43,6 @@ namespace dk.kirkeapp {
 		public static string PODIO_PASSWORD = "belle0";
 
 		public static string FAVORITE_TAG = "favorit";
-
-		private string _applicationName;
-
-		public string ApplicationName {
-			get {
-				return _applicationName;
-			}
-		}
 
 		private string _applicationUrl;
 
@@ -122,9 +124,22 @@ namespace dk.kirkeapp {
 			}
 		}
 
+		private Space _activeSpace;
 		public Space ActiveSpace {
-			get;
-			set;
+			get {
+				if (_activeSpace == null) {
+					// in case we're reading space before it has been loaded
+					_activeSpace = new Space {
+						Name = "Kirken"
+					};
+				}
+
+				return _activeSpace;
+			}
+
+			set {
+				_activeSpace = value;
+			}
 		}
 
 		public Contact ActiveContact {
@@ -152,11 +167,25 @@ namespace dk.kirkeapp {
 			}
 		}
 
+		public void GetFile(int fileID, Action<string> completed) {
+			var filename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), string.Format("podio-file-{0}", fileID));
+			if (File.Exists(filename)) {
+				completed.Invoke(filename);
+			}
+			else {
+				var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
+				appDelegate.PodioClient._download(fileID, (imageFilename) => {
+					Log.WriteLine("Downloaded file to: {0}", imageFilename);
+					completed.Invoke(imageFilename);
+
+				}, AppDelegate.GenericErrorHandling);
+			}
+		}
+
 		// This method is invoked when the application has loaded its UI and its ready to run
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options) {
 			// load information about currently configured app
 			NSDictionary prefs = NSDictionary.FromFile(Path.Combine(NSBundle.MainBundle.BundlePath, "Settings/App.plist"));
-			_applicationName = prefs.ValueForKey(new NSString("ApplicationName")).ToString();
 			_applicationUrl = prefs.ValueForKey(new NSString("ApplicationUrl")).ToString();
 			_podioChurchProfileID = prefs.ValueForKey(new NSString("PodioChurchProfileID")).ToString();
 			_podioClientID = prefs.ValueForKey(new NSString("PodioClientID")).ToString();

@@ -49,16 +49,27 @@ namespace dk.kirkeapp {
 			DateTime activeStartAt = options.ContainsKey("ActiveStartAt") ? Convert.ToDateTime(options["ActiveStartAt"]) : DateTime.Now;
 			if (activeStartAt.Hour == 0 && activeStartAt.Minute == 0) {
 				active = activeStartAt.ToString("d/M-yyyy");
-			} else {
+			}
+			else {
 				active = activeStartAt.ToString("d/M-yyyy HH:mm");
 			}
 
 			DateTime activeEndAt = options.ContainsKey("ActiveEndAt") ? Convert.ToDateTime(options["ActiveEndAt"]) : DateTime.Now;
-			if (activeStartAt != activeEndAt) {
-				if (activeEndAt.Hour == 0 && activeEndAt.Minute == 0) {
-					active += " - " + activeEndAt.ToString("d/M-yyyy");
-				} else {
-					active += " - " + activeEndAt.ToString("d/M-yyyy HH:mm");
+			if (activeStartAt.Date != activeEndAt.Date) {
+				if (activeStartAt != activeEndAt) {
+					if (activeEndAt.Hour == 0 && activeEndAt.Minute == 0) {
+						active += " - " + activeEndAt.ToString("d/M-yyyy");
+					}
+					else {
+						active += " - " + activeEndAt.ToString("d/M-yyyy HH:mm");
+					}
+				}
+			}
+			else {
+				if (activeStartAt.Hour == activeEndAt.Hour && activeStartAt.Minute == activeEndAt.Minute) {
+				}
+				else {
+					active += " - " + activeEndAt.ToString("HH:mm");
 				}
 			}
 

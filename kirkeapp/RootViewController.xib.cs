@@ -60,7 +60,6 @@ namespace dk.kirkeapp {
 				int profileID = AppDelegate.Defaults.IntForKey("profile_id");
 				if (profileID > 0) {
 					appDelegate.PodioClient._get(string.Format("/contact/{0}/v2", profileID), (rsp2) => {
-
 						appDelegate.ActiveContact = Contact.FromJson(rsp2);
 
 						InvokeOnMainThread(() => {
@@ -71,6 +70,16 @@ namespace dk.kirkeapp {
 
 					}, AppDelegate.GenericErrorHandling);
 				}
+
+//				// set church image
+//				Log.WriteLine("We got {0}", appDelegate.ActiveSpace.ImageFileID);
+//				if (appDelegate.ActiveSpace.ImageFileID > 0) {
+//					appDelegate.GetFile(appDelegate.ActiveSpace.ImageFileID, (filename) => {
+//						InvokeOnMainThread(() => {
+//							FrontImage.Image = UIImage.FromFile(filename);
+//						});
+//					});
+//				}
 
 				InvokeOnMainThread(() => {
 					NavigationItem.Title = TitleLabel.Text = appDelegate.ActiveSpace.Name;
@@ -86,7 +95,7 @@ namespace dk.kirkeapp {
 
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 			NavigationItem.Title = "Kirken";
-			TitleLabel.Text = appDelegate.ApplicationName;
+			TitleLabel.Text = "Indlæser...";
 
 			UIImage image = UIImage.FromBundle("Images/brown-gradient.png");
 			UIImageView a = new UIImageView(image);
@@ -110,12 +119,12 @@ namespace dk.kirkeapp {
 			btnPsalms.SetBackgroundImage(UIImage.FromBundle("Images/buttons/psalms-icon-selected.png"), UIControlState.Highlighted);
 			btnFavorites.SetBackgroundImage(UIImage.FromBundle("Images/buttons/favorites-icon-selected.png"), UIControlState.Highlighted);
 
-			btnMessages.SetTitle("", UIControlState.Normal);
-			btnCalendar.SetTitle("", UIControlState.Normal);
-			btnDonation.SetTitle("", UIControlState.Normal);
-			btnBible.SetTitle("", UIControlState.Normal);
-			btnPsalms.SetTitle("", UIControlState.Normal);
-			btnFavorites.SetTitle("", UIControlState.Normal);
+//			btnMessages.SetTitle("", UIControlState.Normal);
+//			btnCalendar.SetTitle("", UIControlState.Normal);
+//			btnDonation.SetTitle("", UIControlState.Normal);
+//			btnBible.SetTitle("", UIControlState.Normal);
+//			btnPsalms.SetTitle("", UIControlState.Normal);
+//			btnFavorites.SetTitle("", UIControlState.Normal);
 
 			FrontImage.Image = UIImage.FromBundle("Images/churches/frontpage.jpg");
 

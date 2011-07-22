@@ -72,11 +72,14 @@ namespace dk.kirkeapp {
 
 							if (field.AsString("external_id") == "beskrivelse") {
 								description = HtmlRemoval.StripTags(field["values"][0]["value"]);
-							} else if (field.AsString("external_id") == "lokation") {
+							}
+							else if (field.AsString("external_id") == "lokation") {
 								address = field["values"][0]["value"];
-							} else if (field.AsString("external_id") == "latitude") {
+							}
+							else if (field.AsString("external_id") == "latitude") {
 								latitude = Convert.ToDouble(field["values"][0].AsString("value"), appDelegate.EnglishFormatProvider);
-							} else if (field.AsString("external_id") == "longitude") {
+							}
+							else if (field.AsString("external_id") == "longitude") {
 								longitude = Convert.ToDouble(field["values"][0].AsString("value"), appDelegate.EnglishFormatProvider);
 							}
 						}
@@ -96,8 +99,8 @@ namespace dk.kirkeapp {
 
 						AddressMapView.SetCenterCoordinate(coord, true);
 						AddressMapView.SetRegion(region, true);
-
-						MyAnnotation annotation = new MyAnnotation(coord, appDelegate.ApplicationName, "Vis i fuldskærm");
+						
+						MyAnnotation annotation = new MyAnnotation(coord, appDelegate.ActiveSpace.Name, "Vis i fuldskærm");
 						AddressMapView.AddAnnotationObject(annotation);
 					}
 				});
@@ -160,7 +163,6 @@ namespace dk.kirkeapp {
 		}
 
 		public override MKAnnotationView GetViewForAnnotation(MKMapView mapView, NSObject annotation) {
-			Log.WriteLine("Attempt to get view for MKAnnotation " + annotation);
 			try {
 				var anv = mapView.DequeueReusableAnnotation("thislocation");
 				if (anv == null) {

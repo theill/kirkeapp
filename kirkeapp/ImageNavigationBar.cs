@@ -35,8 +35,8 @@ namespace dk.kirkeapp {
 		public override void Draw(RectangleF rect) {
 			base.Draw(rect);
 			
-			UIImage image = UIImage.FromBundle("Images/navigationbar.png");
-			image.Draw(rect);
+//			UIImage image = UIImage.FromBundle("Images/navigationbar.png");
+//			image.Draw(rect);
 		}
 	}
 }
