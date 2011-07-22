@@ -21,10 +21,10 @@ namespace dk.kirkeapp {
 
 	/**
 	 * Building for multiple churches
-	 *  + create a new git checkout for each church
+	 *  + create a new branch for each church then do:
 	 *  + git checkout kokkedal
 	 *  + build
-	 * 
+	 *
 	 *
 	 *
 	 */
