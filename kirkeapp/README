@@ -1,0 +1,21 @@
+= Build
+
+# merge from master into church specific branch (maintenance)
+
+$ git checkout kokkedal
+$ git diff kokkedal master
+$ git merge master
+
+# merge part of church specific branch into master
+
+$ git checkout master
+$ git diff master kokkedal
+$ git merge kokkedal
+
+
+= Build new maintenance release
+
+$ git checkout kokkedal
+$ build
+$ cp kokkedal.ipa /ready-to-deploy
+
