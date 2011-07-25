@@ -19,6 +19,7 @@ namespace dk.kirkeapp {
 				return Address1Label.Text;
 			}
 		}
+
 		#region Constructors
 		
 		// The IntPtr and initWithCoder constructors are required for items that need 
@@ -71,10 +72,10 @@ namespace dk.kirkeapp {
 //							 {"values": [{"value": "<p>Beskrivelse af Kokkedal kirke.</p>"}], "type": "text", "field_id": 2342768, "external_id": "beskrivelse", "label": "Beskrivelse"}
 
 							if (field.AsString("external_id") == "beskrivelse") {
-								description = HtmlRemoval.StripTags(field["values"][0]["value"]);
+								description = HtmlRemoval.StripTags(field["values"][0].AsString("value").Replace("<br />", "\n\n").Replace("<br>", "\n\n"));
 							}
 							else if (field.AsString("external_id") == "lokation") {
-								address = field["values"][0]["value"];
+								address = field["values"][0].AsString("value");
 							}
 							else if (field.AsString("external_id") == "latitude") {
 								latitude = Convert.ToDouble(field["values"][0].AsString("value"), appDelegate.EnglishFormatProvider);

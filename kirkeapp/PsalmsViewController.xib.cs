@@ -24,7 +24,7 @@ namespace dk.kirkeapp {
 
 			using (var db = new SQLite.SQLiteConnection("Databases/kirkeapp.db")) {
 				if (!string.IsNullOrEmpty(filter)) {
-					_data = db.Query<CellData>("SELECT id AS ID, title AS Title FROM psalms WHERE no = ? OR title LIKE ? ORDER BY no", filter, "%" + filter + "%");
+					_data = db.Query<CellData>("SELECT id AS ID, (no || ' ' || title) AS Title FROM psalms WHERE no = ? OR title LIKE ? ORDER BY no", filter, "%" + filter + "%");
 				} else {
 					_data = new List<CellData>();
 				}
@@ -67,7 +67,6 @@ namespace dk.kirkeapp {
 		}
 
 		public override void RowSelected(UITableView tableView, NSIndexPath indexPath) {
-			Log.WriteLine("Selected {0}", indexPath.Row);
 			var e = _data[indexPath.Row];
 
 			if (_selected != null) {

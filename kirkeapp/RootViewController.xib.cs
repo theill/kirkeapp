@@ -82,7 +82,8 @@ namespace dk.kirkeapp {
 //				}
 
 				InvokeOnMainThread(() => {
-					NavigationItem.Title = TitleLabel.Text = appDelegate.ActiveSpace.Name;
+//					NavigationItem.Title =
+					TitleLabel.Text = appDelegate.ActiveSpace.Name;
 				});
 			}, AppDelegate.GenericErrorHandling);
 		}
