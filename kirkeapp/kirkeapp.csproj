@@ -13,8 +13,8 @@
     <AssemblyName>kirkeapp</AssemblyName>
     <MtouchMinimumOS>3.0</MtouchMinimumOS>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <BundleIdentifier>dk.kirkeapp.kokkedal</BundleIdentifier>
-    <BundleDisplayName>Kokkedal Kirke</BundleDisplayName>
+    <BundleIdentifier>dk.kirkeapp.dyssegaard</BundleIdentifier>
+    <BundleDisplayName>Dyssegård Kirke</BundleDisplayName>
     <BundleVersion>1.0</BundleVersion>
     <BundleIcon>Icon.png</BundleIcon>
     <BundleIconHigh>Icon@2x.png</BundleIconHigh>
@@ -128,6 +128,17 @@
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchExtraArgs>-v</MtouchExtraArgs>
     <CodesignKey>iPhone Distribution: Peter Theill</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'App Store|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\App Store</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <MtouchUseSGen>false</MtouchUseSGen>
+    <MtouchDebug>False</MtouchDebug>
+    <MtouchUseLlvm>false</MtouchUseLlvm>
+    <MtouchUseThumb>false</MtouchUseThumb>
+    <MtouchArch>ARMv6</MtouchArch>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

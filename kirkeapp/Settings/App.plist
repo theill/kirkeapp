@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ApplicationUrl</key>
-	<string>http://kokkedal.kirkeapp.dk/</string>
+	<string>http://dyssegaard.kirkeapp.dk/</string>
 	<key>PodioChurchProfileID</key>
 	<string>2671439</string>
 	<key>PodioClientID</key>
@@ -11,14 +11,14 @@
 	<key>PodioClientSecret</key>
 	<string>8tv8mJmfXuop1zPI4z3RrUmy1RszQ4MsxzBEkYZxNdqcPDAf1Nclm2mZSeYqN3zU</string>
 	<key>PodioEventsAppID</key>
-	<string>291877</string>
+	<string>399069</string>
 	<key>PodioMessagesAppID</key>
-	<string>289471</string>
+	<string>399068</string>
 	<key>PodioPagesAppID</key>
-	<string>340654</string>
+	<string>399070</string>
 	<key>PodioGroupsAppID</key>
-	<string>367203</string>
+	<string>399071</string>
 	<key>PodioSpaceUrl</key>
-	<string>https://kirkeapp.podio.com/kokkedal/</string>
+	<string>https://kirkeapp.podio.com/dyssegrdskirken/</string>
 </dict>
 </plist>
