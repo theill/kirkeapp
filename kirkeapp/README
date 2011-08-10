@@ -19,3 +19,11 @@ $ git checkout kokkedal
 $ build
 $ cp kokkedal.ipa /ready-to-deploy
 
+
+= Church specific files
+
+* kirkeapp/Icon-72.png
+* kirkeapp/Icon.png
+* kirkeapp/Icon@2x.png
+* kirkeapp/Images/churches/frontpage@2x.png
+* kirkeapp/Settings/App.plist
