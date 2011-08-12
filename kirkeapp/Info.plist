@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>CFBundleDisplayName</key>
-    <string>Hundige</string>
+    <string>Hundige Kirke</string>
     <key>CFBundleIdentifier</key>
     <string>dk.kirkeapp.hundige</string>
     <key>CFBundleIconFiles</key>
