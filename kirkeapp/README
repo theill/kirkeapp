@@ -26,4 +26,5 @@ $ cp kokkedal.ipa /ready-to-deploy
 * kirkeapp/Icon.png
 * kirkeapp/Icon@2x.png
 * kirkeapp/Images/churches/frontpage@2x.png
+* kirkeapp/Info.plist
 * kirkeapp/Settings/App.plist

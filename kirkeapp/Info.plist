@@ -3,9 +3,9 @@
 <plist version="1.0">
   <dict>
     <key>CFBundleDisplayName</key>
-    <string>Kokkedal</string>
+    <string>Hundige</string>
     <key>CFBundleIdentifier</key>
-    <string>dk.kirkeapp.kokkedal</string>
+    <string>dk.kirkeapp.hundige</string>
     <key>CFBundleIconFiles</key>
     <array>
       <string>Icon.png</string>

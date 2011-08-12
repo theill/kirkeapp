@@ -13,8 +13,8 @@
     <AssemblyName>kirkeapp</AssemblyName>
     <MtouchMinimumOS>3.0</MtouchMinimumOS>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
-    <BundleIdentifier>dk.kirkeapp.kokkedal</BundleIdentifier>
-    <BundleDisplayName>Kokkedal Kirke</BundleDisplayName>
+    <BundleIdentifier>dk.kirkeapp.hundige</BundleIdentifier>
+    <BundleDisplayName>Hundige Kirke</BundleDisplayName>
     <BundleVersion>1.0</BundleVersion>
     <BundleIcon>Icon.png</BundleIcon>
     <BundleIconHigh>Icon@2x.png</BundleIconHigh>
@@ -48,6 +48,7 @@
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchArch>ARMv6</MtouchArch>
+    <OutputPath>bin\Release</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -109,6 +110,7 @@
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchArch>ARMv6</MtouchArch>
+    <OutputPath>bin\Distribution</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'App Store|iPhone' ">
     <DebugType>none</DebugType>
@@ -136,6 +138,7 @@
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchArch>ARMv6</MtouchArch>
+    <OutputPath>bin\App Store</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
