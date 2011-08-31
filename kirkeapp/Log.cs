@@ -57,7 +57,6 @@ namespace dk.kirkeapp {
 		}
 #endif
 
-
 	}
 }
 
