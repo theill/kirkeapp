@@ -190,10 +190,13 @@ namespace dk.kirkeapp {
 			a = new UIImageView(image);
 			View.AddSubview(a);
 
-			CategoriesTableView.SeparatorColor = UIColor.FromRGB(217, 212, 199);
+//			CategoriesTableView.SeparatorColor = UIColor.FromRGB(217, 212, 199);
 
-			SearchBar.Delegate = new PsalmsSearch(this, this.CategoriesTableView);
-			SearchBar.BecomeFirstResponder();
+//			SearchBar.Delegate = new PsalmsSearch(this, this.CategoriesTableView);
+//			SearchBar.BecomeFirstResponder();
+
+			SearchBar.Hidden = true;
+
 		}
 	}
 }

@@ -11,7 +11,6 @@ namespace dk.kirkeapp {
 	[MonoTouch.Foundation.Register("ImageNavigationBar")]
 	public class ImageNavigationBar : UINavigationBar {
 		
-		//Die Standardkonstrutoren einfach durchgeben
 		public ImageNavigationBar() : base() {
 			
 		}

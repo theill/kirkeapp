@@ -74,6 +74,12 @@ namespace dk.kirkeapp {
 			base.ViewDidLoad();
 
 			NavigationItem.Title = GetTitleByLevel(this.Level);
+			NavigationItem.BackBarButtonItem = new UIBarButtonItem("Tilbage", UIBarButtonItemStyle.Plain, delegate(object sender, EventArgs e) {
+
+				InvokeOnMainThread(() => {
+					this.NavigationController.PopViewControllerAnimated(true);
+				});
+			});
 
 			UIImage image = UIImage.FromBundle("Images/double-paper.png");
 			UIImageView a = new UIImageView(image);
@@ -136,7 +142,8 @@ namespace dk.kirkeapp {
 							Cell = cell
 						}, true);
 					});
-				} else {
+				}
+				else {
 					using (var db = new SQLite.SQLiteConnection("Databases/kirkeapp.db")) {
 						Log.WriteLine("Chapter ID => {0}", cell.ID);
 						var sections = db.Query<CellData>("SELECT id AS ID, content AS Title FROM sections WHERE chapter_id = ? ORDER BY ID", cell.ID);

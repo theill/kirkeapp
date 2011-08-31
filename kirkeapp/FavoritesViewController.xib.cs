@@ -202,19 +202,24 @@ namespace dk.kirkeapp {
 						Title = item.AsString("title")
 					};
 
+//					int file_id = 0;
+
 					JsonArray fields = (JsonArray)item["fields"];
 					foreach (JsonObject field in fields) {
 						if (field.AsString("external_id") == "beskrivelse") {
 							f.Content = field["values"][0]["value"];
 						}
+//						else if (v["external_id"] == "image") {
+//							file_id = field["values"][0]["value"].AsInt32("file_id");
+//						}
 					}
 
 					_data.Add(f);
 				}
 
 				InvokeOnMainThread(() => {
-					this.FavoritesTableView.DataSource = new JsonDataSource<Favorite>(this);
-					this.FavoritesTableView.ReloadData();
+					FavoritesTableView.DataSource = new JsonDataSource<Favorite>(this);
+					FavoritesTableView.ReloadData();
 				});
 
 			}, (error) => {
@@ -222,7 +227,7 @@ namespace dk.kirkeapp {
 				Log.WriteLine("Unable to read pages");
 			});
 
-			this.FavoritesTableView.Delegate = new JsonDataListDelegate<Favorite>(this, this, (fav) => {
+			FavoritesTableView.Delegate = new JsonDataListDelegate<Favorite>(this, this, (fav) => {
 				Log.WriteLine("Favorite {0} has been selected", fav);
 
 				NavigationController.PushViewController(new WebPageViewController {

@@ -54,7 +54,7 @@ namespace dk.kirkeapp {
 
 			Address1Label.Text = "";
 			DescriptionTextView.Text = "";
-			
+
 			var appDelegate = (AppDelegate)UIApplication.SharedApplication.Delegate;
 
 			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
@@ -72,7 +72,7 @@ namespace dk.kirkeapp {
 //							 {"values": [{"value": "<p>Beskrivelse af Kokkedal kirke.</p>"}], "type": "text", "field_id": 2342768, "external_id": "beskrivelse", "label": "Beskrivelse"}
 
 							if (field.AsString("external_id") == "beskrivelse") {
-								description = HtmlRemoval.StripTags(field["values"][0].AsString("value").Replace("<br />", "\n\n").Replace("<br>", "\n\n"));
+								description = HtmlRemoval.StripTags(field["values"][0].AsString("value").Replace("<br />", "\n\n").Replace("<br>", "\n\n").Replace("&nbsp;", ""));
 							}
 							else if (field.AsString("external_id") == "lokation") {
 								address = field["values"][0].AsString("value");
@@ -98,9 +98,9 @@ namespace dk.kirkeapp {
 						MKCoordinateSpan span = new MKCoordinateSpan(0.005, 0.005);
 						MKCoordinateRegion region = new MKCoordinateRegion(coord, span);
 
-						AddressMapView.SetCenterCoordinate(coord, true);
-						AddressMapView.SetRegion(region, true);
-						
+						AddressMapView.SetRegion(region, false);
+						AddressMapView.SetCenterCoordinate(coord, false);
+
 						MyAnnotation annotation = new MyAnnotation(coord, appDelegate.ActiveSpace.Name, "Vis i fuldskærm");
 						AddressMapView.AddAnnotationObject(annotation);
 					}

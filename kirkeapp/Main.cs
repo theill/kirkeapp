@@ -40,7 +40,8 @@ namespace dk.kirkeapp {
 		public static NSUserDefaults Defaults = NSUserDefaults.StandardUserDefaults;
 
 		public static string PODIO_USERNAME = "admin@kirkeapp.dk";
-		public static string PODIO_PASSWORD = "belle0";
+		public static string PODIO_PASSWORD_EXTRA = "0";
+		public static string PODIO_PASSWORD = "belle" + PODIO_PASSWORD_EXTRA;
 
 		public static string FAVORITE_TAG = "favorit";
 
