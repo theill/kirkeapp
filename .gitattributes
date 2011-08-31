@@ -1,0 +1,7 @@
+kirkeapp/Settings/App.plist merge=ours
+kirkeapp/kirkeapp.csproj merge=ours
+kirkeapp/Info.plist merge=ours
+kirkeapp/Images/churches/frontpage@2x.jpg merge=ours
+kirkeapp/Icon-72.png merge=ours
+kirkeapp/Icon.png merge=ours
+kirkeapp/Icon@2x.png merge=ours
