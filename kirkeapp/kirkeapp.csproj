@@ -12,10 +12,10 @@
     <MainNibFile>MainWindow.xib</MainNibFile>
     <AssemblyName>kirkeapp</AssemblyName>
     <MtouchMinimumOS>3.0</MtouchMinimumOS>
-    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BundleIdentifier>dk.kirkeapp.dyssegaard</BundleIdentifier>
     <BundleDisplayName>Dyssegård Kirke</BundleDisplayName>
-    <BundleVersion>1.0</BundleVersion>
+    <BundleVersion>1.0.1</BundleVersion>
     <BundleIcon>Icon.png</BundleIcon>
     <BundleIconHigh>Icon@2x.png</BundleIconHigh>
   </PropertyGroup>
@@ -138,6 +138,8 @@
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchUseThumb>false</MtouchUseThumb>
     <MtouchArch>ARMv6</MtouchArch>
+    <OutputPath>bin\App Store</OutputPath>
+    <MtouchI18n />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
