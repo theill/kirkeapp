@@ -1,25 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-  <dict>
-    <key>CFBundleDisplayName</key>
-    <string>Kokkedal</string>
-    <key>CFBundleIdentifier</key>
-    <string>dk.kirkeapp.kokkedal</string>
-    <key>CFBundleIconFiles</key>
-    <array>
-      <string>Icon.png</string>
-      <string>Icon@2x.png</string>
-      <string>Icon-72.png</string>
-    </array>
-    <key>UIStatusBarStyle</key>
-    <string>UIStatusBarStyleBlackOpaque</string>
-    <key>UISupportedInterfaceOrientations</key>
-    <array>
-      <string>UIInterfaceOrientationPortrait</string>
-      <string>UIInterfaceOrientationPortraitUpsideDown</string>
-      <string>UIInterfaceOrientationLandscapeLeft</string>
-      <string>UIInterfaceOrientationLandscapeRight</string>
-    </array>
-  </dict>
+<dict>
+  <key>ApplicationUrl</key>
+  <string>http://kokkedal.kirkeapp.dk/</string>
+  <key>PodioChurchProfileID</key>
+  <string>2671439</string>
+  <key>PodioClientID</key>
+  <string>kirkeapp</string>
+  <key>PodioClientSecret</key>
+  <string>8tv8mJmfXuop1zPI4z3RrUmy1RszQ4MsxzBEkYZxNdqcPDAf1Nclm2mZSeYqN3zU</string>
+  <key>PodioEventsAppID</key>
+  <string>291877</string>
+  <key>PodioMessagesAppID</key>
+  <string>289471</string>
+  <key>PodioPagesAppID</key>
+  <string>340654</string>
+  <key>PodioGroupsAppID</key>
+  <string>367203</string>
+  <key>PodioSpaceUrl</key>
+  <string>https://kirkeapp.podio.com/kokkedal/</string>
+</dict>
 </plist>

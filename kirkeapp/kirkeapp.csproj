@@ -12,10 +12,10 @@
     <MainNibFile>MainWindow.xib</MainNibFile>
     <AssemblyName>kirkeapp</AssemblyName>
     <MtouchMinimumOS>3.0</MtouchMinimumOS>
-    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <BundleIdentifier>dk.kirkeapp.kokkedal</BundleIdentifier>
     <BundleDisplayName>Kokkedal Kirke</BundleDisplayName>
-    <BundleVersion>1.0</BundleVersion>
+    <BundleVersion>1.0.1</BundleVersion>
     <BundleIcon>Icon.png</BundleIcon>
     <BundleIconHigh>Icon@2x.png</BundleIconHigh>
   </PropertyGroup>
@@ -332,4 +332,9 @@
       <Name>dk.kirkeapp.data</Name>
     </ProjectReference>
   </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties InternalTargetFrameworkVersion="IPhone" />
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>
