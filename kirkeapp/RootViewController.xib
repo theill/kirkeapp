@@ -82,7 +82,7 @@
               <double key="NSSize">15</double>
               <int key="NSfFlags">16</int>
             </object>
-            <int key="IBUIButtonType">4</int>
+            <int key="IBUIButtonType">3</int>
             <bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
             <string key="IBUITitleShadowOffset">{1, 1}</string>
             <object class="NSColor" key="IBUIHighlightedTitleColor" id="956292787">
@@ -577,7 +577,7 @@
           <object class="NSAffineTransform">
             <bytes key="NSTransformStruct">AUGQAABBoAAAA</bytes>
           </object>
-          <string>{{585, 383}, {320, 480}}</string>
+          <string>{{821, 383}, {320, 480}}</string>
           <string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
           <string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
           <object class="NSAffineTransform">

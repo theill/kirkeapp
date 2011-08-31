@@ -3,3 +3,4 @@
 *.ipa
 *.userprefs
 **/*.pidb
+kirkeapp/output.txt
